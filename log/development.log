@@ -1,7 +1,0 @@
-
-
-Processing InfoController#properties (for 127.0.0.1 at 2007-02-05 15:54:58) [GET]
-  Session ID: b274e10a27c93150be867c57c55d8fc6
-  Parameters: {"action"=>"properties", "controller"=>"rails/info"}
-  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: #42S02Table 'sixsigma_development.schema_info' doesn't exist: SELECT version FROM schema_info[0m
-Completed in 0.16910 (5 reqs/sec) | Rendering: 0.00104 (0%) | DB: 0.00000 (0%) | 200 OK [http://0.0.0.0/rails/info/properties]
