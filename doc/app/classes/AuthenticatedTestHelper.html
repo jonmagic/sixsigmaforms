@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: AuthenticatedTestHelper</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">AuthenticatedTestHelper</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/authenticated_test_helper_rb.html">
+                lib/authenticated_test_helper.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000055">accept</a>&nbsp;&nbsp;
+      <a href="#M000057">assert_difference</a>&nbsp;&nbsp;
+      <a href="#M000060">assert_http_authentication_required</a>&nbsp;&nbsp;
+      <a href="#M000058">assert_no_difference</a>&nbsp;&nbsp;
+      <a href="#M000059">assert_requires_login</a>&nbsp;&nbsp;
+      <a href="#M000056">authorize_as</a>&nbsp;&nbsp;
+      <a href="#M000054">content_type</a>&nbsp;&nbsp;
+      <a href="#M000053">login_as</a>&nbsp;&nbsp;
+      <a href="#M000061">reset!</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
+
+        <div class="method-heading">
+          <a href="#M000055" class="method-signature">
+          <span class="method-name">accept</span><span class="method-args">(accept)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000055-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000055-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 11</span>
+11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">accept</span>(<span class="ruby-identifier">accept</span>)
+12:     <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;HTTP_ACCEPT&quot;</span>] = <span class="ruby-identifier">accept</span>
+13:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
+
+        <div class="method-heading">
+          <a href="#M000057" class="method-signature">
+          <span class="method-name">assert_difference</span><span class="method-args">(object, method = nil, difference = 1) {|| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a
+href="http://project.ioni.st/post/217#post-217">project.ioni.st/post/217#post-217</a>
+</p>
+<pre>
+ def test_new_publication
+   assert_difference(Publication, :count) do
+     post :create, :publication =&gt; {...}
+     # ...
+   end
+ end
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000057-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 36</span>
+36:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_difference</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">method</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">difference</span> = <span class="ruby-value">1</span>)
+37:     <span class="ruby-identifier">initial_value</span> = <span class="ruby-identifier">object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>)
+38:     <span class="ruby-keyword kw">yield</span>
+39:     <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">initial_value</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">difference</span>, <span class="ruby-identifier">object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>), <span class="ruby-node">&quot;#{object}##{method}&quot;</span>
+40:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+          <a href="#M000060" class="method-signature">
+          <span class="method-name">assert_http_authentication_required</span><span class="method-args">(login = nil) {|XmlLoginProxy.new(self, login)| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000060-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 54</span>
+54:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_http_authentication_required</span>(<span class="ruby-identifier">login</span> = <span class="ruby-keyword kw">nil</span>)
+55:     <span class="ruby-keyword kw">yield</span> <span class="ruby-constant">XmlLoginProxy</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">login</span>)
+56:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
+
+        <div class="method-heading">
+          <a href="#M000058" class="method-signature">
+          <span class="method-name">assert_no_difference</span><span class="method-args">(object, method, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000058-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000058-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 42</span>
+42:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_no_difference</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">method</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+43:     <span class="ruby-identifier">assert_difference</span> <span class="ruby-identifier">object</span>, <span class="ruby-identifier">method</span>, <span class="ruby-value">0</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+44:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <a href="#M000059" class="method-signature">
+          <span class="method-name">assert_requires_login</span><span class="method-args">(login = nil) {|HttpLoginProxy.new(self, login)| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Assert the block redirects to the login
+</p>
+<pre>
+  assert_requires_login(:bob) { |c| c.get :edit, :id =&gt; 1 }
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000059-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000059-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 50</span>
+50:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_requires_login</span>(<span class="ruby-identifier">login</span> = <span class="ruby-keyword kw">nil</span>)
+51:     <span class="ruby-keyword kw">yield</span> <span class="ruby-constant">HttpLoginProxy</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">login</span>)
+52:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
+
+        <div class="method-heading">
+          <a href="#M000056" class="method-signature">
+          <span class="method-name">authorize_as</span><span class="method-args">(user)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000056-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000056-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 15</span>
+15:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">authorize_as</span>(<span class="ruby-identifier">user</span>)
+16:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
+17:       <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;HTTP_AUTHORIZATION&quot;</span>] = <span class="ruby-node">&quot;Basic #{Base64.encode64(&quot;#{users(user).login}:test&quot;)}&quot;</span>
+18:       <span class="ruby-identifier">accept</span>       <span class="ruby-value str">'application/xml'</span>
+19:       <span class="ruby-identifier">content_type</span> <span class="ruby-value str">'application/xml'</span>
+20:     <span class="ruby-keyword kw">else</span>
+21:       <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;HTTP_AUTHORIZATION&quot;</span>] = <span class="ruby-keyword kw">nil</span>
+22:       <span class="ruby-identifier">accept</span>       <span class="ruby-keyword kw">nil</span>
+23:       <span class="ruby-identifier">content_type</span> <span class="ruby-keyword kw">nil</span>
+24:     <span class="ruby-keyword kw">end</span>
+25:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
+
+        <div class="method-heading">
+          <a href="#M000054" class="method-signature">
+          <span class="method-name">content_type</span><span class="method-args">(type)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000054-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000054-source">
+<pre>
+   <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 7</span>
+7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_type</span>(<span class="ruby-identifier">type</span>)
+8:     <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">'Content-Type'</span>] = <span class="ruby-identifier">type</span>
+9:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+          <a href="#M000053" class="method-signature">
+          <span class="method-name">login_as</span><span class="method-args">(user)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets the current user in the session from the user fixtures.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000053-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000053-source">
+<pre>
+   <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 3</span>
+3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">login_as</span>(<span class="ruby-identifier">user</span>)
+4:     <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user</span>] = <span class="ruby-identifier">user</span> <span class="ruby-value">? </span><span class="ruby-identifier">users</span>(<span class="ruby-identifier">user</span>).<span class="ruby-identifier">id</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+5:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+          <a href="#M000061" class="method-signature">
+          <span class="method-name">reset!</span><span class="method-args">(*instance_vars)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000061-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 58</span>
+58:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">instance_vars</span>)
+59:     <span class="ruby-identifier">instance_vars</span> = [<span class="ruby-identifier">:controller</span>, <span class="ruby-identifier">:request</span>, <span class="ruby-identifier">:response</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">instance_vars</span>.<span class="ruby-identifier">any?</span>
+60:     <span class="ruby-identifier">instance_vars</span>.<span class="ruby-identifier">collect!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;@#{v}&quot;</span>.<span class="ruby-identifier">to_sym</span> }
+61:     <span class="ruby-identifier">instance_vars</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span>
+62:       <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-identifier">var</span>, <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">var</span>).<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>)
+63:     <span class="ruby-keyword kw">end</span>
+64:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
