@@ -1,0 +1,16 @@
+URLs for doctors in SixSigma's HipForms
+  all prepended with "doctorbusinessname.hipforms.com"
+
+/create_user
+  AJAX interface, under which we have things like the account type:
+    /create_user/FormUser
+  which will show the create user form. Once submitted to the same url,
+  a registration token link is shown and emailed to the email given.
+/create_login?token=a389bqv98y7qb239nc
+  simple form to fill in the user's name, username/password, [employee number].
+  this logs the user in as well.
+
+/, /login
+  Logs user in. Automatically detects user or business administrator.
+/logout
+  Logs out.

@@ -1,0 +1,19 @@
+<h1>Doctor Activation</h1>
+
+<%= error_messages_for :doctor %>
+<p style="color: green"><%= flash[:notice] %></p>
+
+<% form_for(:doctor, :url => doctors_path+';activate') do |f| %>
+  <%= f.hidden_field :activation_code, :value => params[:activation_code] %>
+  <p><label for="username">Username</label><br/>
+  <%= f.text_field :username %></p>
+  <p><label for="password">Password</label><br/>
+  <%= f.password_field :password %></p>
+  <p><label for="password_confirmation">Retype Password</label><br/>
+  <%= f.password_field :password_confirmation %></p>
+  <p>
+    <%= submit_tag "Activate" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', doctors_path %>
