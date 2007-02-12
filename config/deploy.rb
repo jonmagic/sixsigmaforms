@@ -23,12 +23,12 @@ role :db,  domain, :primary => true
 # form the root of the application path.
 
 set :application, "hipforms"
-set :deploy_to, "/var/www/apps/#{application}"
+set :deploy_to, "/home/sixsigma/apps/#{application}"
 
 # XXX we may not need this - it doesn't work on windows
-set :user, "jonmagic"
+set :user, "sixsigma"
 set :repository, "http://store.sabretechllc.com/public/sixsigma/hipforms/trunk"
-set :rails_env, "production"
+set :rails_env, "development"
 
 # Automatically symlink these directories from current/public to shared/public.
 # set :app_symlinks, %w{photo, document, asset}
