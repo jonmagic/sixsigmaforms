@@ -14,8 +14,13 @@ ActionController::Routing::Routes.draw do |map|
   # map.connect '', :controller => "welcome"
 
   map.resources :users, :admins, :sessions, :doctors
+#  map.resources :users, :admins, :sessions
+#  map.resources :doctors do |doctor|
+#    doctor.resources :managed_forms
+#  end
   map.connect '/:doctor/login', :controller => 'sessions', :action => 'create'
   map.connect '/login', :controller => 'sessions', :action => 'create', :doctor => 'SSAdmin'
+  map.connect '/logout', :controller => 'sessions', :action => 'destroy'
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'

@@ -8,12 +8,13 @@ module AuthenticatedSystem
     
     # Accesses the current user from the session.
     def current_user
-      @current_user ||= (session[:user] && User.find_by_id(session[:user])) || :false
+      @current_user ||= (session[:user] && (session[:domain] != 'SSAdmin' ? User.find_by_id(session[:user]) : Admin.find_by_id(session[:user]))) || :false
     end
     
     # Store the given user in the session.
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
+      session[:domain] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.domain
       @current_user = new_user
     end
     
@@ -49,7 +50,7 @@ module AuthenticatedSystem
     #
     def login_required
       username, passwd = get_auth_data
-      self.current_user ||= User.authenticate(username, passwd) || :false if username && passwd
+      self.current_user ||= (session[:domain] != 'SSAdmin' ? User.authenticate(username, passwd) : Admin.authenticate(username, passwd)) || :false if username && passwd
       logged_in? && authorized? ? true : access_denied
     end
     

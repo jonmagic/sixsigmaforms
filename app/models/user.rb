@@ -12,13 +12,21 @@ class User < ActiveRecord::Base
   validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :username, :email, :case_sensitive => false
   before_save :encrypt_password
-   before_create :make_activation_code 
+  before_create :make_activation_code 
   
   # Activates the user in the database.
   def activate
     @activated = true
     self.attributes = {:activated_at => Time.now.utc, :activation_code => nil}
     save(false)
+  end
+
+  def domain
+    self.doctor.url_name
+  end
+  
+  def doctor
+    Doctor.find_by_id(self.business_id)
   end
 
   def activated?
@@ -30,8 +38,12 @@ class User < ActiveRecord::Base
     @activated
   end 
   # Authenticates a user by their username and unencrypted password.  Returns the user or nil.
-  def self.authenticate(username, password)
-    u = find :first, :conditions => ['username = ? and activated_at IS NOT NULL', username] # need to get the salt
+  def self.authenticate(username, password, doctor)
+    return nil if !username || !password || !doctor
+#    u = find :first, :conditions => ['username = ? and activated_at IS NOT NULL', username] # need to get the salt
+    doc = Doctor.find_by_url_name(doctor)
+    return nil if doc.nil?
+    u = find :first, :conditions => ['username = ? and business_id = ?', username, doc.id] # :first, :conditions => ['username = ?', username] # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
 
@@ -47,31 +59,6 @@ class User < ActiveRecord::Base
 
   def authenticated?(password)
     crypted_password == encrypt(password)
-  end
-
-  def remember_token?
-    remember_token_expires_at && Time.now.utc < remember_token_expires_at 
-  end
-
-  # These create and unset the fields required for remembering users between browser closes
-  def remember_me
-    remember_me_for 2.weeks
-  end
-
-  def remember_me_for(time)
-    remember_me_until time.from_now.utc
-  end
-
-  def remember_me_until(time)
-    self.remember_token_expires_at = time
-    self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
-    save(false)
-  end
-
-  def forget_me
-    self.remember_token_expires_at = nil
-    self.remember_token            = nil
-    save(false)
   end
 
   protected
