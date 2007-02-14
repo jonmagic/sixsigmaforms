@@ -3,6 +3,7 @@ class CreateAdmins < ActiveRecord::Migration
     create_table "admins", :force => true do |t|
       t.column :username,                  :string
       t.column :email,                     :string
+      t.column :friendly_name,             :string, :limit => 50
       t.column :crypted_password,          :string, :limit => 40
       t.column :salt,                      :string, :limit => 40
       t.column :created_at,                :datetime

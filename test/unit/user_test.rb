@@ -6,6 +6,11 @@ class UserTest < Test::Unit::TestCase
   include AuthenticatedTestHelper
   fixtures :users
 
+#Things to test for:
+# Create user
+#  Require:
+#   
+
   def test_should_create_user
     assert_difference User, :count do
       user = create_user
@@ -13,10 +18,10 @@ class UserTest < Test::Unit::TestCase
     end
   end
 
-  def test_should_require_login
+  def test_should_require_username
     assert_no_difference User, :count do
-      u = create_user(:login => nil)
-      assert u.errors.on(:login)
+      u = create_user(:username => nil)
+      assert u.errors.on(:username)
     end
   end
 
@@ -41,22 +46,33 @@ class UserTest < Test::Unit::TestCase
     end
   end
 
+  def test_should_require_business_id
+    assert_no_difference User, :count do
+      u = create_user(:business_id => nil)
+      assert u.errors.on(:business_id)
+    end
+  end
+
   def test_should_reset_password
     users(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
-    assert_equal users(:quentin), User.authenticate('quentin', 'new password')
+    assert_equal users(:quentin), User.authenticate('quentin', 'new password', 'alphago')
   end
 
   def test_should_not_rehash_password
-    users(:quentin).update_attributes(:login => 'quentin2')
-    assert_equal users(:quentin), User.authenticate('quentin2', 'test')
+    users(:quentin).update_attributes(:username => 'quentin2')
+    assert_equal users(:quentin), User.authenticate('quentin2', 'test', 'alphago')
   end
 
-  def test_should_authenticate_user
-    assert_equal users(:quentin), User.authenticate('quentin', 'test')
+  def test_should_authenticate_user_with_proper_doctor
+    assert_equal users(:quentin), User.authenticate('quentin', 'test', 'alphago')
+  end
+
+  def test_should_not_authenticate_user_with_improper_doctor
+    assert_not_equal users(:quentin), User.authenticate('quentin', 'test', 'yomagrat')
   end
 
   protected
     def create_user(options = {})
-      User.create({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
+      User.create({ :username => 'quire', :business_id => 2, :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
     end
 end

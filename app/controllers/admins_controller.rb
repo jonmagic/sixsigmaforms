@@ -26,6 +26,42 @@ class AdminsController < ApplicationController
     end
   end
 
+  # GET /admins/register?activation_code=...
+  def register
+    @admin = Admin.find_by_activation_code(params[:admin] ? params[:admin][:activation_code] : params[:activation_code])
+  end
+
+  def activate
+    if !params[:admin] || !params[:admin][:activation_code]
+      redirect_back_or_default(admins_path+'/register')
+    else
+#Find unregistered user (need to choke if not a valid code)
+      @admin = Admin.find_by_activation_code(params[:admin][:activation_code])
+#Set the username and password validations active
+      @admin.changing_login
+#Automatically log the user in
+      self.current_user ||= @admin
+#Put in appropriate error messages: already activated, etc
+#****
+      if logged_in? && !@admin.activated?
+        respond_to do |format|
+          if @admin.update_attributes(params[:admin])
+            @admin.activate
+            flash[:notice] = "Signup complete! #{@admin.username} is ready for login."
+            format.html { redirect_to admin_url(@admin) }
+            format.xml  { head :ok }
+          else
+            format.html { render "admins/register" }
+            format.xml  { render :xml => @admin.errors.to_xml }
+          end
+        end
+      else
+        render 'admins/register'
+      end
+#      redirect_back_or_default(admin_path(@admin))
+    end
+  end
+
   def create
     @admin = Admin.new(params[:admin])
     @admin.save!
@@ -34,15 +70,6 @@ class AdminsController < ApplicationController
     flash[:notice] = "Thanks for signing up!"
   rescue ActiveRecord::RecordInvalid
     render :action => 'new'
-  end
-
-  def activate
-    self.current_user = Admin.find_by_activation_code(params[:activation_code])
-    if logged_in? && !current_user.activated?
-      current_user.activate
-      flash[:notice] = "Signup complete!"
-    end
-    redirect_back_or_default(admin_path(self.current_user))
   end
 
   # DELETE /admins/1

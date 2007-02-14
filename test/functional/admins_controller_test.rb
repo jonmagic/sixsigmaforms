@@ -24,10 +24,10 @@ class AdminsControllerTest < Test::Unit::TestCase
     end
   end
 
-  def test_should_require_username_on_signup
+  def test_should_require_email_on_signup
     assert_no_difference Admins, :count do
-      create_admin(:username => nil)
-      assert assigns(:admin).errors.on(:username)
+      create_admin(:email => nil)
+      assert assigns(:admin).errors.on(:email)
       assert_response :success
     end
   end
@@ -37,6 +37,21 @@ class AdminsControllerTest < Test::Unit::TestCase
       create_admin(:password => nil)
       assert assigns(:admin).errors.on(:password)
       assert_response :success
+    end
+  end
+
+  def test_activation_should_require_activation_code
+    assert_no_difference Admin, :count do
+      post :activate, :admin => { :username => 'aaron', :password => 'password', :password_confirmation => 'password' }
+      
+    end
+  end
+
+  def test_activation_should_require_password_confirmation
+    assert_no_difference Admin, :count do
+#      assert_raises(ActiveRecord::RecordInvalid) { admins(:aaron).update_attributes!(:username => 'aaron2', :password => 'password') }
+      post :activate, :admin => { :username => 'aaron', :password => 'password', :activation_code => '8f24789ae988411ccf33ab0c30fe9106fab32e9a' }
+#      admins(:aaron).update_attributes!(:username => 'aaron2', :password => 'password')
     end
   end
 

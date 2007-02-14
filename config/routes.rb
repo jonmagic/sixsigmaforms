@@ -13,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
   # -- just remember to delete public/index.html.
   # map.connect '', :controller => "welcome"
 
+  map.register_admin '/admins/register', :controller => 'admins', :action => 'register'
+  map.register_user '/users/register', :controller => 'users', :action => 'register'
   map.resources :users, :admins, :sessions, :doctors
 #  map.resources :users, :admins, :sessions
 #  map.resources :doctors do |doctor|

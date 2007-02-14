@@ -6,31 +6,10 @@ class AdminTest < Test::Unit::TestCase
   include AuthenticatedTestHelper
   fixtures :admins
 
-  def test_should_create_user
+  def test_should_create_admin
     assert_difference Admin, :count do
       admin = create_admin
       assert !admin.new_record?, "#{admin.errors.full_messages.to_sentence}"
-    end
-  end
-
-  def test_should_require_username
-    assert_no_difference Admin, :count do
-      u = create_admin(:username => nil)
-      assert u.errors.on(:username)
-    end
-  end
-
-  def test_should_require_password
-    assert_no_difference Admin, :count do
-      u = create_admin(:password => nil)
-      assert u.errors.on(:password)
-    end
-  end
-
-  def test_should_require_password_confirmation
-    assert_no_difference Admin, :count do
-      u = create_admin(:password_confirmation => nil)
-      assert u.errors.on(:password_confirmation)
     end
   end
 
@@ -38,6 +17,27 @@ class AdminTest < Test::Unit::TestCase
     assert_no_difference Admin, :count do
       u = create_admin(:email => nil)
       assert u.errors.on(:email)
+    end
+  end
+
+  def test_should_require_friendly_name
+    assert_no_difference Admin, :count do
+      u = create_admin(:friendly_name => nil)
+      assert u.errors.on(:friendly_name)
+    end
+  end
+
+  def test_registration_should_require_username
+    assert_no_difference Admin, :count do
+      admins(:aaron).changing_login
+      assert_raises(ActiveRecord::RecordInvalid) { admins(:aaron).update_attributes!(:password => 'password', :password_confirmation => 'password') }
+    end
+  end
+
+  def test_registration_should_require_password
+    assert_no_difference Admin, :count do
+      admins(:aaron).changing_login
+      assert_raises(ActiveRecord::RecordInvalid) { admins(:aaron).update_attributes!(:username => 'aaron2', :password_confirmation => 'password') }
     end
   end
 
@@ -56,7 +56,10 @@ class AdminTest < Test::Unit::TestCase
   end
 
   protected
-    def create_user(options = {})
-      User.create({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
+#    def create_admin(options = {})
+#      Admin.create({ :username => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
+#    end
+    def create_admin(options = {})
+      Admin.create({ :email => 'quire@example.com', :friendly_name => 'Quire Faldice' }.merge(options))
     end
 end

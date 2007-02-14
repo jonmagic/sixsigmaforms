@@ -2,17 +2,20 @@ require 'digest/sha1'
 class Admin < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
+#  attr_accessor :password_confirmation
 
-  validates_presence_of     :username, :email
-  validates_presence_of     :password,                   :if => :password_required?
-  validates_presence_of     :password_confirmation,      :if => :password_required?
-  validates_length_of       :password, :within => 4..40, :if => :password_required?
-  validates_confirmation_of :password,                   :if => :password_required?
-  validates_length_of       :username,    :within => 3..40
-  validates_length_of       :email,    :within => 3..100
-  validates_uniqueness_of   :username, :email, :case_sensitive => false
-  before_save :encrypt_password
-  before_create :make_activation_code 
+  validates_presence_of     :email, :friendly_name
+  validates_length_of       :email, :within => 3..100
+  validates_uniqueness_of   :email, :case_sensitive => false
+
+#[username, password, password_confirmation] are required on user create or any type of password update.
+  validates_length_of       :username,    :within => 3..40,      :if => :login_change?
+  validates_uniqueness_of   :username, :case_sensitive => false, :if => :login_change?
+  validates_length_of       :password, :within => 4..40,         :if => :login_change?
+  validates_confirmation_of :password,                           :if => :login_change?
+
+  before_save               :encrypt_password
+  before_create             :make_activation_code 
   
   # Activates the user in the database.
   def activate
@@ -54,6 +57,10 @@ class Admin < ActiveRecord::Base
     crypted_password == encrypt(password)
   end
 
+  def changing_login
+    @login_change = true
+  end
+
   protected
     # before filter 
     def encrypt_password
@@ -66,8 +73,11 @@ class Admin < ActiveRecord::Base
       crypted_password.blank? || !password.blank?
     end
 
-    
     def make_activation_code
       self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
     end 
+
+    def login_change?
+      @login_change
+    end
 end
