@@ -1,0 +1,7 @@
+<p>Full Name: <%= @admin.friendly_name %></p>
+<p>Username:  <%= @admin.username %></p>
+<p>Email:     <%= @admin.email %></p>
+<p><%= link_to 'Register!', admins_path+"/register?activation_code="+@admin.activation_code if !@admin.activation_code.blank? %>&nbsp;</p>
+
+<%= link_to 'Edit', edit_admin_path(@admin) %> |
+<%= link_to 'Back', admins_path %>

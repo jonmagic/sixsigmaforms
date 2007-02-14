@@ -1,0 +1,17 @@
+<%= error_messages_for :admin %>
+<% form_for :admin, :url => admins_path+'/activate' do |f| -%>
+<p>Hello, <%= @admin.friendly_name %>! Please create a username and password.</p>
+
+<%= f.hidden_field :activation_code, :value => params[:activation_code] %>
+<p><label for="username">Username</label><br/>
+<%= f.text_field :username %></p>
+
+<p><label for="password">Password</label><br/>
+<%= f.password_field :password %></p>
+
+<p><label for="password_confirmation">Confirm Password</label><br/>
+<%= f.password_field :password_confirmation %></p>
+
+<p><%= submit_tag 'Activate' %></p>
+<p><small>An email will be sent to your email at <%= @admin.email %></small></p>
+<% end -%>
