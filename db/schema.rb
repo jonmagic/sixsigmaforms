@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 3) do
 
   create_table "users", :force => true do |t|
     t.column "username",             :string,   :limit => 25
-    t.column "business_id",          :integer
+    t.column "doctor_id",            :integer
     t.column "email",                :string
     t.column "crypted_password",     :string,   :limit => 40
     t.column "salt",                 :string,   :limit => 40

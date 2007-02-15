@@ -1,19 +1,22 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
+  belongs_to :doctor
   # Virtual attribute for the unencrypted password
   attr_accessor :password
-#  attr_accessor :password_confirmation
 
-  validates_presence_of     :username, :email, :business_id
-  validates_presence_of     :password,                   :if => :password_required?
-  validates_presence_of     :password_confirmation,      :if => :password_required?
-  validates_length_of       :password, :within => 4..40, :if => :password_required?
-  validates_confirmation_of :password,                   :if => :password_required?
-  validates_length_of       :username,    :within => 3..40
-  validates_length_of       :email,    :within => 3..100
-  validates_uniqueness_of   :username, :email, :case_sensitive => false
-  before_save :encrypt_password
-  before_create :make_activation_code 
+  validates_presence_of     :email, :doctor_id, :friendly_name
+  validates_length_of       :email, :within => 3..100
+  validates_uniqueness_of   :email, :case_sensitive => false
+
+#[username, password, password_confirmation] are required on user create or any type of password update.
+  validates_length_of       :username,    :within => 3..40,      :if => :login_change?
+  validates_uniqueness_of   :username, :case_sensitive => false, :if => :login_change?
+  validates_length_of       :password, :within => 4..40,         :if => :login_change?
+  validates_presence_of     :password_confirmation,              :if => :login_change?
+  validates_confirmation_of :password,                           :if => :login_change?
+
+  before_save               :encrypt_password
+  before_create             :make_activation_code 
   
   # Activates the user in the database.
   def activate
@@ -22,18 +25,14 @@ class User < ActiveRecord::Base
     save(false)
   end
 
-  def domain
-    self.doctor.url_name
-  end
-  
-  def doctor
-    Doctor.find_by_id(self.business_id)
-  end
-
   def activated?
     !! activation_code.nil?
   end
 
+  def domain
+    self.doctor.url_name
+  end
+  
   # Returns true if the user has just been activated.
   def recently_activated?
     @activated

@@ -51,12 +51,12 @@ class AdminsController < ApplicationController
             format.html { redirect_to admin_url(@admin) }
             format.xml  { head :ok }
           else
-            format.html { render "admins/register" }
+            format.html { render :file => "admins/register" }
             format.xml  { render :xml => @admin.errors.to_xml }
           end
         end
       else
-        render 'admins/register'
+        render :file => "admins/register"
       end
 #      redirect_back_or_default(admin_path(@admin))
     end

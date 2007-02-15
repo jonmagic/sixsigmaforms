@@ -1,7 +1,7 @@
 class CreateDoctors < ActiveRecord::Migration
   def self.up
     create_table :doctors do |t|
-      t.column :url_name,                  :string, :limit => 25
+      t.column :alias,                     :string, :limit => 25
       t.column :key_diff,                  :blob
       t.column :created_at,                :datetime
       t.column :business_name,             :string, :limit => 50

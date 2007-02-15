@@ -57,11 +57,11 @@ class UsersControllerTest < Test::Unit::TestCase
   end
   
   def test_should_activate_user
-    assert_nil User.authenticate('aaron', 'test')
+    assert_nil User.authenticate('aaron', 'test', 'yomagrat')
     get :activate, :activation_code => users(:aaron).activation_code
     assert_redirected_to '/'
     assert_not_nil flash[:notice]
-    assert_equal users(:aaron), User.authenticate('aaron', 'test')
+    assert_equal users(:aaron), User.authenticate('aaron', 'test', 'yomagrat')
   end 
 
   protected

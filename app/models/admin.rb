@@ -2,7 +2,6 @@ require 'digest/sha1'
 class Admin < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
-#  attr_accessor :password_confirmation
 
   validates_presence_of     :email, :friendly_name
   validates_length_of       :email, :within => 3..100
@@ -12,6 +11,7 @@ class Admin < ActiveRecord::Base
   validates_length_of       :username,    :within => 3..40,      :if => :login_change?
   validates_uniqueness_of   :username, :case_sensitive => false, :if => :login_change?
   validates_length_of       :password, :within => 4..40,         :if => :login_change?
+  validates_presence_of     :password_confirmation,              :if => :login_change?
   validates_confirmation_of :password,                           :if => :login_change?
 
   before_save               :encrypt_password
