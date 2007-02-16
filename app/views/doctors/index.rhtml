@@ -6,6 +6,9 @@
   
 <% for doctor in @doctors %>
   <tr>
+    <td><%= doctor.friendly_name %></td>
+    <td><em><%= doctor.alias %></em></td>
+    <td><%= doctor.telephone %></td>
     <td><%= link_to 'Show', doctor_path(doctor) %></td>
     <td><%= link_to 'Edit', edit_doctor_path(doctor) %></td>
     <td><%= link_to 'Destroy', doctor_path(doctor), :confirm => 'Are you sure?', :method => :delete %></td>

@@ -1,12 +1,6 @@
 <h1>Editing doctor</h1>
 
-<%= error_messages_for :doctor %>
-
-<% form_for(:doctor, :url => doctor_path(@doctor), :html => { :method => :put }) do |f| %>
-  <p>
-    <%= submit_tag "Update" %>
-  </p>
-<% end %>
+<%= render :partial => "form", :locals => { :submit => "Update" } %>
 
 <%= link_to 'Show', doctor_path(@doctor) %> |
 <%= link_to 'Back', doctors_path %>

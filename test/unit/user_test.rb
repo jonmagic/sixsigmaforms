@@ -18,26 +18,26 @@ class UserTest < Test::Unit::TestCase
     end
   end
 
-  def test_should_require_username
-    assert_no_difference User, :count do
-      u = create_user(:username => nil)
-      assert u.errors.on(:username)
-    end
-  end
+#  def test_should_require_username
+#    assert_no_difference User, :count do
+#      u = create_user(:username => nil)
+#      assert u.errors.on(:username)
+#    end
+#  end
 
-  def test_should_require_password
-    assert_no_difference User, :count do
-      u = create_user(:password => nil)
-      assert u.errors.on(:password)
-    end
-  end
+#  def test_should_require_password
+#    assert_no_difference User, :count do
+#      u = create_user(:password => nil)
+#      assert u.errors.on(:password)
+#    end
+#  end
 
-  def test_should_require_password_confirmation
-    assert_no_difference User, :count do
-      u = create_user(:password_confirmation => nil)
-      assert u.errors.on(:password_confirmation)
-    end
-  end
+#  def test_should_require_password_confirmation
+#    assert_no_difference User, :count do
+#      u = create_user(:password_confirmation => nil)
+#      assert u.errors.on(:password_confirmation)
+#    end
+#  end
 
   def test_should_require_email
     assert_no_difference User, :count do
@@ -46,10 +46,10 @@ class UserTest < Test::Unit::TestCase
     end
   end
 
-  def test_should_require_business_id
+  def test_should_require_doctor_id
     assert_no_difference User, :count do
-      u = create_user(:business_id => nil)
-      assert u.errors.on(:business_id)
+      u = create_user(:doctor_id => nil)
+      assert u.errors.on(:doctor_id)
     end
   end
 
@@ -73,6 +73,6 @@ class UserTest < Test::Unit::TestCase
 
   protected
     def create_user(options = {})
-      User.create({ :username => 'quire', :business_id => 2, :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
+      User.create({ :username => 'quire', :friendly_name => 'Quire Buddy', :doctor_id => 2, :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
     end
 end

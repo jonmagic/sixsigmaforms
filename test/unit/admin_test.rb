@@ -6,6 +6,7 @@ class AdminTest < Test::Unit::TestCase
   include AuthenticatedTestHelper
   fixtures :admins
 
+# Should create
   def test_should_create_admin
     assert_difference Admin, :count do
       admin = create_admin
@@ -13,6 +14,7 @@ class AdminTest < Test::Unit::TestCase
     end
   end
 
+#  Should require email
   def test_should_require_email
     assert_no_difference Admin, :count do
       u = create_admin(:email => nil)
@@ -20,6 +22,7 @@ class AdminTest < Test::Unit::TestCase
     end
   end
 
+#  Should require friendly_name
   def test_should_require_friendly_name
     assert_no_difference Admin, :count do
       u = create_admin(:friendly_name => nil)
@@ -27,20 +30,80 @@ class AdminTest < Test::Unit::TestCase
     end
   end
 
-  def test_registration_should_require_username
+# Should activate
+  def test_should_activate_admin
+    assert_no_difference Admin, :count do
+      admins(:aaron).changing_login
+      admins(:aaron).update_attributes(:username => 'aaronjo', :password => 'dont', :password_confirmation => 'dont')
+      admins(:aaron).activate
+      assert admins(:aaron).activated?
+    end
+  end
+
+# Should require username
+  def test_should_require_username_to_activate
+    assert_no_difference Admin, :count do
+      admins(:aaron).changing_login
+      admins(:aaron).update_attributes(:password => 'dont', :password_confirmation => 'dont')
+      admins(:aaron).activate
+      assert !admins(:aaron).activated?
+    end
+  end
+
+# Should require password
+  def test_should_require_password_to_activate
+    assert_no_difference Admin, :count do
+      admins(:aaron).changing_login
+      admins(:aaron).update_attributes(:username => 'aaronjo', :password_confirmation => 'dont')
+      admins(:aaron).activate
+      assert !admins(:aaron).activated?
+    end
+  end
+
+# Should require password_confirmation
+  def test_should_require_password_confirmation_to_activate
+    assert_no_difference Admin, :count do
+      admins(:aaron).changing_login
+      admins(:aaron).update_attributes(:username => 'aaronjo', :password => 'dont')
+      admins(:aaron).activate
+      assert !admins(:aaron).activated?
+    end
+  end
+
+# Should update
+  def test_activation_should_require_username
+    assert_no_difference Admin, :count do
+      admins(:aaron).changing_login
+      admins(:aaron).update_attributes!(:username => 'aaronjo', :password => 'password', :password_confirmation => 'password')
+      model.errors[:username].nil?
+    end
+  end
+
+#  Should require username
+  def test_activation_should_require_username
     assert_no_difference Admin, :count do
       admins(:aaron).changing_login
       assert_raises(ActiveRecord::RecordInvalid) { admins(:aaron).update_attributes!(:password => 'password', :password_confirmation => 'password') }
     end
   end
 
-  def test_registration_should_require_password
+#  Should require password
+  def test_activation_should_require_password
     assert_no_difference Admin, :count do
       admins(:aaron).changing_login
       assert_raises(ActiveRecord::RecordInvalid) { admins(:aaron).update_attributes!(:username => 'aaron2', :password_confirmation => 'password') }
     end
   end
 
+#  Should require password_confirmation
+  def test_activation_should_require_password_confirmation
+    assert_no_difference Admin, :count do
+      admins(:aaron).changing_login
+      assert_raises(ActiveRecord::RecordInvalid) { admins(:aaron).update_attributes!(:username => 'aaron2', :password => 'password') }
+    end
+  end
+
+# * * * *
   def test_should_reset_password
     admins(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
     assert_equal admins(:quentin), Admin.authenticate('quentin', 'new password')
@@ -50,6 +113,8 @@ class AdminTest < Test::Unit::TestCase
     admins(:quentin).update_attributes(:username => 'quentin2')
     assert_equal admins(:quentin), Admin.authenticate('quentin2', 'test')
   end
+
+# Should destroy
 
   def test_should_authenticate_admin
     assert_equal admins(:quentin), Admin.authenticate('quentin', 'test')

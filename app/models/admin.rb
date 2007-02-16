@@ -8,7 +8,7 @@ class Admin < ActiveRecord::Base
   validates_uniqueness_of   :email, :case_sensitive => false
 
 #[username, password, password_confirmation] are required on user create or any type of password update.
-  validates_length_of       :username,    :within => 3..40,      :if => :login_change?
+  validates_length_of       :username, :within => 3..40,         :if => :login_change?
   validates_uniqueness_of   :username, :case_sensitive => false, :if => :login_change?
   validates_length_of       :password, :within => 4..40,         :if => :login_change?
   validates_presence_of     :password_confirmation,              :if => :login_change?
@@ -19,6 +19,7 @@ class Admin < ActiveRecord::Base
   
   # Activates the user in the database.
   def activate
+    return nil if !self.username || !self.password
     @activated = true
     self.attributes = {:activated_at => Time.now.utc, :activation_code => nil}
     save(false)

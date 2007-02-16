@@ -1,7 +1,7 @@
 quentin:
   id: 1
   friendly_name: Quentin Slusher
-  business_id: 1
+  doctor_id: 1
   username: quentin
   email: quentin@example.com
   salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
@@ -12,7 +12,7 @@ quentin:
 aaron:
   id: 2
   friendly_name: Aaron Bogus
-  business_id: 2
+  doctor_id: 2
   email: aaron@example.com
   created_at: <%= 1.days.ago.to_s :db %>
   activation_code: 8f24789ae988411ccf33ab0c30fe9106fab32e9a 

@@ -6,14 +6,14 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if params[:doctor] == 'SSAdmin'
+    if params[:doctor_alias] == 'SSAdmin'
       self.current_user = Admin.authenticate(params[:username], params[:password])
     else
-      self.current_user = User.authenticate(params[:username], params[:password], params[:doctor])
+      self.current_user = User.authenticate(params[:username], params[:password], params[:doctor_alias])
     end
     if logged_in?
-      flash[:notice] = "Logged in successfully. Welcome, " + self.current_user.username + "."
-      redirect_back_or_default(admins_path)
+      flash[:notice] = "Welcome " + self.current_user.friendly_name + "."
+      redirect_back_or_default()
     else
       if params[:username]
         flash[:notice] = "Invalid username or password."
@@ -26,6 +26,6 @@ class SessionsController < ApplicationController
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default('/login')
+    redirect_back_or_default()
   end
 end

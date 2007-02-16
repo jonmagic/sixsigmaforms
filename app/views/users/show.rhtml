@@ -1,0 +1,9 @@
+<p>User Type: <em><%= @user.is_doctor ? "Doctor Admin" : "Form User" %></em></p>
+<p>Full Name: <%= @user.friendly_name %></p>
+<p>Username:  <%= @user.username %></p>
+<p>Email:     <%= @user.email %></p>
+<p>Doctor:    <%= @user.doctor.friendly_name %></p>
+<p><%= link_to 'Register!', users_path+"/register?activation_code="+@user.activation_code if !@user.activation_code.blank? %>&nbsp;</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

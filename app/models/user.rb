@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email, :case_sensitive => false
 
 #[username, password, password_confirmation] are required on user create or any type of password update.
-  validates_length_of       :username,    :within => 3..40,      :if => :login_change?
+  validates_length_of       :username, :within => 3..40,         :if => :login_change?
   validates_uniqueness_of   :username, :case_sensitive => false, :if => :login_change?
   validates_length_of       :password, :within => 4..40,         :if => :login_change?
   validates_presence_of     :password_confirmation,              :if => :login_change?
@@ -30,20 +30,22 @@ class User < ActiveRecord::Base
   end
 
   def domain
-    self.doctor.url_name
+    self.doctor.alias
   end
   
+  def is_doctor
+    self.doctor.alias == self.username
+  end
+
   # Returns true if the user has just been activated.
   def recently_activated?
     @activated
   end 
   # Authenticates a user by their username and unencrypted password.  Returns the user or nil.
-  def self.authenticate(username, password, doctor)
-    return nil if !username || !password || !doctor
+  def self.authenticate(username, password, doc_alias)
+    return nil if !username || !password || !doc_alias
 #    u = find :first, :conditions => ['username = ? and activated_at IS NOT NULL', username] # need to get the salt
-    doc = Doctor.find_by_url_name(doctor)
-    return nil if doc.nil?
-    u = find :first, :conditions => ['username = ? and business_id = ?', username, doc.id] # :first, :conditions => ['username = ?', username] # need to get the salt
+    u = find :first, :conditions => ['username = ? and doctor_id = ?', username, Doctor.id_of_alias(doc_alias)] # :first, :conditions => ['username = ?', username] # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
 
@@ -61,6 +63,10 @@ class User < ActiveRecord::Base
     crypted_password == encrypt(password)
   end
 
+  def changing_login
+    @login_change = true
+  end
+
   protected
     # before filter 
     def encrypt_password
@@ -69,10 +75,9 @@ class User < ActiveRecord::Base
       self.crypted_password = encrypt(password)
     end
     
-    def password_required?
-      crypted_password.blank? || !password.blank?
+    def login_change?
+      @login_change
     end
-
     
     def make_activation_code
       self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )

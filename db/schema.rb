@@ -6,8 +6,8 @@ ActiveRecord::Schema.define(:version => 3) do
 
   create_table "admins", :force => true do |t|
     t.column "username",                  :string
-    t.column "email",                     :string
     t.column "friendly_name",             :string,   :limit => 50
+    t.column "email",                     :string
     t.column "crypted_password",          :string,   :limit => 40
     t.column "salt",                      :string,   :limit => 40
     t.column "created_at",                :datetime
@@ -19,28 +19,31 @@ ActiveRecord::Schema.define(:version => 3) do
   end
 
   create_table "doctors", :force => true do |t|
-    t.column "url_name",       :string,   :limit => 25
-    t.column "key_diff",       :binary
-    t.column "created_at",     :datetime
-    t.column "business_name",  :string,   :limit => 50
+    t.column "alias",          :string,   :limit => 25
+    t.column "friendly_name",  :string,   :limit => 50
+    t.column "encryption_key", :binary
     t.column "address",        :string
     t.column "contact_person", :string,   :limit => 25
     t.column "telephone",      :string,   :limit => 20
+    t.column "tax_id",         :string
+    t.column "created_at",     :datetime
+    t.column "updated_at",     :datetime
   end
 
   create_table "users", :force => true do |t|
     t.column "username",             :string,   :limit => 25
+    t.column "friendly_name",        :string,   :limit => 50
     t.column "doctor_id",            :integer
     t.column "email",                :string
     t.column "crypted_password",     :string,   :limit => 40
     t.column "salt",                 :string,   :limit => 40
-    t.column "friendlyname",         :string,   :limit => 50
     t.column "key_diff",             :binary
     t.column "status",               :string
     t.column "password_change_date", :string
-    t.column "created_at",           :datetime
     t.column "activation_code",      :string,   :limit => 40
     t.column "activated_at",         :datetime
+    t.column "created_at",           :datetime
+    t.column "updated_at",           :datetime
   end
 
 end

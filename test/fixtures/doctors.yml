@@ -1,7 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
   id: 1
-  url_name: alphago
+  alias: alphago
+  friendly_name: Alpha Go
+  address: 98765 Togo Road St
+  telephone: 1234567890
 two:
   id: 2
-  url_name: yomagrat
+  alias: yomagrat
+  friendly_name: Yomagrat Phd
+  address: 123 on The Road
+  telephone: 0987654321

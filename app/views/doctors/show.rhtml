@@ -1,3 +1,8 @@
+<h1><%= @doctor.friendly_name %></h1>
+<p>Business Alias: <%= @doctor.alias %></p>
+<p>Address:        <%= @doctor.address %></p>
+<p>Admin Name:     <%= @doctor.admin.friendly_name %></p>
+<p>Admin Email:    <%= @doctor.admin.email %></p>
 
 <%= link_to 'Edit', edit_doctor_path(@doctor) %> |
 <%= link_to 'Back', doctors_path %>

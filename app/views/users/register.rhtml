@@ -1,0 +1,21 @@
+<%= error_messages_for :user %>
+<% form_for :user, :url => doctor_user_path(params[:doctor_alias], 'activate') do |f| -%>
+<p>Hello, <%= @user.friendly_name %><%= ", your username is <em>#{@user.username}</em>. <br />Please create a password." if @user.is_doctor -%>
+<%= ". Please create a username and password." if !@user.is_doctor -%>
+</p>
+
+<%= f.hidden_field :activation_code, :value => params[:activation_code] %>
+<% if !@user.is_doctor -%>
+<p><label for="username">Username</label><br/>
+<%= f.text_field :username %></p>
+
+<% end -%>
+<p><label for="password">Password</label><br/>
+<%= f.password_field :password %></p>
+
+<p><label for="password_confirmation">Confirm Password</label><br/>
+<%= f.password_field :password_confirmation %></p>
+
+<p><%= submit_tag 'Activate' %></p>
+<p><small>An email will be sent to your email at <%= @user.email %></small></p>
+<% end -%>

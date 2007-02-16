@@ -19,7 +19,6 @@ class AdminsController < ApplicationController
   # GET /doctors/1.xml
   def show
     @admin = Admin.find(params[:id])
-
     respond_to do |format|
       format.html # show.rhtml
       format.xml  { render :xml => @admin.to_xml }

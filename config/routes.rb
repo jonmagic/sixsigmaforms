@@ -15,12 +15,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.register_admin '/admins/register', :controller => 'admins', :action => 'register'
   map.register_user '/users/register', :controller => 'users', :action => 'register'
-  map.resources :users, :admins, :sessions, :doctors
-#  map.resources :users, :admins, :sessions
+  map.resources :admins, :sessions
+  map.resources :doctors, :users
 #  map.resources :doctors do |doctor|
-#    doctor.resources :managed_forms
+#    doctor.resources :users
 #  end
-  map.connect '/:doctor/login', :controller => 'sessions', :action => 'create'
+  map.doctor_login '/:doctor_alias/login', :controller => 'sessions', :action => 'create'
+  map.doctor_user '/:doctor_alias/users/:action/:id', :controller => 'users'
   map.connect '/login', :controller => 'sessions', :action => 'create', :doctor => 'SSAdmin'
   map.connect '/logout', :controller => 'sessions', :action => 'destroy'
 

@@ -1,4 +1,4 @@
-<% form_tag "/"+params[:doctor]+"/login" do -%>
+<% form_tag doctor_login_path(params[:doctor_alias]) do -%>
 <p><label for="username">Username</label><br/>
 <%= text_field_tag 'username' %></p>
 
