@@ -3,7 +3,7 @@
 <p>Username:  <%= @user.username %></p>
 <p>Email:     <%= @user.email %></p>
 <p>Doctor:    <%= @user.doctor.friendly_name %></p>
-<p><%= link_to 'Register!', users_path+"/register?activation_code="+@user.activation_code if !@user.activation_code.blank? %>&nbsp;</p>
+<p><%= link_to 'Register!', doctor_user_path(@user.doctor.alias)+"/register?activation_code="+@user.activation_code if !@user.activation_code.blank? %>&nbsp;</p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back', doctor_user_path(@user.doctor.alias) %>

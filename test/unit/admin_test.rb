@@ -60,16 +60,6 @@ class AdminTest < Test::Unit::TestCase
     end
   end
 
-# Should require password_confirmation
-  def test_should_require_password_confirmation_to_activate
-    assert_no_difference Admin, :count do
-      admins(:aaron).changing_login
-      admins(:aaron).update_attributes(:username => 'aaronjo', :password => 'dont')
-      admins(:aaron).activate
-      assert !admins(:aaron).activated?
-    end
-  end
-
 # Should update
   def test_activation_should_require_username
     assert_no_difference Admin, :count do

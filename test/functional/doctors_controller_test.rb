@@ -6,12 +6,21 @@ class DoctorsController; def rescue_action(e) raise e end; end
 
 class DoctorsControllerTest < Test::Unit::TestCase
   fixtures :doctors
+  fixtures :users
 
   def setup
     @controller = DoctorsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
+
+#Create
+# requires alias
+# requires friendly_name
+# requires address
+# requires telephone
+# requires user[friendly_name]
+# requires user[email]
 
   def test_should_get_index
     get :index
@@ -26,7 +35,8 @@ class DoctorsControllerTest < Test::Unit::TestCase
   
   def test_should_create_doctor
     old_count = Doctor.count
-    post :create, :doctor => { }
+    post :create, :doctor => { :alias => 'gramit', :friendly_name => "Gramit", :address => "278 Art Buelevard", :telephone => "7681234567" }, :user => { :email => "test@exampl.com", :friendly_name => "Thomas Aquinas" }
+
     assert_equal old_count+1, Doctor.count
     
     assert_redirected_to doctor_path(assigns(:doctor))

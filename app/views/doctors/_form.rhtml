@@ -1,6 +1,5 @@
-<%= error_messages_for :doctor %>
-<%= error_messages_for :user %>
 <% form_for(:doctor, :url => doctors_path) do |f| %>
+<%= error_messages_for :doctor %>
   <p><label for="alias">Doctor Alias</label><br/>
   <%= f.text_field :alias %></p>
   <p><label for="friendly_name">Business Friendly Name</label><br/>
@@ -13,6 +12,7 @@
   <%= f.text_field :telephone %></p>
   <p><label for="tax_id">Tax ID</label><br/>
   <%= f.text_field :tax_id %></p>
+<%= error_messages_for :user %>
   <p><label for="friendly_name">Doctor's Full Name</label><br/>
   <%= text_field :user, :friendly_name %>
   <p><label for="email">Doctor Email</label><br/>

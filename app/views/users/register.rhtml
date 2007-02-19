@@ -5,7 +5,7 @@
 </p>
 
 <%= f.hidden_field :activation_code, :value => params[:activation_code] %>
-<% if !@user.is_doctor -%>
+<% if true or !@user.is_doctor -%>
 <p><label for="username">Username</label><br/>
 <%= f.text_field :username %></p>
 

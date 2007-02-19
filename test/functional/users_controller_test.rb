@@ -10,6 +10,7 @@ class UsersControllerTest < Test::Unit::TestCase
   include AuthenticatedTestHelper
 
   fixtures :users
+  fixtures :doctors
 
   def setup
     @controller = UsersController.new
@@ -17,37 +18,36 @@ class UsersControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-  def test_should_allow_signup
+#Create
+# requires friendly_name
+# requires email
+#Register
+# requires activation_code
+#Activate
+# requires activation_code
+# requires username
+# requires password
+# requires password_confirmation
+# cannot change username if doctor_admin
+#Request re-activate
+# requires username
+# requires email
+
+  def test_should_create
     assert_difference User, :count do
       create_user
       assert_response :redirect
     end
   end
 
-  def test_should_require_username_on_signup
+  def test_should_require_friendly_name_on_signup
     assert_no_difference User, :count do
-      create_user(:username => nil)
-      assert assigns(:user).errors.on(:username)
+      create_user(:friendly_name => nil)
+      assert assigns(:user).errors.on(:friendly_name)
       assert_response :success
     end
   end
-
-  def test_should_require_password_on_signup
-    assert_no_difference User, :count do
-      create_user(:password => nil)
-      assert assigns(:user).errors.on(:password)
-      assert_response :success
-    end
-  end
-
-  def test_should_require_password_confirmation_on_signup
-    assert_no_difference User, :count do
-      create_user(:password_confirmation => nil)
-      assert assigns(:user).errors.on(:password_confirmation)
-      assert_response :success
-    end
-  end
-
+  
   def test_should_require_email_on_signup
     assert_no_difference User, :count do
       create_user(:email => nil)
@@ -57,16 +57,26 @@ class UsersControllerTest < Test::Unit::TestCase
   end
   
   def test_should_activate_user
-    assert_nil User.authenticate('aaron', 'test', 'yomagrat')
-    get :activate, :activation_code => users(:aaron).activation_code
-    assert_redirected_to '/'
-    assert_not_nil flash[:notice]
-    assert_equal users(:aaron), User.authenticate('aaron', 'test', 'yomagrat')
+    assert_no_difference User, :count do
+      assert_nil User.authenticate('aaronla', 'test', 'yomagrat')
+      post :activate, {:user => {:username => 'aaronla', :password => 'toast', :password_confirmation => 'toast', :activation_code => users(:aron).activation_code}, :doctor_alias => 'yomagrat'}
+      assert flash[:notice] == "Signup complete! aaronla is ready for login.", "User was not activated."
+      assert_equal users(:aron), User.authenticate('aaronla', 'toast', 'yomagrat')
+      assert_response :redirect
+    end
   end 
+
+  def activation_should_not_allow_username_change_for_doctor_admins
+    assert_no_difference User, :count do
+     post :activate, {:user => {:username => 'boyning', :password => 'test1', :password_confirmation => 'test1', :activation_code => users(:alphago).activation_code}, :doctor_alias => 'alphago'}
+      assert_not_equal users(:alphago), User.authenticate('boyning', 'test1', 'alphago')
+      assert_equal users(:alphago), User.authenticate('alphago', 'test', 'alphago')
+    end
+  end
 
   protected
     def create_user(options = {})
-      post :create, :user => { :username => 'quire', :email => 'quire@example.com', 
-        :password => 'quire', :password_confirmation => 'quire' }.merge(options)
+      post :create, {:doctor_alias => 'yomagrat', :user => { :email => 'quire@example.com', 
+        :friendly_name => 'Quire Quigley' }.merge(options)}
     end
 end

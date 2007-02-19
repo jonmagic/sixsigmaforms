@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
     return nil if !username || !password || !doc_alias
 #    u = find :first, :conditions => ['username = ? and activated_at IS NOT NULL', username] # need to get the salt
     u = find :first, :conditions => ['username = ? and doctor_id = ?', username, Doctor.id_of_alias(doc_alias)] # :first, :conditions => ['username = ?', username] # need to get the salt
-    u && u.authenticated?(password) ? u : nil
+    return u && u.authenticated?(password) ? u : nil
   end
 
   # Encrypts some data with the salt.
@@ -68,7 +68,10 @@ class User < ActiveRecord::Base
   end
 
   protected
-    # before filter 
+    def validate
+      errors.add("Username(#{id}): ", "Doctor (#{doctor_id}) Admin users cannot change their username!") if login_change? and User.find_by_activation_code(activation_code).username and Doctor.find_by_alias(User.find_by_activation_code(activation_code).username).alias != username
+    end
+
     def encrypt_password
       return if password.blank?
       self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{username}--") if new_record?

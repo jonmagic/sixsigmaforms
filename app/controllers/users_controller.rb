@@ -25,59 +25,69 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/register?activation_code=...
-  def register
-    @user = User.find_by_activation_code(params[:user] ? params[:user][:activation_code] : params[:activation_code])
-  end
-
   def create
     @user = User.new(params[:user])
     @user.doctor_id = Doctor.id_of_alias(params[:doctor_alias])
-    @user.save!
-#    self.current_user = @user
-    redirect_back_or_default(doctor_user_path(params[:doctor_alias]))
-    flash[:notice] = "Thanks for signing up!"
-  rescue ActiveRecord::RecordInvalid
-    render :action => "new"
+    if @user.save
+      redirect_back_or_default(doctor_user_path(params[:doctor_alias]))
+      flash[:notice] = "User @user.friendly_name has been created."
+    else
+      render :action => "new"
+    end
+  end
+
+  # GET /admins/register?activation_code=...
+  def register
+    activation_code = params[:user] ? params[:user][:activation_code] || params[:activation_code] : params[:activation_code]
+    if activation_code
+      @user = User.find_by_activation_code(activation_code)
+      if !@user
+        flash[:notice] = "Invalid activation code!"
+        render "users/register_activation"
+      end
+    else
+      flash[:notice] = "You must have an activation code to continue!"
+      render "users/register_activation"
+    end
   end
 
   def activate
-    if !params[:user] || !params[:user][:activation_code]
-      redirect_back_or_default(doctor_user_path(params[:doctor_alias], '/register'))
-    else
-#Find unregistered user (need to choke if not a valid code)
-      @user = User.find_by_activation_code(params[:user][:activation_code])
-      if @user.nil?
-        flash[:notice] = "Invalid Registration Code!"
-        render :action => "register"
-      end
-#Set the username and password validations active
-      @user.changing_login
-#Automatically log the user in
-#      self.current_user = @user
-#Put in appropriate error messages: already activated, etc
-#****
-#      if logged_in? && !@user.activated?
-      if !@user.activated?
-        respond_to do |format|
-          if @user.update_attributes!(params[:user])
-            @user.activate
-            flash[:notice] = "Signup complete! #{@user.username} is ready for login."
-            format.html { redirect_to doctor_login_path(params[:doctor_alias]) }
-            format.xml  { head :ok }
-          else
-            format.html { render :action => "register" }
-            format.xml  { render :xml => @user.errors.to_xml }
+    activation_code = params[:user] ? params[:user][:activation_code] || params[:activation_code] : params[:activation_code]
+    if activation_code
+      #Find unregistered user (need to choke if not a valid code)
+      @user = User.find_by_activation_code(activation_code)
+      if @user
+        #Set the username and password validations active
+        @user.changing_login
+        #Automatically log the user in
+#        self.current_user = @user
+        if !@user.activated?
+          respond_to do |format|
+            if @user.update_attributes!(params[:user])
+              @user.activate
+              flash[:notice] = "Signup complete! #{@user.username} is ready for login."
+              format.html { redirect_to user_url(@user) }
+              format.xml  { head :ok }
+            else
+              flash[:notice] = "Invalid record!"
+              format.html { render :action => "register" }
+              format.xml  { render :xml => @user.errors.to_xml }
+            end
           end
+        else
+          flash[:notice] = "#{@user.username} is already registered and activated."
+          render :action => "register"
         end
       else
-# Should this ever happen? Should it be recorded in some master error log?
-        flash[:notice] = "An unknown error occurred during activation: #{self.current_user.to_yaml}"
+        #No user with that activation code
+        flash[:notice] = "Invalid activation code!"
         render :action => "register"
+#        render "users/register_activation"
       end
+    else
+      #No activation code present
+      redirect_back_or_default(users_path+'/register')
     end
-  rescue ActiveRecord::RecordInvalid
-    render :action => "register"
   end
 
   # DELETE /users/1

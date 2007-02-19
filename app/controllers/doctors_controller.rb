@@ -18,7 +18,7 @@ class DoctorsController < ApplicationController
 
     respond_to do |format|
       format.html # show.rhtml
-      format.xml  { render :xml => @doctor.to_xml } #How do I inject the admin user in there too?
+#      format.xml  { render :xml => (:doc => {:doctor => @doctor, :user => @user}).to_xml }
     end
   end
 
@@ -39,22 +39,22 @@ class DoctorsController < ApplicationController
   def create
     @doctor = Doctor.new(params[:doctor])
     @user   = User.new(params[:user])
-    @user.doctor = @doctor
     @user.username = @doctor.alias
+    @user.doctor_id = 1 #Fake the validation, this will be overwritten as soon as the doctor is created.
     respond_to do |format|
-      if @doctor.save!
-        @user.save!
+      if @doctor.valid? and @user.valid?
+        @doctor.save
+        @user.doctor_id = @doctor.id
+        @user.save
 #        flash[:notice] = "Doctor [#{@doctor.friendly_name} @ #{@doctor.alias} (#{@doctor.id})] was successfully created, with user [#{@user.friendly_name} @ #{@user.username}]."
         format.html { redirect_to doctor_url(@doctor) }
         format.xml  { head :created, :location => doctor_url(@doctor) }
       else
+        @user.valid?
         format.html { render :action => "new" }
         format.xml  { render :xml => @doctor.errors.to_xml }
       end
     end
-  rescue ActiveRecord::RecordInvalid
-    @doctor.destroy
-    render :action => 'new'
   end
 
   # PUT /doctors/1
