@@ -72,3 +72,58 @@ set :mongrel_address, apache_proxy_address
 # =============================================================================
 # ssh_options[:keys] = %w(/path/to/my/key /path/to/another/key)
 # ssh_options[:port] = 25
+
+# My custom recipes!
+
+task :install_rails_stack do
+  setup_user_perms
+  enable_universe # we'll need some packages from the 'universe' repository
+  disable_cdrom_install # we don't want to have to insert cdrom
+  install_packages_for_rails # install packages that come with distribution
+  install_rubygems
+  install_gems
+  install_nginx
+  setup_firewall
+end
+
+task :setup_firewall do
+  sudo 'echo \'#!/bin/bash\' >> /tmp/firewall.sh'
+  sudo 'echo \'sudo iptables -A INPUT -j ACCEPT -p tcp --destination-port 80 -i eth0\' >> /tmp/firewall.sh'
+  sudo 'echo \'sudo iptables -A INPUT -j ACCEPT -p tcp --destination-port 443 -i eth0\' >> /tmp/firewall.sh'
+  sudo 'echo \'sudo iptables -A INPUT -j ACCEPT -p tcp --destination-port 3000 -i eth0\' >> /tmp/firewall.sh'
+  sudo 'echo \'sudo iptables -A INPUT -j ACCEPT -p tcp --destination-port 22 -i eth0\' >> /tmp/firewall.sh'
+  sudo 'echo \'sudo iptables -A INPUT -j DROP -p tcp -i eth0\' >> /tmp/firewall.sh'
+  sudo 'chown root:root /tmp/firewall.sh'
+  sudo 'chmod +x /tmp/firewall.sh'
+  sudo 'mv /tmp/firewall.sh /etc/init.d/'
+  sudo '/etc/init.d/firewall.sh'
+  sudo 'update-rc.d firewall.sh defaults 99'
+end
+
+task :install_nginx do
+  install_pcre
+  version = 'nginx-0.5.12'
+  set :src_package, {
+    :file => version + '.tar.gz',    
+    :dir => version,  
+    :url => "http://sysoev.ru/nginx/#{version}.tar.gz",
+    :unpack => "tar -xzvf #{version}.tar.gz;",
+    :configure => './configure --sbin-path=/usr/local/sbin --with-http_ssl_module;',
+    :make => 'make;',
+    :install => 'make install;',
+  }
+  deprec.download_src(src_package, src_dir)
+  deprec.install_from_src(src_package, src_dir)
+  sudo 'wget http://notrocketsurgery.com/files/nginx -O /etc/init.d/nginx'
+  sudo 'chmod 755 /etc/init.d/nginx'
+  send(run_method, "update-rc.d nginx defaults")
+  sudo '/etc/init.d/nginx start'
+end
+
+task :install_pcre do
+  apt.install({:base => ['libpcre3', 'libpcre3-dev']}, :stable)
+end
+
+task :restart_nginx do
+  sudo '/etc/init.d/nginx restart'
+end

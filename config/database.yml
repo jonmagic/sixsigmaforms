@@ -1,15 +1,15 @@
 development:
   adapter: mysql
   database: sixsigma_development
-  username: ss
-  password: phi
+  username: root
+  password: 
   host: localhost
 
 test:
   adapter: mysql
   database: sixsigma_test
-  username: ss_test
-  password: phi_test
+  username: root
+  password: 
   host: localhost
 
 production:
