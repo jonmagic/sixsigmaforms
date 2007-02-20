@@ -54,13 +54,14 @@ set :apache_server_name, domain
 # =============================================================================
 # MONGREL OPTIONS
 # =============================================================================
-# set :mongrel_servers, apache_proxy_servers
-# set :mongrel_port, apache_proxy_port
-# set :mongrel_address, apache_proxy_address
-# set :mongrel_environment, "production"
-set :mongrel_conf, "#{deploy_to}/config/mongrel_cluster.yml"
-# set :mongrel_user, user
-# set :mongrel_group, group
+set :mongrel_conf, "#{deploy_to}/current/config/mongrel_cluster.yml"
+set :mongrel_servers, 2
+set :mongrel_port, 5000
+set :mongrel_address, "127.0.0.1"
+set :mongrel_environment, "development"
+# set :mongrel_user, nil
+# set :mongrel_group, nil
+# set :mongrel_prefix, nil
 
 # =============================================================================
 # MYSQL OPTIONS
@@ -84,7 +85,6 @@ task :install_rails_stack do
   install_gems
   install_nginx
   setup_firewall
-  svn_cache_credentials
 end
 
 task :setup_firewall do
@@ -98,7 +98,7 @@ task :setup_firewall do
   sudo 'chmod +x /tmp/firewall.sh'
   sudo 'mv /tmp/firewall.sh /etc/init.d/'
   sudo '/etc/init.d/firewall.sh'
-  sudo 'update-rc.d firewall.sh defaults 99'
+  sudo 'update-rc.d firewall.sh defaults'
 end
 
 task :install_nginx do
@@ -125,6 +125,20 @@ task :install_pcre do
   apt.install({:base => ['libpcre3', 'libpcre3-dev']}, :stable)
 end
 
+task :start_nginx do
+  sudo '/etc/init.d/nginx start'
+end
+
 task :restart_nginx do
   sudo '/etc/init.d/nginx restart'
+end
+
+task :stop_nginx do
+  sudo '/etc/init.d/nginx stop'
+end
+
+task :configure_nginx do
+  stop_nginx
+  sudo 'cp #{deploy_to}/releases/current/config/nginx.conf /usr/local/nginx/conf/'
+  start_nginx
 end
