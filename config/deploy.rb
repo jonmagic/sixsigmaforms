@@ -125,8 +125,7 @@ end
 
 task :configure_nginx do
   stop_nginx
-  # i need to fix the following line to be fluid
-  sudo 'cp /home/sixsigma/apps/hipforms/current/config/nginx.conf /usr/local/nginx/conf/'
+  sudo "cp #{release_path}/config/nginx.conf /usr/local/nginx/conf/"
   start_nginx
 end
 
@@ -146,7 +145,7 @@ task :stop_nginx do
   sudo '/etc/init.d/nginx stop'
 end
 
-# rewrite of deploy recipe
+# rewrite of deploy recipe so that it puts in the right database.yml file
 
 task :deploy_with_migrations do
   update_code
@@ -166,5 +165,8 @@ task :deploy_with_migrations do
 end
 
 task :create_database_yml do
-  run 'cp #{deploy_to}/current/config/database.yml.production #{deploy_to}/current/config/database.yml'
+  run "cp #{release_path}/config/database.yml.production #{release_path}/config/database.yml"  
 end
+
+# here is my section to tie this all together and make it as easy as three cap instructions to setup a new server
+
