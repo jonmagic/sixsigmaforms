@@ -2,19 +2,19 @@ development:
   adapter: mysql
   database: sixsigma_development
   username: sixsigma
-  password: coffee@9
+  password: B76807CD2E5DBEE1B9785397FA2D51EF9B7C42910F5FF8B37032D91543FDFD8D
   host: localhost
 
 test:
   adapter: mysql
   database: sixsigma_test
   username: sixsigma
-  password: coffee@9
+  password: B76807CD2E5DBEE1B9785397FA2D51EF9B7C42910F5FF8B37032D91543FDFD8D
   host: localhost
 
 production:
   adapter: mysql
   database: sixsigma_production
   username: sixsigma
-  password: coffee@9
+  password: B76807CD2E5DBEE1B9785397FA2D51EF9B7C42910F5FF8B37032D91543FDFD8D
   host: localhost

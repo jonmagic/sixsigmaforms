@@ -55,7 +55,7 @@ set :apache_server_name, domain
 # MONGREL OPTIONS
 # =============================================================================
 set :mongrel_conf, "#{deploy_to}/current/config/mongrel_cluster.yml"
-set :mongrel_servers, 2
+set :mongrel_servers, 3
 set :mongrel_port, 5000
 set :mongrel_address, "127.0.0.1"
 set :mongrel_environment, "development"
@@ -76,7 +76,7 @@ set :mongrel_environment, "development"
 
 # My custom recipes!
 
-task :install_rails_stack do
+task :install_rails_stack_with_nginx do
   setup_user_perms
   enable_universe # we'll need some packages from the 'universe' repository
   disable_cdrom_install # we don't want to have to insert cdrom
@@ -84,14 +84,12 @@ task :install_rails_stack do
   install_rubygems
   install_gems
   install_nginx
-  setup_firewall
 end
 
 task :setup_firewall do
   sudo 'echo \'#!/bin/bash\' >> /tmp/firewall.sh'
   sudo 'echo \'sudo iptables -A INPUT -j ACCEPT -p tcp --destination-port 80 -i eth0\' >> /tmp/firewall.sh'
   sudo 'echo \'sudo iptables -A INPUT -j ACCEPT -p tcp --destination-port 443 -i eth0\' >> /tmp/firewall.sh'
-  sudo 'echo \'sudo iptables -A INPUT -j ACCEPT -p tcp --destination-port 3000 -i eth0\' >> /tmp/firewall.sh'
   sudo 'echo \'sudo iptables -A INPUT -j ACCEPT -p tcp --destination-port 22 -i eth0\' >> /tmp/firewall.sh'
   sudo 'echo \'sudo iptables -A INPUT -j DROP -p tcp -i eth0\' >> /tmp/firewall.sh'
   sudo 'chown root:root /tmp/firewall.sh'
@@ -169,4 +167,22 @@ task :create_database_yml do
 end
 
 # here is my section to tie this all together and make it as easy as three cap instructions to setup a new server
+task :deploy_first_time do
+  setup  
+  deploy
+  create_database_yml
+  setup_mysql
+  migrate
+  configure_mongrel_cluster
+  configure_nginx
+  start_mongrel_cluster
+  start_nginx
+end
 
+# overwrite the deprec read db task so that it grabs the right config
+def read_config
+  db_config = YAML.load_file('config/database.yml.production')
+  set :db_user, db_config[rails_env]["username"]
+  set :db_password, db_config[rails_env]["password"] 
+  set :db_name, db_config[rails_env]["database"]
+end
