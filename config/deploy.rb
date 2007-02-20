@@ -101,6 +101,8 @@ task :setup_firewall do
   sudo 'update-rc.d firewall.sh defaults'
 end
 
+# nginx recipes
+
 task :install_nginx do
   install_pcre
   version = 'nginx-0.5.12'
@@ -121,6 +123,13 @@ task :install_nginx do
   sudo '/etc/init.d/nginx start'
 end
 
+task :configure_nginx do
+  stop_nginx
+  # i need to fix the following line to be fluid
+  sudo 'cp /home/sixsigma/apps/hipforms/current/config/nginx.conf /usr/local/nginx/conf/'
+  start_nginx
+end
+
 task :install_pcre do
   apt.install({:base => ['libpcre3', 'libpcre3-dev']}, :stable)
 end
@@ -137,9 +146,25 @@ task :stop_nginx do
   sudo '/etc/init.d/nginx stop'
 end
 
-task :configure_nginx do
-  stop_nginx
-  # i need to fix the following line to be fluid
-  sudo 'cp /home/sixsigma/apps/hipforms/current/config/nginx.conf /usr/local/nginx/conf/'
-  start_nginx
+# rewrite of deploy recipe
+
+task :deploy_with_migrations do
+  update_code
+  create_database_yml
+
+  begin
+    old_migrate_target = migrate_target
+    set :migrate_target, :latest
+    migrate
+  ensure
+    set :migrate_target, old_migrate_target
+  end
+
+  symlink
+
+  restart
+end
+
+task :create_database_yml do
+  run 'cp #{deploy_to}/current/config/database.yml.production #{deploy_to}/current/config/database.yml'
 end
