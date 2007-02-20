@@ -27,7 +27,7 @@ set :deploy_to, "/home/sixsigma/apps/#{application}"
 
 # XXX we may not need this - it doesn't work on windows
 set :user, "sixsigma"
-set :repository, "http://store.sabretechllc.com/public/sixsigma/hipforms/trunk"
+set :repository, "http://store.sabretechllc.com/public/sixsigma/modelA/"
 set :rails_env, "development"
 
 # Automatically symlink these directories from current/public to shared/public.
