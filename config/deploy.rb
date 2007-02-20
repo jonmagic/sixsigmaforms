@@ -139,6 +139,7 @@ end
 
 task :configure_nginx do
   stop_nginx
-  sudo 'cp #{deploy_to}/releases/current/config/nginx.conf /usr/local/nginx/conf/'
+  # i need to fix the following line to be fluid
+  sudo 'cp /home/sixsigma/apps/hipforms/current/config/nginx.conf /usr/local/nginx/conf/'
   start_nginx
 end
