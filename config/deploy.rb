@@ -56,9 +56,9 @@ set :apache_server_name, domain
 # =============================================================================
 # set :mongrel_servers, apache_proxy_servers
 # set :mongrel_port, apache_proxy_port
-set :mongrel_address, apache_proxy_address
+# set :mongrel_address, apache_proxy_address
 # set :mongrel_environment, "production"
-# set :mongrel_config, "/etc/mongrel_cluster/#{application}.conf"
+set :mongrel_conf, "#{deploy_to}/config/mongrel_cluster.yml"
 # set :mongrel_user, user
 # set :mongrel_group, group
 
@@ -84,6 +84,7 @@ task :install_rails_stack do
   install_gems
   install_nginx
   setup_firewall
+  svn_cache_credentials
 end
 
 task :setup_firewall do
