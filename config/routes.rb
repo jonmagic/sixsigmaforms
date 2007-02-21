@@ -22,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
 #  end
   map.doctor_login '/:doctor_alias/login', :controller => 'sessions', :action => 'create'
   map.doctor_user '/:doctor_alias/users/:action/:id', :controller => 'users'
-  map.connect '/login', :controller => 'sessions', :action => 'create', :doctor => 'SSAdmin'
+  map.connect '/login', :controller => 'sessions', :action => 'create', :doctor_alias => 'SSAdmin'
   map.connect '/logout', :controller => 'sessions', :action => 'destroy'
 
   # Allow downloading Web Service WSDL as a file with an extension

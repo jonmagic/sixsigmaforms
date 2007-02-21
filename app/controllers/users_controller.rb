@@ -16,17 +16,10 @@ class UsersController < ApplicationController
    @user.doctor_id = Doctor.id_of_alias(params[:doctor_alias])
   end
 
-  # render show.rhtml
-  def show
-    @user = User.find_by_id(params[:id])
-    respond_to do |format|
-      format.html # show.rhtml
-      format.xml  { render :xml => @user.to_xml }
-    end
-  end
-
   def create
-    @user = User.new(params[:user])
+    @user = User.new
+    @user.friendly_name = params[:user][:friendly_name]
+    @user.email = params[:user][:email]
     @user.doctor_id = Doctor.id_of_alias(params[:doctor_alias])
     if @user.save
       redirect_back_or_default(doctor_user_path(params[:doctor_alias]))
@@ -38,10 +31,10 @@ class UsersController < ApplicationController
 
   # GET /admins/register?activation_code=...
   def register
-    activation_code = params[:user] ? params[:user][:activation_code] || params[:activation_code] : params[:activation_code]
-    if activation_code
-      @user = User.find_by_activation_code(activation_code)
-      if !@user
+    act_code = params[:user] ? params[:user][:activation_code] || params[:activation_code] : params[:activation_code]
+    if !act_code.blank?
+      @user = User.find_by_activation_code(act_code)
+      if @user.blank?
         flash[:notice] = "Invalid activation code!"
         render "users/register_activation"
       end
@@ -52,24 +45,21 @@ class UsersController < ApplicationController
   end
 
   def activate
-    activation_code = params[:user] ? params[:user][:activation_code] || params[:activation_code] : params[:activation_code]
-    if activation_code
+    act_code = params[:user] ? params[:user][:activation_code] || params[:activation_code] : params[:activation_code]
+    if !act_code.blank?
       #Find unregistered user (need to choke if not a valid code)
-      @user = User.find_by_activation_code(activation_code)
-      if @user
-        #Set the username and password validations active
-        @user.changing_login
-        #Automatically log the user in
-#        self.current_user = @user
+      @user = User.find_by_activation_code(act_code)
+      if !@user.blank?
+        @user.operation = 'activate'
         if !@user.activated?
           respond_to do |format|
-            if @user.update_attributes!(params[:user])
-              @user.activate
+            if @user.update_attributes(params[:user])
+              #Log the user in
+              self.current_user = @user
               flash[:notice] = "Signup complete! #{@user.username} is ready for login."
               format.html { redirect_to user_url(@user) }
               format.xml  { head :ok }
             else
-              flash[:notice] = "Invalid record!"
               format.html { render :action => "register" }
               format.xml  { render :xml => @user.errors.to_xml }
             end
@@ -79,14 +69,20 @@ class UsersController < ApplicationController
           render :action => "register"
         end
       else
-        #No user with that activation code
         flash[:notice] = "Invalid activation code!"
-        render :action => "register"
-#        render "users/register_activation"
+        render "users/register_activation"
       end
     else
-      #No activation code present
       redirect_back_or_default(users_path+'/register')
+    end
+  end
+
+  # render show.rhtml
+  def show
+    @user = User.find_by_id(params[:id])
+    respond_to do |format|
+      format.html # show.rhtml
+      format.xml  { render :xml => @user.to_xml }
     end
   end
 

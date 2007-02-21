@@ -6,108 +6,88 @@ class AdminTest < Test::Unit::TestCase
   include AuthenticatedTestHelper
   fixtures :admins
 
-# Should create
-  def test_should_create_admin
+#Create
+# require email
+# require friendly_name
+#Activate
+# require username
+# require password
+# require password_confirmation
+#Authenticate
+#Can't simply change password
+
+#Create
+  def test_should_create
     assert_difference Admin, :count do
       admin = create_admin
       assert !admin.new_record?, "#{admin.errors.full_messages.to_sentence}"
     end
   end
 
-#  Should require email
-  def test_should_require_email
+#Create requires email
+  def test_create_should_require_email
     assert_no_difference Admin, :count do
       u = create_admin(:email => nil)
       assert u.errors.on(:email)
     end
   end
 
-#  Should require friendly_name
-  def test_should_require_friendly_name
+#Create requires friendly_name
+  def test_create_should_require_friendly_name
     assert_no_difference Admin, :count do
       u = create_admin(:friendly_name => nil)
       assert u.errors.on(:friendly_name)
     end
   end
 
-# Should activate
-  def test_should_activate_admin
+#Activate
+  def test_test_should_activate
     assert_no_difference Admin, :count do
-      admins(:aaron).changing_login
       admins(:aaron).update_attributes(:username => 'aaronjo', :password => 'dont', :password_confirmation => 'dont')
-      admins(:aaron).activate
-      assert admins(:aaron).activated?
+      assert admins(:aaron).activate, "Failed to activate: #{admins(:aaron).errors.full_messages.to_sentence}"
+#      assert admins(:aaron).activated?
     end
   end
 
-# Should require username
-  def test_should_require_username_to_activate
+#Activate requires username
+  def test_activate_should_require_username
     assert_no_difference Admin, :count do
-      admins(:aaron).changing_login
       admins(:aaron).update_attributes(:password => 'dont', :password_confirmation => 'dont')
       admins(:aaron).activate
       assert !admins(:aaron).activated?
     end
   end
 
-# Should require password
-  def test_should_require_password_to_activate
+#Activate requires password
+  def test_activate_should_require_password
     assert_no_difference Admin, :count do
-      admins(:aaron).changing_login
       admins(:aaron).update_attributes(:username => 'aaronjo', :password_confirmation => 'dont')
       admins(:aaron).activate
       assert !admins(:aaron).activated?
     end
   end
 
-# Should update
-  def test_activation_should_require_username
+#Activate requires password_confirmation
+  def test_activate_should_require_password_confirmation
     assert_no_difference Admin, :count do
-      admins(:aaron).changing_login
-      admins(:aaron).update_attributes!(:username => 'aaronjo', :password => 'password', :password_confirmation => 'password')
-      model.errors[:username].nil?
+      admins(:aaron).update_attributes(:username => 'aaronjo', :password => 'dont')
+      admins(:aaron).activate
+      assert !admins(:aaron).activated?
     end
   end
 
-#  Should require username
-  def test_activation_should_require_username
-    assert_no_difference Admin, :count do
-      admins(:aaron).changing_login
-      assert_raises(ActiveRecord::RecordInvalid) { admins(:aaron).update_attributes!(:password => 'password', :password_confirmation => 'password') }
-    end
-  end
-
-#  Should require password
-  def test_activation_should_require_password
-    assert_no_difference Admin, :count do
-      admins(:aaron).changing_login
-      assert_raises(ActiveRecord::RecordInvalid) { admins(:aaron).update_attributes!(:username => 'aaron2', :password_confirmation => 'password') }
-    end
-  end
-
-#  Should require password_confirmation
-  def test_activation_should_require_password_confirmation
-    assert_no_difference Admin, :count do
-      admins(:aaron).changing_login
-      assert_raises(ActiveRecord::RecordInvalid) { admins(:aaron).update_attributes!(:username => 'aaron2', :password => 'password') }
-    end
-  end
-
-# * * * *
-  def test_should_reset_password
-    admins(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
-    assert_equal admins(:quentin), Admin.authenticate('quentin', 'new password')
-  end
-
-  def test_should_not_rehash_password
-    admins(:quentin).update_attributes(:username => 'quentin2')
-    assert_equal admins(:quentin), Admin.authenticate('quentin2', 'test')
-  end
-
-# Should destroy
-
-  def test_should_authenticate_admin
+#Authenticate
+  def test_should_authenticate
     assert_equal admins(:quentin), Admin.authenticate('quentin', 'test')
+  end
+
+#Changing login information requires activation_code
+  def test_should_not_change_password_if_activation_code_not_present_and_valid
+    assert_no_difference Admin, :count do
+      admins(:quentin).update_attributes(:username => 'quentin', :password => 'dontnever', :password_confirmation => 'dontnever')
+      assert_equal admins(:quentin), Admin.authenticate('quentin', 'test')
+      assert_not_equal admins(:quentin), Admin.authenticate('quentin', 'dontnever')
+    end
   end
 
   protected

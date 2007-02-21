@@ -1,10 +1,13 @@
 <%= error_messages_for :admin %>
 <% form_for :admin, :url => admins_path+'/activate' do |f| -%>
-<p>Hello, <%= @admin.friendly_name %>! Please create a username and password.</p>
+<p>Hello, <%= @admin.friendly_name %><%= ", your username is <em>#{@admin.username}</em>. <br />Please create a password." if !@admin.username.blank? -%>
+<%= ". Please create a username and password." if @admin.username.blank? -%>
 
 <%= f.hidden_field :activation_code, :value => params[:activation_code] %>
+<% if true or @admin.username.blank? -%>
 <p><label for="username">Username</label><br/>
 <%= f.text_field :username %></p>
+<% end -%>
 
 <p><label for="password">Password</label><br/>
 <%= f.password_field :password %></p>
