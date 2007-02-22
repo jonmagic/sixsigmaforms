@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 3) do
+ActiveRecord::Schema.define(:version => 8) do
 
   create_table "admins", :force => true do |t|
     t.column "username",                  :string
@@ -28,6 +28,78 @@ ActiveRecord::Schema.define(:version => 3) do
     t.column "tax_id",         :string
     t.column "created_at",     :datetime
     t.column "updated_at",     :datetime
+  end
+
+  create_table "doctors_forms", :force => true do |t|
+    t.column "doctor_id", :integer
+    t.column "form_id",   :integer
+  end
+
+  create_table "forms", :force => true do |t|
+    t.column "friendly_name",   :string
+    t.column "type",            :string
+    t.column "fields",          :string
+    t.column "required_fields", :string
+    t.column "can_have_notes",  :boolean
+  end
+
+  create_table "notes", :force => true do |t|
+    t.column "form_id",    :integer
+    t.column "form_type",  :integer
+    t.column "text",       :text
+    t.column "created_by", :integer
+    t.column "created_at", :datetime
+  end
+
+  create_table "pages", :force => true do |t|
+    t.column "title", :string
+    t.column "body",  :string
+    t.column "stub",  :string
+  end
+
+  create_table "patients", :force => true do |t|
+    t.column "doctor_id",                         :integer
+    t.column "insurance_type",                    :string
+    t.column "insurance_id_number",               :string
+    t.column "last_name",                         :string
+    t.column "first_name",                        :string
+    t.column "middle_initial",                    :string
+    t.column "birth_date",                        :date
+    t.column "sex",                               :string
+    t.column "insured_first_name",                :string
+    t.column "insured_middle_initial",            :string
+    t.column "insured_last_name",                 :string
+    t.column "address",                           :string
+    t.column "city",                              :string
+    t.column "state",                             :string
+    t.column "zipcode",                           :string
+    t.column "telephone",                         :string
+    t.column "relationship_to_insured",           :string
+    t.column "insured_address",                   :string
+    t.column "insured_city",                      :string
+    t.column "insured_state",                     :string
+    t.column "insured_zipcode",                   :string
+    t.column "insured_telephone",                 :string
+    t.column "marital_status",                    :string
+    t.column "work_status",                       :string
+    t.column "work_accident",                     :boolean
+    t.column "auto_accident",                     :boolean
+    t.column "auto_accident_state",               :string
+    t.column "other_accident",                    :boolean
+    t.column "insured_policy_group_feca_number",  :string
+    t.column "insured_birth_date",                :date
+    t.column "insured_sex",                       :string
+    t.column "insured_employer",                  :string
+    t.column "insured_plan_program_name",         :string
+    t.column "another_benefit_plan",              :boolean
+    t.column "other_insured_first_name",          :string
+    t.column "other_insured_middle_initial",      :string
+    t.column "other_insured_last_name",           :string
+    t.column "other_insured_policy_group_number", :string
+    t.column "other_insured_birth_date",          :date
+    t.column "other_insured_sex",                 :string
+    t.column "other_insured_employer",            :string
+    t.column "other_insured_plan_program_name",   :string
   end
 
   create_table "users", :force => true do |t|

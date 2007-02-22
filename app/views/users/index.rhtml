@@ -14,7 +14,7 @@
 <% end %>
     </td>
     <td><%= link_to 'Show', doctor_user_path(:doctor_alias => params[:doctor_alias], :action=> 'show', :id => user.id) %></td>
-    <td><%= link_to 'Destroy', doctor_user_path(user), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', doctor_user_path(:doctor_alias => params[:doctor_alias], :id => user.id), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

@@ -1,6 +1,8 @@
 require 'digest/sha1'
 class Doctor < ActiveRecord::Base
-  has_many :users
+  has_many  :users
+  has_many  :patients
+  has_and_belongs_to_many  :forms
 
   validates_presence_of     :alias, :friendly_name, :address, :telephone
   validates_length_of       :alias, :within => 5..25

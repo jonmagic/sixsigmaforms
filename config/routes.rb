@@ -28,6 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/logout', :controller => 'sessions', :action => 'destroy'
   map.admin_dashboard '/SSAdmin', :controller => 'admins', :action => 'dashboard'
   map.doctor_login '/:doctor_alias/login', :controller => 'sessions', :action => 'create'
+  map.doctor_user '/:doctor_alias/patients/:action/:id', :controller => 'patients', :action => 'search'
   map.doctor_user '/:doctor_alias/users/:action/:id', :controller => 'users'
   map.doctor_form '/:doctor_alias/forms/:form_alias/:action', :controller => 'forms', :action => 'index'
   map.doctor_dashboard '/:doctor_alias', :controller => 'doctors', :action => 'dashboard'

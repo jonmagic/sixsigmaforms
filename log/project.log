@@ -3,3 +3,11 @@
 [Thu 22 Feb 11:11am]	 Created Dashboard actions and view files.
 [Thu 22 Feb 11:36am]	 Rearranged Routes, login/logout redirects, and dashboard urls
 [Thu 22 Feb 11:59am]	*Suspecting that we might not need the Admins controller at all, just the model, and operate everything from the users and doctors controller?
+                 - -   <COMMIT REVISION 42>
+[Thu 22 Feb 12:25pm]	*Admins -- we might rather have a type field in the users table, specifying a 1 for Admin and 0 for DoctorUser,
+-                   	 having each a sub-model, both inhereting from the Users model.
+[Thu 22 Feb 14:17pm]	 Struggling with how to associate Notes with the different types of forms, which have different models.
+[Thu 22 Feb 14:33pm]	 Created a POLYMORPHIC relationship between Notes and all the different form types!
+-                      Notes has two association fields: form_id and form_type; and Forms has a type field
+[Thu 22 Feb 15:29pm]	 Creating a HABTM relationship between Doctors and Forms
+[Thu 22 Feb 16:49pm]	 Created Patients - controller, model with hefty migration
