@@ -2,7 +2,7 @@ class CreatePatients < ActiveRecord::Migration
   def self.up
     create_table :patients do |t|
       t.column :doctor_id,                   :integer
-      t.column :insurance_type,              :string   #CMS 1a  #Ask Cheryl how this one works
+      t.column :insurance_type,              :string   #CMS 1a   #Virtual Enum: Medicare, Medicaid, Champus, ChampVa, Group Health Plan, Feca Blk Lung
       t.column :insurance_id_number,         :string   #CMS 1b
       t.column :last_name,                   :string   #CMS 2a
       t.column :first_name,                  :string   #CMS 2b

@@ -11,3 +11,5 @@
 -                      Notes has two association fields: form_id and form_type; and Forms has a type field
 [Thu 22 Feb 15:29pm]	 Creating a HABTM relationship between Doctors and Forms
 [Thu 22 Feb 16:49pm]	 Created Patients - controller, model with hefty migration
+                 - -   <COMMIT REVISION 43>
+[Thu 22 Feb 16:55pm]	 Ready to work on: patients/search, Notes create/read/update/destroy, Associating Doctors with Forms in the Doctor updating action, FormOperations module (managing notes, patient and logging information)
