@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     end
     if logged_in?
       flash[:notice] = "Welcome " + self.current_user.friendly_name + "."
-      redirect_back_or_default('/admins')
+      redirect_back_or_default(doctor_dashboard_url(params[:doctor_alias]))
     else
       if params[:username]
         flash[:notice] = "Invalid username or password."
@@ -23,9 +23,10 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    doc_al = self.current_user.domain
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default('/login')
+    redirect_back_or_default(doctor_login_url(doc_al))
   end
 end

@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     @user.doctor_id = Doctor.id_of_alias(params[:doctor_alias])
     if @user.save
       redirect_back_or_default(doctor_user_path(params[:doctor_alias]))
-      flash[:notice] = "User @user.friendly_name has been created."
+      flash[:notice] = "User #{@user.friendly_name} has been created."
     else
       render :action => "new"
     end
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
         render "users/register_activation"
       end
     else
-      redirect_back_or_default(users_path+'/register')
+      redirect_back_or_default(doctor_user_path(:doctor_alias => params[:doctor_alias], :action => 'register'))
     end
   end
 

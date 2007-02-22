@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :pages
+
+  map.resources :pages
+
   # The priority is based upon order of creation: first created -> highest priority.
   
   # Sample of regular route:
@@ -16,14 +20,17 @@ ActionController::Routing::Routes.draw do |map|
   map.register_admin '/admins/register', :controller => 'admins', :action => 'register'
   map.register_user '/users/register', :controller => 'users', :action => 'register'
   map.resources :admins, :sessions
-  map.resources :doctors, :users
+  map.resources :doctors
 #  map.resources :doctors do |doctor|
 #    doctor.resources :users
 #  end
+#  map.connect '/login', :controller => 'sessions', :action => 'create', :doctor_alias => 'SSAdmin'
+  map.connect '/logout', :controller => 'sessions', :action => 'destroy'
+  map.admin_dashboard '/SSAdmin', :controller => 'admins', :action => 'dashboard'
   map.doctor_login '/:doctor_alias/login', :controller => 'sessions', :action => 'create'
   map.doctor_user '/:doctor_alias/users/:action/:id', :controller => 'users'
-  map.connect '/login', :controller => 'sessions', :action => 'create', :doctor_alias => 'SSAdmin'
-  map.connect '/logout', :controller => 'sessions', :action => 'destroy'
+  map.doctor_form '/:doctor_alias/forms/:form_alias/:action', :controller => 'forms', :action => 'index'
+  map.doctor_dashboard '/:doctor_alias', :controller => 'doctors', :action => 'dashboard'
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'

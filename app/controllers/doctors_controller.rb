@@ -57,6 +57,7 @@ class DoctorsController < ApplicationController
     end
   end
 
+#This needs to be locked down to do only what it should be allowed to do
   # PUT /doctors/1
   # PUT /doctors/1.xml
   def update
@@ -75,11 +76,28 @@ class DoctorsController < ApplicationController
     end
   end
 
+  # GET /:doctor_alias/dashboard
+  def dashboard
+    #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
+    if logged_in?
+      if !(current_user.doctor.alias == params[:doctor_alias])
+        redirect_back_or_default(doctor_dashboard_path(current_user.doctor.alias))
+      end
+    else
+      if Doctor.exists?(params[:doctor_alias])
+        redirect_back_or_default(doctor_login_path(params[:doctor_alias]))
+      else
+        redirect_back_or_default('/')
+      end
+    end
+  end
+
   # DELETE /doctors/1
   # DELETE /doctors/1.xml
   def destroy
 
 #Must also destroy the admin user and all other users tied with this business. But then what exactly do we want to do with destroying doctors? Do we ever want to destroy them?
+#****
     @doctor = Doctor.find(params[:id])
     @doctor.destroy
 

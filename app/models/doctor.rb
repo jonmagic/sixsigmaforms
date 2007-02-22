@@ -12,6 +12,10 @@ class Doctor < ActiveRecord::Base
     User.find_by_username(self.alias)
   end
 
+  def self.exists?(doc_alias)
+    Doctor.find_by_alias(doc_alias).blank?
+  end
+
   def self.id_of_alias(doc_alias)
     Doctor.find_by_alias(doc_alias).id
   end
