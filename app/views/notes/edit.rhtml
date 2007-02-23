@@ -1,0 +1,12 @@
+<h1>Editing note</h1>
+
+<%= error_messages_for :note %>
+
+<% form_for(:note, :url => note_path(@note), :html => { :method => :put }) do |f| %>
+  <p>
+    <%= submit_tag "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', note_path(@note) %> |
+<%= link_to 'Back', notes_path %>

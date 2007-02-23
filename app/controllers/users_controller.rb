@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     @user.email = params[:user][:email]
     @user.doctor_id = Doctor.id_of_alias(params[:doctor_alias])
     if @user.save
-      redirect_back_or_default(doctor_user_path(params[:doctor_alias]))
+      redirect_back_or_default(users_path)
       flash[:notice] = "User #{@user.friendly_name} has been created."
     else
       render :action => "new"
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
               #Log the user in
               self.current_user = @user
               flash[:notice] = "Signup complete! #{@user.username} is ready for login."
-              format.html { redirect_to user_url(@user) }
+              format.html { redirect_to user_url(:doctor_alias => params[:doctor_alias], :id => @user) }
               format.xml  { head :ok }
             else
               format.html { render :action => "register" }

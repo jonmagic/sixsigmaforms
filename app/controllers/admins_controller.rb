@@ -87,17 +87,7 @@ class AdminsController < ApplicationController
   # GET /SixSigma/dashboard
   def dashboard
     #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
-    if logged_in?
-      if !(current_user.doctor.alias == params[:doctor_alias])
-        redirect_back_or_default(doctor_dashboard_path(current_user.doctor.alias))
-      end
-    else
-      if Doctor.exists?(params[:doctor_alias])
-        redirect_back_or_default(doctor_login_path(params[:doctor_alias]))
-      else
-        redirect_back_or_default('/')
-      end
-    end
+    
   end
 
   # DELETE /admins/1

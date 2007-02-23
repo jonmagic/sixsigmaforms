@@ -10,15 +10,15 @@
     <td><%= user.username %></td>
     <td>&nbsp;
 <% if !user.activation_code.blank? %>
-    <%= link_to 'Register!', doctor_user_path(params[:doctor_alias])+"/register?activation_code="+user.activation_code %>
+    <%= link_to 'Register!', register_users_path(params[:doctor_alias])+"?activation_code="+user.activation_code %>
 <% end %>
     </td>
-    <td><%= link_to 'Show', doctor_user_path(:doctor_alias => params[:doctor_alias], :action=> 'show', :id => user.id) %></td>
-    <td><%= link_to 'Destroy', doctor_user_path(:doctor_alias => params[:doctor_alias], :id => user.id), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', user_path(:doctor_alias => params[:doctor_alias], :action=> 'show', :id => user.id) %></td>
+    <td><%= link_to 'Destroy', user_path(:doctor_alias => params[:doctor_alias], :id => user.id), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New user', doctor_user_path(params[:doctor_alias], 'new') %>
+<%= link_to 'New user', user_path(params[:doctor_alias], 'new') %>

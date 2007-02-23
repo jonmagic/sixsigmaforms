@@ -7,13 +7,13 @@ class User < ActiveRecord::Base
   attr_accessor :operation #for the status of activating to enable the activation validations
 
   validates_presence_of     :email, :doctor_id, :friendly_name
-  validates_length_of       :email, :within => 3..100,          :if => :email_present?
+  validates_length_of       :email, :within => 3..100,           :if => :email_present?
   validates_uniqueness_of   :email, :case_sensitive => false
-  validates_length_of       :username, :within => 3..40,        :if => :username_present?
-  validates_uniqueness_of   :username, :case_sensitive => false
-  validates_presence_of     :password_confirmation,             :if => :password_present?
-  validates_confirmation_of :password,                          :if => :password_present?
-  validates_length_of       :password, :within => 4..40,        :if => :password_present?
+  validates_length_of       :username, :within => 3..40,         :if => :username_present?
+  validates_uniqueness_of   :username, :case_sensitive => false, :if => :username_present?
+  validates_presence_of     :password_confirmation,              :if => :password_present?
+  validates_confirmation_of :password,                           :if => :password_present?
+  validates_length_of       :password, :within => 4..40,         :if => :password_present?
 
   before_save               :encrypt_password
   after_update              :activate
