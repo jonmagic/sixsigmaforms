@@ -1,5 +1,6 @@
 class DoctorsController < ApplicationController
   before_filter :validate_doctor_and_form_type
+  layout 'admin'
 
   # GET /doctors
   # GET /doctors.xml
@@ -43,7 +44,7 @@ class DoctorsController < ApplicationController
     @user.username = @doctor.alias
     @user.doctor_id = 1 #Fake the validation, this will be overwritten as soon as the doctor is created.
     respond_to do |format|
-      if @doctor.valid? and @user.valid?
+      if @doctor.valid? & @user.valid?
         @doctor.save
         @user.doctor_id = @doctor.id
         @user.save
@@ -51,7 +52,6 @@ class DoctorsController < ApplicationController
         format.html { redirect_to doctor_url(@doctor) }
         format.xml  { head :created, :location => doctor_url(@doctor) }
       else
-        @user.valid?
         format.html { render :action => "new" }
         format.xml  { render :xml => @doctor.errors.to_xml }
       end
@@ -64,9 +64,8 @@ class DoctorsController < ApplicationController
   def update
     @doctor = Doctor.find(params[:id])
     @user   = @doctor.admin
-
     respond_to do |format|
-      if @doctor.update_attributes(params[:doctor])
+      if (@doctor.valid? & @user.valid?) &&  @doctor.update_attributes(params[:doctor]) && @user.update_attributes(params[:user])
         flash[:notice] = "Doctor was successfully updated."
         format.html { redirect_to doctor_url(@doctor) }
         format.xml  { head :ok }

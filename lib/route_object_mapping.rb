@@ -2,10 +2,14 @@ module RouteObjectMapping
   protected
 
     def current_doctor
-       # (session[:user] && (session[:domain] != 'SSAdmin' ? User.find_by_id(session[:user]) : Admin.find_by_id(session[:user]))) || :false
-      @current_doctor ||= params[:doctor_alias] ? Doctor.find_by_alias(params[:doctor_alias]) || false : false
+      #Is this always what I want to return here?
+      @current_doctor ||= logged_in? ? current_user.domain : false
     end
     
+    def user_is_ssadmin?
+      logged_in? ? current_doctor == 'SSAdmin' : false
+    end
+
     # Store the given user in the session.
     def current_doctor=(new_doctor)
       @current_doctor = new_doctor
@@ -32,11 +36,13 @@ module RouteObjectMapping
     def redirect_if_invalid_doctor_alias(doc_alias)
       if logged_in?
         if !(current_user.doctor.alias == doc_alias)
-          redirect_back_or_default(doctor_dashboard_path(current_user.doctor.alias))
+          store_location
+          redirect_to_url(doctor_dashboard_path(current_user.doctor.alias))
         end
       else
         if Doctor.exists?(doc_alias) or doc_alias == "SSAdmin"
-          redirect_back_or_default(doctor_login_url(doc_alias))
+          store_location
+          redirect_to_url(doctor_login_url(doc_alias))
         else
           redirect_back_or_default('/')
         end

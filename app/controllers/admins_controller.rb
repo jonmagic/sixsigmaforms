@@ -1,4 +1,5 @@
 class AdminsController < ApplicationController
+  layout 'admin'
 
   # GET /admins
   # GET /admins.xml
@@ -70,7 +71,7 @@ class AdminsController < ApplicationController
         render "admins/register_activation"
       end
     else
-      redirect_back_or_default(admins_path+'/register')
+      redirect_to admins_path+'/register'
     end
   end
 
@@ -87,6 +88,8 @@ class AdminsController < ApplicationController
   # GET /SixSigma/dashboard
   def dashboard
     #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
+    store_location  #I don't think I need this because it automatically redirects to the dashboard, but maybe this is helpful?
+    redirect_to doctor_login_url('SSAdmin') unless user_is_ssadmin?
     
   end
 

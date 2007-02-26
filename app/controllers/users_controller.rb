@@ -77,6 +77,24 @@ class UsersController < ApplicationController
     end
   end
 
+#This needs to be locked down to do only what it should be allowed to do
+  # PUT /users/1
+  # PUT /users/1.xml
+  def update
+    @user = User.find(params[:id])
+
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        flash[:notice] = "User was successfully updated."
+        format.html { redirect_to user_url(@user) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @user.errors.to_xml }
+      end
+    end
+  end
+
   # render show.rhtml
   def show
     @user = User.find_by_id(params[:id])

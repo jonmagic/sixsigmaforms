@@ -3,7 +3,7 @@ class FormType < ActiveRecord::Base
   serialize :required_fields, Array
   has_and_belongs_to_many :doctors
 
-  validates_presence_of :friendly_name, :type, :fields, :required_fields, 
+  validates_presence_of :friendly_name, :model, :fields, :required_fields
 
 #In each form instance, include thes lines
 #  has_many :notes, :as => 'form_instance'

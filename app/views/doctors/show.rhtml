@@ -3,6 +3,7 @@
 <p>Address:        <%= @doctor.address %></p>
 <p>Admin Name:     <%= @doctor.admin.friendly_name %></p>
 <p>Admin Email:    <%= @doctor.admin.email %></p>
+<p>Assigned Forms: <%= (@doctor.form_types.collect {|f| f.friendly_name}).join(', ') %></p>
 <p><%= link_to 'Users', users_path(:doctor_alias => @user.doctor.alias) %></p>
 
 <%= link_to 'Edit', edit_doctor_path(@doctor) %> |

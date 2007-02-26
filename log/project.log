@@ -12,7 +12,8 @@
 [Thu 22 Feb 15:29pm]	 Creating a HABTM relationship between Doctors and Forms
 [Thu 22 Feb 16:49pm]	 Created Patients - controller, model with hefty migration
                  - -   <COMMIT REVISION 43>
-[Thu 22 Feb 16:55pm]	 Ready to work on: patients/search, Notes create/read/update/destroy, Associating Doctors with Forms in the Doctor updating action, FormOperations module (managing notes, patient and logging information)
+[Thu 22 Feb 16:55pm]	 Ready to work on: patients/search, Notes create/read/update/destroy, Associating Doctors with Forms in the Doctor updating action,
+-                      FormOperations module (managing notes, patient and logging information)
 [Fri 23 Feb 09:09am]	*INDEXing is something we probably want to do for the Archived forms databases.
 [Fri 23 Feb 10:01am]	 Recreated Notes via scaffold_resource, routes.db point to /:doctor_alias/forms/:form_type/notes/:action/:id
 [Fri 23 Feb 14:06pm]	 Reworked relationships a bit: Notes belongs_to :form_instance, :polymorphic => true, :as => :form; BasicForm has_many :notes, :as => :form_instance
@@ -20,3 +21,9 @@
 -                      which will have to be populated by migrations as we add each form_type.
 [Fri 23 Feb 16:52pm]	*When patient information is changed, the system must ask the User on submitting the form whether to save the changes to the patient data or not.
 [Fri 23 Feb 16:53pm]	 Working on Admins tying a Doctor to FormTypes.
+                 - -   <COMMIT REVISION 44>
+                 - -   <COMMIT REVISION 45>
+[Mon 26 Feb 13:25pm]	 Having trouble with the type field in the FormType model - found out I don't really need it to be named 'type' -
+-                      I thought it was necessary for an association, but that must have been a while ago.
+[Mon 26 Feb 14:24pm]	 Finished the correct associations, etc to associate Doctors with FormTypes, as well as implementing the drop-down input in the Edit form.
+                 - -   <COMMIT REVISION 46>
