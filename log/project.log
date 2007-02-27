@@ -36,3 +36,5 @@
 [Tue 27 Feb 13:54pm]	*EDITING THE MENUS -- we'd need to either create a new database table for them too, unless they're dynamic based on pages and you have a checkbox with the page that specifies whether to include it on the menu or not.
 [Tue 27 Feb 13:57pm]	 Created an "admins_doctors_controller" to which I connected the map.resources of doctors for the SSAdmin dashboard. This makes it possible for me to have different functionality and not worry about accessibility issues and distinguishing between SSAdmins and doctor admins. SSAdmins can create doctors, Doctor Admins don't even have such a function available that would have to bar them out.
                  - -   <COMMIT REVISION 49>
+[Tue 27 Feb 14:34pm]	 Secured the Pages admin to SSAdmin-only access. If not logged in, redirects to SSAdmin login; if logged in as a non-SSAdmin user, redirects to your dashboard; After SSAdmin login, redirects back to the previous attempted-access page. Added "Manage Pages" to SSAdmin dashboard.
+                 - -   <COMMIT REVISION 50>

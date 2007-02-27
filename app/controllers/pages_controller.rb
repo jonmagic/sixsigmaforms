@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
   layout 'pages'
+  before_filter :require_ssadmin_except_for_show
+
   # GET /pages
   # GET /pages.xml
   def index #This is the ACTION 'index', accessed via /SSAdmin/pages, as opposed to the STUB 'index', accessed via /pages

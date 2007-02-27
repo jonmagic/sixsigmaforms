@@ -32,12 +32,15 @@ module RouteObjectMapping
       redirect_if_invalid_form_type(params[:form_type]) if !params[:form_type].blank?
     end
 
+    def require_ssadmin_except_for_show
+      redirect_if_invalid_doctor_alias('SSAdmin') unless params[:action] == 'show'
+    end
   private
     def redirect_if_invalid_doctor_alias(doc_alias)
       if logged_in?
-        if !(current_user.doctor.alias == doc_alias)
+        if !(current_user.domain == doc_alias)
           store_location
-          redirect_to_url(doctor_dashboard_path(current_user.doctor.alias))
+          redirect_to_url(doctor_dashboard_path(current_user.domain))
         end
       else
         if Doctor.exists?(doc_alias) or doc_alias == "SSAdmin"

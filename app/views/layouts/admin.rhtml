@@ -13,7 +13,7 @@
 <% else -%>
 <p>Not logged in. <a href="/<%= params[:doctor_alias] ? params[:doctor_alias] : "SSAdmin" %>/login">Login</a></p>
 <% end -%>
-<p>Tabs: <%= link_to 'Manage Admins', admins_url %> | <%= link_to 'Manage Doctors', doctors_url %></p>
+<p>Tabs: <%= link_to 'Manage Admins', admins_url %> | <%= link_to 'Manage Doctors', doctors_url %> | <%= link_to 'Manage Pages', pages_url %></p>
 <p style="color: green">&nbsp;<%= flash[:notice] %></p>
 
 <%= yield  %>
