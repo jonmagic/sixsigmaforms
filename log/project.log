@@ -27,3 +27,6 @@
 -                      I thought it was necessary for an association, but that must have been a while ago.
 [Mon 26 Feb 14:24pm]	 Finished the correct associations, etc to associate Doctors with FormTypes, as well as implementing the drop-down input in the Edit form.
                  - -   <COMMIT REVISION 46>
+[Mon 26 Feb 23:04pm]	Picked layout for pages, the front facing part of the site. Moved resources to public folder, started pages layout, put some content in db. I'm having trouble with routes though, they don't use the stub correctly, so I need Dan to fix it. Also, I need Dan to make a migration and change the body field from varchar to text so I can fit more than 255 characters in. Next I need to decide where to put my Admin section for the pages stuff, and then build in the dojo editor for ease of use... Also, should I have the menu's be easily editable from admin, or hardcoded into the template? cost/convenience?
+                 - -   <COMMIT REVISION 48>
+
