@@ -1,4 +1,7 @@
 class PatientsController < ApplicationController
-  belongs_to :doctor
+
+  def live_search
+    render :text => "<p>Hello World from Patients Search!</p>"
+  end
   
 end

@@ -38,3 +38,9 @@
                  - -   <COMMIT REVISION 49>
 [Tue 27 Feb 14:34pm]	 Secured the Pages admin to SSAdmin-only access. If not logged in, redirects to SSAdmin login; if logged in as a non-SSAdmin user, redirects to your dashboard; After SSAdmin login, redirects back to the previous attempted-access page. Added "Manage Pages" to SSAdmin dashboard.
                  - -   <COMMIT REVISION 50>
+[Tue 27 Feb 18:07pm]	 Created a reusable LIVE SEARCH functionality! Put one line in your view to include a live search of any controller or model... Take a look at Manage Doctors in the SSAdmin dashboard, or look at the Doctor Admin dashboard (log in as a doctor admin user) to see two totally different live searches on the same page!
+                 - -   <COMMIT REVISION 51>
+
+
+::TO DO::
+Create the SSAdmin Doctor management page.

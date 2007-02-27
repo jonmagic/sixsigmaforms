@@ -40,9 +40,9 @@ ActionController::Routing::Routes.draw do |map|
 #****
 
 #/mydoc/patients/:action/:id
-  map.resources :patients, :path_prefix => '/:doctor_alias' #index is search
+  map.resources :patients, :path_prefix => '/:doctor_alias', :collection => { :live_search => :any, :search => :any } #index is search
 #/mydoc/users/[new,create,show,destroy,etc]
-  map.resources :users, :path_prefix => '/:doctor_alias', :collection => { :register => :any, :activate => :any }
+  map.resources :users, :path_prefix => '/:doctor_alias', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
 #/mydoc/forms/CMS1500/[new,show,edit,etc]
   map.resources :forms, :path_prefix => '/:doctor_alias' do |form|
 #/mydoc/forms/CMS1500/157/notes/[show,edit,create]
@@ -50,12 +50,12 @@ ActionController::Routing::Routes.draw do |map|
   end
 #/mydoc/forms/chooser
   map.form_type_chooser '/:doctor_alias/forms/chooser', :controller => 'forms', :action => 'chooser'
-#/mydoc
-  map.doctor_dashboard '/:doctor_alias', :controller => 'doctors', :action => 'dashboard'
 #/mydoc/profile
   map.doctor_profile '/:doctor_alias/profile', :controller => 'doctors', :action => 'show'
 #/mydoc/profile/edit
   map.edit_doctor_profile '/:doctor_alias/profile/edit', :controller => 'doctors', :action => 'edit'
+#/mydoc
+  map.doctor_dashboard '/:doctor_alias', :controller => 'doctors', :action => 'dashboard'
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'

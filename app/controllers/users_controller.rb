@@ -16,6 +16,20 @@ class UsersController < ApplicationController
    @user.doctor_id = Doctor.id_of_alias(params[:doctor_alias])
   end
 
+# Need to create a search action in case user hits enter on the live_search box, or else disable hard-submit on the form.
+
+  def live_search
+    @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)
+    if @phrase.blank?
+      render :nothing => true
+    else
+      @sqlphrase = "%" + @phrase.to_s + "%"
+      @results = User.find(:all, :conditions => [ "friendly_name LIKE ? OR username LIKE ?", @sqlphrase, @sqlphrase])
+      @search_entity = @results.length == 1 ? "User" : "Users"
+      render(:file => 'shared/live_search_results', :use_full_path => true)
+    end
+  end
+
   def create
     @user = User.new
     @user.friendly_name = params[:user][:friendly_name]
