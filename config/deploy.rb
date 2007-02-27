@@ -74,7 +74,7 @@ set :mongrel_environment, "development"
 # ssh_options[:keys] = %w(/path/to/my/key /path/to/another/key)
 # ssh_options[:port] = 25
 
-# My custom recipes!
+# my custom stack install, including all necessary packages for rails, mysql, and nginx
 
 task :install_rails_stack_with_nginx do
   setup_user_perms
@@ -118,7 +118,6 @@ task :install_nginx do
   sudo 'wget http://notrocketsurgery.com/files/nginx -O /etc/init.d/nginx'
   sudo 'chmod 755 /etc/init.d/nginx'
   send(run_method, "update-rc.d nginx defaults")
-  sudo '/etc/init.d/nginx start'
 end
 
 task :configure_nginx do
@@ -143,25 +142,6 @@ task :stop_nginx do
   sudo '/etc/init.d/nginx stop'
 end
 
-# rewrite of deploy recipe so that it puts in the right database.yml file
-
-task :deploy_with_migrations do
-  update_code
-  create_database_yml
-
-  begin
-    old_migrate_target = migrate_target
-    set :migrate_target, :latest
-    migrate
-  ensure
-    set :migrate_target, old_migrate_target
-  end
-
-  symlink
-
-  restart
-end
-
 task :create_database_yml do
   run "cp #{release_path}/config/database.yml.production #{release_path}/config/database.yml"  
 end
@@ -175,11 +155,11 @@ task :deploy_first_time do
   migrate
   configure_mongrel_cluster
   configure_nginx
-  start_mongrel_cluster
+  restart_mongrel_cluster
   start_nginx
 end
 
-# overwrite the deprec read db task so that it grabs the right config
+# overwrite the deprec read_config task so that it grabs the right config
 def read_config
   db_config = YAML.load_file('config/database.yml.production')
   set :db_user, db_config[rails_env]["username"]

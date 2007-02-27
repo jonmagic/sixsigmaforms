@@ -1,7 +1,8 @@
 class PagesController < ApplicationController
+  layout 'pages'
   # GET /pages
   # GET /pages.xml
-  def index
+  def manage
     @pages = Page.find(:all)
 
     respond_to do |format|
