@@ -43,6 +43,7 @@ class Doctor < ActiveRecord::Base
 #        end
 #      end
       if !old_doctor.blank?
+        errors.add_to_base("Only SixSigma Admin users can modify your assigned forms.") if !form_type_ids.blank? && !old_doctor.form_type_ids.blank? && !(form_type_ids == old_doctor.form_type_ids)
         errors.add(:alias, "cannot be changed once created!") if !self.alias.blank? && !old_doctor.alias.blank? && !(self.alias == old_doctor.alias)
       end
     end

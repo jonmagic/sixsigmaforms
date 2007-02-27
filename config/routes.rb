@@ -19,8 +19,12 @@ ActionController::Routing::Routes.draw do |map|
   map.register_admin '/admins/register', :controller => 'admins', :action => 'register'
   map.register_user '/users/register', :controller => 'users', :action => 'register'
 #/sessions/[new,create,destroy]
+  map.resources :sessions
+
 #/pages/[show, etc]
-  map.resources :sessions, :pages
+  map.page '/pages/:stub', :controller => 'pages', :action => 'show', :stub => 'index'
+  map.resources :pages, :path_prefix => '/SSAdmin'
+
 #/logout
   map.connect '/logout', :controller => 'sessions', :action => 'destroy'
 #/mydoc/login
@@ -30,27 +34,28 @@ ActionController::Routing::Routes.draw do |map|
 #/SSAdmin/admins/[new,create,show,destroy,etc]
 #/SSAdmin/doctors/[new,create,show,destroy,etc]
   map.resources :admins, :path_prefix => '/SSAdmin'
-  map.resources :doctors, :path_prefix => '/SSAdmin'
+  map.resources :doctors, :path_prefix => '/SSAdmin', :controller => 'admins_doctors'
 #/SSAdmin/:action/:id
   map.admin_dashboard '/SSAdmin/:action/:id', :controller => 'admins', :action => 'dashboard'
 #****
 
 #/mydoc/patients/:action/:id
   map.resources :patients, :path_prefix => '/:doctor_alias' #index is search
-#/mydoc/users/[new,create,show,destroy,etc]    #  map.doctor_user '/:doctor_alias/patients/:action/:id', :controller => 'patients', :action => 'search'
+#/mydoc/users/[new,create,show,destroy,etc]
   map.resources :users, :path_prefix => '/:doctor_alias', :collection => { :register => :any, :activate => :any }
-#/mydoc/forms/CMS1500/[new,show,edit,etc]            #  map.doctor_user '/:doctor_alias/users/:action/:id', :controller => 'users'
+#/mydoc/forms/CMS1500/[new,show,edit,etc]
   map.resources :forms, :path_prefix => '/:doctor_alias' do |form|
 #/mydoc/forms/CMS1500/157/notes/[show,edit,create]
     form.resources :notes
   end
-#  map.doctor_form '/:doctor_alias/forms/:form_type/:action/:id', :controller => 'forms', :action => 'draft'
 #/mydoc/forms/chooser
   map.form_type_chooser '/:doctor_alias/forms/chooser', :controller => 'forms', :action => 'chooser'
-#  map.form_notes '/:doctor_alias/forms/:form_type/:form_id/notes/:action/:id', :controller => 'notes'
+#/mydoc
   map.doctor_dashboard '/:doctor_alias', :controller => 'doctors', :action => 'dashboard'
-
-  map.pages '/pages/:stub', :controller => 'pages', :action => 'show', :stub => 'index'
+#/mydoc/profile
+  map.doctor_profile '/:doctor_alias/profile', :controller => 'doctors', :action => 'show'
+#/mydoc/profile/edit
+  map.edit_doctor_profile '/:doctor_alias/profile/edit', :controller => 'doctors', :action => 'edit'
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'

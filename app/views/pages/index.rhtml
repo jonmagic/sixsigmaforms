@@ -1,0 +1,24 @@
+<h1>Listing pages</h1>
+
+<table>
+  <thead>
+    <th>Title</th>
+    <th>Stub</th>
+    <th>Body</th>
+  </thead>
+  
+<% for page in @pages %>
+  <tr>
+    <td><%= page.title %></td>
+    <td><%= page.stub %></td>
+    <td><%= page.body %></td>
+    <td><%= link_to 'Show', page_path(page) %></td>
+    <td><%= link_to 'Edit', edit_page_path(page) %></td>
+    <td><%= link_to 'Destroy', page_path(page), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New admin', new_page_path %>

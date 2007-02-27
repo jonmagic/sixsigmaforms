@@ -1,10 +1,9 @@
-class DoctorsController < ApplicationController
+class AdminsDoctorsController < ApplicationController
 
-#The Doctors controller exists for the Doctor Admins to view and manage their own profile,
-# and for Doctor Users to springboard from in their dashboard.
+#The AdminsDoctors controller exists for the SixSigma Admins to manage Doctors.
 
   before_filter :validate_doctor_and_form_type
-  layout 'doctor'
+  layout 'admin'
 
   # GET /doctors
   # GET /doctors.xml

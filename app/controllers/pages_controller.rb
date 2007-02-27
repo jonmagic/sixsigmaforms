@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   layout 'pages'
   # GET /pages
   # GET /pages.xml
-  def manage
+  def index #This is the ACTION 'index', accessed via /SSAdmin/pages, as opposed to the STUB 'index', accessed via /pages
     @pages = Page.find(:all)
 
     respond_to do |format|
@@ -14,7 +14,7 @@ class PagesController < ApplicationController
   # GET /pages/1
   # GET /pages/1.xml
   def show
-    @page = Page.find(params[:id])
+    @page = Page.find_by_stub(params[:stub]) || Page.find(params[:id])
 
     respond_to do |format|
       format.html # show.rhtml
@@ -29,7 +29,7 @@ class PagesController < ApplicationController
 
   # GET /pages/1;edit
   def edit
-    @page = Page.find(params[:id])
+    @page = Page.find_by_stub(params[:stub]) || Page.find(params[:id])
   end
 
   # POST /pages
@@ -52,7 +52,7 @@ class PagesController < ApplicationController
   # PUT /pages/1
   # PUT /pages/1.xml
   def update
-    @page = Page.find(params[:id])
+    @page = Page.find_by_stub(params[:stub]) || Page.find(params[:id])
 
     respond_to do |format|
       if @page.update_attributes(params[:page])
@@ -69,7 +69,7 @@ class PagesController < ApplicationController
   # DELETE /pages/1
   # DELETE /pages/1.xml
   def destroy
-    @page = Page.find(params[:id])
+    @page = Page.find_by_stub(params[:stub]) || Page.find(params[:id])
     @page.destroy
 
     respond_to do |format|

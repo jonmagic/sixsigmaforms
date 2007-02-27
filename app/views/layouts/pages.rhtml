@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title><%= @page.title %></title>
+		<title><%= @page ? @page.title : controller.action_name %></title>
 		<%= stylesheet_link_tag 'pages.css' %>
 	</head>
 	<body>
@@ -32,7 +32,7 @@
 		<div id="servicesPan">
 			<h2>services</h2>
 			<p>tortor porttito sollicitudin</p>
-			<p class="view"><a href="#">view</a></p>
+			<p class="view"><a href="services">view</a></p>
 		</div>
 		<div id="schedulePan">
 			<h2>schedule</h2>

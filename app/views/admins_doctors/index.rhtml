@@ -1,0 +1,21 @@
+<h1>Listing doctors</h1>
+
+<table>
+  <tr>
+  </tr>
+  
+<% for doctor in @doctors %>
+  <tr>
+    <td><%= doctor.friendly_name %></td>
+    <td><em><%= doctor.alias %></em></td>
+    <td><%= doctor.telephone %></td>
+    <td><%= link_to 'Show', doctor_path(doctor) %></td>
+    <td><%= link_to 'Edit', edit_doctor_path(doctor) %></td>
+    <td><%= link_to 'Destroy', doctor_path(doctor), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New doctor', new_doctor_path %>

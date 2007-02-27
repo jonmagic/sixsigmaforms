@@ -1,1 +1,6 @@
-<h1>Doctor Dashboard</h1>
+<% if current_user.is_doctor -%>
+<h1>Doctor Admin Dashboard</h1>
+  
+<% else -%>
+<h1>Doctor Assistant Dashboard</h1>
+<% end -%>

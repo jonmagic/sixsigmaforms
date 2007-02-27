@@ -3,4 +3,8 @@ class FormsController < ApplicationController
   def draft
   end
 
+  def index
+    #This is to be the 'search' feature
+  end
+
 end
