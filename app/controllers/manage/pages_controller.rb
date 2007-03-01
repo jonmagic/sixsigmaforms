@@ -4,7 +4,7 @@ class Manage::PagesController < ApplicationController
 
   # GET /pages
   # GET /pages.xml
-  def index #This is the ACTION 'index', accessed via /ssadmin/pages, as opposed to the STUB 'index', accessed via /pages
+  def index #This is the ACTION 'index', accessed via /manage/pages, as opposed to the STUB 'index', accessed via /pages
     @pages = Page.find(:all)
 
     respond_to do |format|
