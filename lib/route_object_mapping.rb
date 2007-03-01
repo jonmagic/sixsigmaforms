@@ -49,7 +49,7 @@ module RouteObjectMapping
         end
       else
         if Doctor.exists?(doc_alias) or doc_alias == "manage"
-          store_location unless request.path =~ /manage\/login\/?$/
+          store_location
           redirect_to_url(login_url(doc_alias))
         else
           redirect_back_or_default('/')

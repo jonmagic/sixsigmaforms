@@ -23,9 +23,9 @@ class SessionsController < ApplicationController
         render :action => 'new'
       end
     else
-      if params[:username]
-        flash[:notice] = "Invalid username ("+params[:username]+")."
-      end
+#      if params[:username]
+        flash[:notice] = "Invalid username."
+#      end
       render :action => 'new'
     end
   end
