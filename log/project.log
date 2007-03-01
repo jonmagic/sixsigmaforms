@@ -31,16 +31,16 @@
 [Mon 26 Feb 23:04pm]	 Picked layout for pages, the front facing part of the site. Moved resources to public folder, started pages layout, put some content in db. I'm having trouble with routes though, they don't use the stub correctly, so I need Dan to fix it. Also, I need Dan to make a migration and change the body field from varchar to text so I can fit more than 255 characters in. Next I need to decide where to put my Admin section for the pages stuff, and then build in the dojo editor for ease of use... Also, should I have the menu's be easily editable from admin, or hardcoded into the template? cost/convenience?
                  - -   <COMMIT REVISION 48>
 [Tue 27 Feb 13:42pm]	 Created an index page and services page, for examples for Jon to work off of, redid some routing to make it work (I think) as desired.
-[Tue 27 Feb 13:43pm]	*ADMIN section for pages: Located at SSAdmin/pages - typical map.resources has been placed there. A slight problem is it will use the pages layout, which we may or may not want for pages admin.
+[Tue 27 Feb 13:43pm]	*ADMIN section for pages: Located at ssadmin/pages - typical map.resources has been placed there. A slight problem is it will use the pages layout, which we may or may not want for pages admin.
 [Tue 27 Feb 13:45pm]	 Pages can be accessed via stub OR id (easiest way to manage using the same controller for both admin and public)
 [Tue 27 Feb 13:54pm]	*EDITING THE MENUS -- we'd need to either create a new database table for them too, unless they're dynamic based on pages and you have a checkbox with the page that specifies whether to include it on the menu or not.
-[Tue 27 Feb 13:57pm]	 Created an "admins_doctors_controller" to which I connected the map.resources of doctors for the SSAdmin dashboard. This makes it possible for me to have different functionality and not worry about accessibility issues and distinguishing between SSAdmins and doctor admins. SSAdmins can create doctors, Doctor Admins don't even have such a function available that would have to bar them out.
+[Tue 27 Feb 13:57pm]	 Created an "admins_doctors_controller" to which I connected the map.resources of doctors for the ssadmin dashboard. This makes it possible for me to have different functionality and not worry about accessibility issues and distinguishing between ssadmins and doctor admins. ssadmins can create doctors, Doctor Admins don't even have such a function available that would have to bar them out.
                  - -   <COMMIT REVISION 49>
-[Tue 27 Feb 14:34pm]	 Secured the Pages admin to SSAdmin-only access. If not logged in, redirects to SSAdmin login; if logged in as a non-SSAdmin user, redirects to your dashboard; After SSAdmin login, redirects back to the previous attempted-access page. Added "Manage Pages" to SSAdmin dashboard.
+[Tue 27 Feb 14:34pm]	 Secured the Pages admin to ssadmin-only access. If not logged in, redirects to ssadmin login; if logged in as a non-ssadmin user, redirects to your dashboard; After ssadmin login, redirects back to the previous attempted-access page. Added "Manage Pages" to ssadmin dashboard.
                  - -   <COMMIT REVISION 50>
-[Tue 27 Feb 18:07pm]	 Created a reusable LIVE SEARCH functionality! Put one line in your view to include a live search of any controller or model... Take a look at Manage Doctors in the SSAdmin dashboard, or look at the Doctor Admin dashboard (log in as a doctor admin user) to see two totally different live searches on the same page!
+[Tue 27 Feb 18:07pm]	 Created a reusable LIVE SEARCH functionality! Put one line in your view to include a live search of any controller or model... Take a look at Manage Doctors in the ssadmin dashboard, or look at the Doctor Admin dashboard (log in as a doctor admin user) to see two totally different live searches on the same page!
                  - -   <COMMIT REVISION 51>
 
 
 ::TO DO::
-Create the SSAdmin Doctor management page.
+Create the ssadmin Doctor management page.

@@ -134,7 +134,7 @@ This controller handles the login/logout function of the site.
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/sessions_controller.rb, line 8</span>
  8:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
- 9:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:doctor</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'SSAdmin'</span>
+ 9:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:doctor</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'ssadmin'</span>
 10:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_user</span> = <span class="ruby-constant">Admin</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:username</span>], <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:password</span>])
 11:     <span class="ruby-keyword kw">else</span>
 12:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:username</span>], <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:password</span>], <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:doctor</span>])

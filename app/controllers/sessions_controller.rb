@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if params[:doctor_alias] == 'SSAdmin'
+    if params[:doctor_alias] == 'ssadmin'
       self.current_user = Admin.authenticate(params[:username], params[:password])
     else
       self.current_user = User.authenticate(params[:username], params[:password], params[:doctor_alias])

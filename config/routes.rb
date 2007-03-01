@@ -23,7 +23,7 @@ ActionController::Routing::Routes.draw do |map|
 
 #/pages/[show, etc]
   map.page '/pages/:stub', :controller => 'pages', :action => 'show', :stub => 'index'
-  map.resources :pages, :path_prefix => '/SSAdmin'
+  map.resources :pages, :path_prefix => '/ssadmin'
 
 #/logout
   map.connect '/logout', :controller => 'sessions', :action => 'destroy'
@@ -31,12 +31,12 @@ ActionController::Routing::Routes.draw do |map|
   map.doctor_login '/:doctor_alias/login', :controller => 'sessions', :action => 'create'
 
 #This is a little too complicated, maybe a bit redundant? No?
-#/SSAdmin/admins/[new,create,show,destroy,etc]
-#/SSAdmin/doctors/[new,create,show,destroy,etc]
-  map.resources :admins, :path_prefix => '/SSAdmin'
-  map.resources :doctors, :path_prefix => '/SSAdmin', :controller => 'admins_doctors'
-#/SSAdmin/:action/:id
-  map.admin_dashboard '/SSAdmin/:action/:id', :controller => 'admins', :action => 'dashboard'
+#/ssadmin/admins/[new,create,show,destroy,etc]
+#/ssadmin/doctors/[new,create,show,destroy,etc]
+  map.resources :admins, :path_prefix => '/ssadmin'
+  map.resources :doctors, :path_prefix => '/ssadmin', :controller => 'admins_doctors'
+#/ssadmin/:action/:id
+  map.admin_dashboard '/ssadmin/:action/:id', :controller => 'admins', :action => 'dashboard'
 #****
 
 #/mydoc/patients/:action/:id

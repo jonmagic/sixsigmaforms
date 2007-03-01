@@ -7,7 +7,7 @@ module RouteObjectMapping
     end
     
     def user_is_ssadmin?
-      logged_in? ? current_doctor == 'SSAdmin' : false
+      logged_in? ? current_doctor == 'ssadmin' : false
     end
 
     # Store the given user in the session.
@@ -24,8 +24,8 @@ module RouteObjectMapping
     end
 
     def validate_doctor_and_form_type
-     #Keep non-SSAdmin people out of SSAdmin dashboard
-      redirect_back_or_default(doctor_dashboard_url(current_user.domain.alias)) if params[:doctor_alias] == "SSAdmin" and logged_in? and !(current_user.domain.alias == "SSAdmin")
+     #Keep non-ssadmin people out of ssadmin dashboard
+      redirect_back_or_default(doctor_dashboard_url(current_user.domain.alias)) if params[:doctor_alias] == "ssadmin" and logged_in? and !(current_user.domain.alias == "ssadmin")
      #Keep people out of doctors that are not their own or do not exist
       redirect_if_invalid_doctor_alias(params[:doctor_alias]) if !params[:doctor_alias].blank?
      #Keep people away from form types that don't belong to their doctor or do not exist
@@ -33,7 +33,7 @@ module RouteObjectMapping
     end
 
     def require_ssadmin_except_for_show
-      redirect_if_invalid_doctor_alias('SSAdmin') unless params[:action] == 'show'
+      redirect_if_invalid_doctor_alias('ssadmin') unless params[:action] == 'show'
     end
   private
     def redirect_if_invalid_doctor_alias(doc_alias)
@@ -43,7 +43,7 @@ module RouteObjectMapping
           redirect_to_url(doctor_dashboard_path(current_user.domain))
         end
       else
-        if Doctor.exists?(doc_alias) or doc_alias == "SSAdmin"
+        if Doctor.exists?(doc_alias) or doc_alias == "ssadmin"
           store_location
           redirect_to_url(doctor_login_url(doc_alias))
         else
