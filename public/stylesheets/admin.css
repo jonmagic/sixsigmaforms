@@ -71,7 +71,7 @@ blockquote p {
 #leftColumn {
 	position:absolute;
 	left:1.14em;
-	top:6.3em;
+	top:6.7em;
 	width:12em;
 	margin:0;
 	font-size:.9em;
@@ -93,7 +93,7 @@ blockquote p {
 
 #leftColumn ul { 
 	margin:1.5em 0 0 0; 
-	padding:0 1em;
+	padding:.5em 1em;
 	list-style:none;
 	}
 
@@ -116,11 +116,11 @@ blockquote p {
 #centerColumn {
 	right:1.14em;
 	margin-top:.1em;
-	margin-left: 15.50em;
-	margin-right:2.25em;
+	margin-left: 14.50em;
+	margin-right:1.14em;
 	voice-family: "\"}\"";
 	voice-family: inherit;
-	margin-left:15.50em;
+	margin-left:14.50em;
 	margin-right:1.14em;
 	padding:0em .5em 2em .5em;
 	background: #ffffff;
@@ -128,7 +128,7 @@ blockquote p {
 	}
 
 html>body #centerColumn {
-	margin-left:15.50em;
+	margin-left:14.50em;
 	margin-right:1.14em;
 	}
 
