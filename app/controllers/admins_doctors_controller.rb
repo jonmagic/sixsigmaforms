@@ -16,7 +16,6 @@ class AdminsDoctorsController < ApplicationController
   end
 
 # Need to create a search action in case user hits enter on the live_search box, or else disable hard-submit on the form.
-
   def live_search
     @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)
     if @phrase.blank?

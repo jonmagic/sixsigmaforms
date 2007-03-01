@@ -1,4 +1,4 @@
-class PagesController < ApplicationController
+class Manage::PagesController < ApplicationController
   before_filter :require_ssadmin_except_for_show
   layout 'admin'
 
