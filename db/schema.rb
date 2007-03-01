@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(:version => 11) do
 
   create_table "pages", :force => true do |t|
     t.column "title", :string
-    t.column "body",  :string
+    t.column "body",  :text
     t.column "stub",  :string
   end
 

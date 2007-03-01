@@ -1,112 +1,175 @@
-/* CSS Document */
-body{background-color:#3B3B3B; color:#A4A4A4; padding:0px; margin:0px; font:13px/17px Verdana, Arial, Helvetica, sans-serif;}
-div, ul, li, h1, h2, h3, h4, p, img{margin:0px; padding:0px;}
-ul{list-style-type:none;}
+/*
+CSS-file for Strictly CSS three column layout 2006
+http://www.strictlycss.com
+Developed by Eivind Savio
+*/
 
-/*----TOP PANEL----*/
-#header_container{height:299px; position:relative; margin:0 auto; padding:0px; background-image:url(/images/pages/header_slice.gif); background-repeat:repeat-x; background-position:top;}
+* {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	}
 
-#header{width:755px; height:299px; position:relative; margin:0 auto; padding:0px 9px 0px 14px;}
+body, html {
+	color: #000; 
+	font-family: Verdana, Arial, Tahoma, sans-serif;
+	background-color: #eee; 
+	text-align: center; /*** Centers the design in old IE versions ***/
+	}
 
-#header img{height:86px; width:450px; position:absolute; top:0; left:161px; padding:0px;}
+body {
+	font-size: 70%;
+	}
 
-#header ul{width:94px; height:145px; padding:23px 49px 20px 20px; position:absolute; top:103px; left:0px; background:url(/images/pages/ul.gif) 0 0 no-repeat;}
+p {
+	padding: 7px 0 7px 0;
+	}
 
-#header ul li{background:url(/images/pages/bullet1.gif) 0 7px no-repeat #ccc; border-bottom:#929292 dotted 1px; font:12px/24px Verdana, Helvetica, sans-serif; font-weight:bold; color: #000; padding-left:10px;}
+a {
+	color: #000099;
+	}
+a:hover {
+	color: #0000FF;
+	text-decoration: none;
+	}
 
-#header ul li.contact{border:none;}
+h1, h2, h3 {
+	font-weight: bold;
+	padding-bottom: 5px;
+	}
+	
+h1 {
+	font-size: 2em;
+	}
+	
+h2 {
+	font-size: 1.4em;
+	}
 
-#header ul li a{font-family:Verdana, Helvetica, sans-serif; font-size:12px; font-weight:bold; text-decoration:none; background:#ccc; color:#212121;
+h3 {
+	font-size: 1.3em;
+	}
+
+h1 a, #header h2 {
+	color: #fff;
+	}
+	
+.clear { clear: both; }
+
+#mainContainer {
+	width: 760px;
+	margin: 0 auto; /*** Centers the design ***/
+	min-height: 300px;
+	background: #add8e6;
+	text-align: left; /*** Because we centered the text in body we have to move the text back to left aligning ***/
+	}
+
+* html #mainContainer {
+	height: 300px; /*** IE doesn't support min-height, but instead it handles height as min-height so we need to hack the height ***/
+	}
+
+/**************************
+HEADER
+**************************/
+#header {
+background: #000099;
+padding: 10px
 }
-#header ul li a:hover{background:#ccc; color:#B53332; text-decoration:none;}
-#header h1{padding:137px 0px 0px 33px; background:url(/images/pages/banner.jpg) 0 0 no-repeat #fff; width:547px; height:51px; font-family:Verdana, Helvetica, sans-serif; font-size:13px; font-weight:bold; color: #3B3B3B; position:absolute; top:103px; left:175px;}
-
-/*----BODY1 PANEL----*/
-#body1{width:778px; height:77px; position:relative; margin:0 auto; background:url(/images/pages/from_shadow.jpg) 0 100% no-repeat;}
-
-#body1 form{width:690px; height:77px; margin:0; padding:0 0 0 88px;}
-
-#body1 form label{width:177px; height:44px; font-family:Georgia, "Times New Roman", Times, serif; font-size:20px; font-weight:bold; color: #fff; background-color:#3B3B3B; display:block; float:left; background-image: url(/images/pages/level.jpg); background-repeat:no-repeat; background-position:left top; padding-left:60px; line-height:44px; margin-top:17px;}
-
-#body1 form input{width:135px; height:18px; float:left; display:block; margin:28px 25px 0 0; padding:0 0 0 10px;}
-#body1 form input.botton{width:56px; height:28px; float:left; background:url(/images/pages/button.gif) 0 0 no-repeat #3A3A3A; border:none; color:#fff; font:14px/28px Verdana, Arial, Helvetica, sans-serif; margin:26px 0 0; padding:0px;}
-
-/*----/BODY1 PANEL----*/
-
-/*----BODY MIDDLE PANEL----*/
-#bodymiddlePan{width:602px; position:relative; margin:0 auto; padding:0 88px; clear:both;}
-#bodymiddlePan h2{width:400px; height:68px; display:block; background:#3B3B3B; color:#FBD61A; font:28px/68px Georgia, "Times New Roman", Times, serif; font-weight:normal;}
-#bodymiddlePan p.lasttext{padding:0 0 25px 0;}
-#bodymiddlePan p span{background:#3B3B3B; color:#fff;}
-/*----BODY MIDDLE PANEL----*/
-
-/*----BODY BOTTOM PANEL----*/
-#bodyBottomPan{width:690px; background:url(/images/pages/body_shadow.gif) 0 0 no-repeat; position:relative; margin:0 auto; padding:54px 0 0 88px; clear:both;}
-/*----Info Panel----*/
-#infoPan{width:187px; height:192px; background:url(/images/pages/infopanelbg.jpg) 0 100% no-repeat #3B3B3B; float:left; margin:0 28px 0 0; color:#524201; font:13px/17px Verdana, Arial, Helvetica, sans-serif;}
-#infoPan h2{width:163px; height:40px; background:url(/images/pages/infopaneltop.jpg) 0 0 no-repeat #3B3B3B; color:#fff; font:32px/36px "Trebuchet MS", Arial, Helvetica, sans-serif; font-weight:normal; padding:30px 0 0 24px;}
-#infoPan p{padding:10px 0 0 24px; line-height:17px;}
-#infoPan p.view{width:66px; height:18px; padding:10px 0 0 24px;}
-#infoPan p.view a{width:66px; height:18px; display:block; background:url(/images/pages/infoview-normal.gif) 0 0 no-repeat #F0C40E; color:#fff; font:12px/18px Verdana, Arial, Helvetica, sans-serif; font-weight:bold; text-align:center; text-decoration:none;}
-#infoPan p.view a:hover{background:url(/images/pages/infoview-hover.gif) 0 0 no-repeat #F0C40E; color:#fff; text-decoration:none;}
-/*----/Info Panel----*/
-
-/*----Services Panel----*/
-#servicesPan{width:187px; height:192px; background:url(/images/pages/servicespanelbg.jpg) 0 100% no-repeat #3B3B3B; color:#212121; float:left; margin:0 28px 0 0; font:13px/17px Verdana, Arial, Helvetica, sans-serif;}
-#servicesPan h2{width:163px; height:40px; background:url(/images/pages/servicespaneltop.jpg) 0 0 no-repeat #3B3B3B; color:#fff; font:32px/36px "Trebuchet MS", Arial, Helvetica, sans-serif; font-weight:normal; padding:30px 0 0 24px;}
-#servicesPan p{padding:10px 0 0 24px; line-height:17px;}
-#servicesPan p.view{width:66px; height:18px; padding:10px 0 0 24px;}
-#servicesPan p.view a{width:66px; height:18px; display:block; background:url(/images/pages/servicesview-normal.gif) 0 0 no-repeat #B8B8B8; color:#fff; font:12px/18px Verdana, Arial, Helvetica, sans-serif; font-weight:bold; text-align:center; text-decoration:none;}
-#servicesPan p.view a:hover{background:url(/images/pages/servicesview-hover.gif) 0 0 no-repeat #B8B8B8; color:#fff; text-decoration:none;}
-/*----/Services Panel----*/
-
-/*----Schedule Panel----*/
-#schedulePan{width:187px; height:192px; background:url(/images/pages/schedulepanelbg.jpg) 0 100% no-repeat #3B3B3B; color:#fff; float:left; margin:0 28px 0 0; font:13px/17px Verdana, Arial, Helvetica, sans-serif;}
-#schedulePan h2{width:163px; height:40px; background:url(/images/pages/schedulepaneltop.jpg) 0 0 no-repeat #3B3B3B; color:#fff; font:32px/36px "Trebuchet MS", Arial, Helvetica, sans-serif; font-weight:normal; padding:30px 0 0 24px;}
-#schedulePan p{padding:10px 0 0 24px; line-height:17px;}
-#schedulePan p.view{width:66px; height:18px; padding:10px 0 0 24px;}
-#schedulePan p.view a{width:66px; height:18px; display:block; background:url(/images/pages/scheduleview-normal.gif) 0 0 no-repeat #E45D5D; color:#fff; font:12px/18px Verdana, Arial, Helvetica, sans-serif; font-weight:bold; text-align:center; text-decoration:none;}
-#schedulePan p.view a:hover{background:url(/images/pages/scheduleview-hover.gif) 0 0 no-repeat #E45D5D; color:#fff; text-decoration:none;}
-/*----/Schedule Panel----*/
-
-/*----BOTOM PANEL----*/
-#bottomPan{height:282px; background:url(/images/pages/bottombg.gif) 0 0 repeat-x; position:relative; margin:0 auto; padding:65px 0 0; clear:both;}
-
-#bottomMainPan{width:778px; position:relative; margin:0 auto; padding:50px 0 0;}
-#bottomBorderPan{width:778px; float:left; background:url(/images/pages/bottomborder-bg1.gif) 0 0 repeat-y;}
-#bottomBorderPan h2{width:210px; height:40px; position:absolute; top:28px; left:0px; display:block; background:#ccc; color:#0C0C0C; font:24px/40px Georgia, "Times New Roman", Times, serif;}
-#bottomBorderPan h3{width:210px; height:40px; position:absolute; top:28px; left:259px; display:block; background:#ccc; color:#0C0C0C; font:24px/40px Georgia, "Times New Roman", Times, serif;}
-#bottomBorderPan h4{width:210px; height:40px; position:absolute; top:28px; left:517px; display:block; background:#ccc; color:#0C0C0C; font:24px/40px Georgia, "Times New Roman", Times, serif;}
-
-#bottomBorderPan ul{float:left; width:258px; padding:25px 0 0;}
-#bottomBorderPan ul li{width:225px; height:22px; margin:0 10px 0 0;}
-#bottomBorderPan ul li a{width:200px; height:22px; display:block; background:url(/images/pages/arrow-normal.gif) 0 8px no-repeat #ccc; color:#3D3C2C; font:14px/22px Arial, Helvetica, sans-serif; text-decoration:none; padding:0 0 0 16px;}
-#bottomBorderPan ul li a:hover{background:url(/images/pages/arrow-hover.gif) 0 8px no-repeat #BDBDBD; color:#3D3C2C; text-decoration:none;}
-/*----/BOTOM PANEL----*/
-
-/*----FOOTER PANEL----*/
-#footermainPan{height:144px; background:url(/images/pages/footerbg.gif) 0 0 repeat-x #3B3B3B; position:relative; margin:0 auto;  color:#fff; font:13px/22px "Trebuchet MS",Arial, Helvetica, sans-serif; clear:both; padding:30px 0 0;}
-
-#footerPan{width:778px; position:relative; margin:0 auto;}
-
-#footerlogoPan{display:block; width:215px; height:40px; position:absolute; top:0px; left:456px;}
-
-#footerPan ul{width:546px; position:absolute; top:0px; left:0px;}
-#footerPan li{float:left; }
-#footerPan ul li a{padding:0 10px 0; color:#fff; background: url(/images/pages/footermenubg.gif) 0 0 repeat-x #3B3B3B; text-decoration:none;}
-#footerPan ul li a:hover{text-decoration:underline;}
-
-#footerPan ul.templateworld{width:250px; background:#3B3B3B; color:#fff; display:block; position:absolute; top:80px; left:10px;}
-#footerPan ul.templateworld li a{background:#3B3B3B; display:block; color:#fff; text-decoration:none;}
-#footerPan ul.templateworld li a:hover{text-decoration:underline;}
-
-#footerPan p.copyright{width:300px; background: url(/images/pages/copyrightbg.gif) 0 0 repeat-x #3B3B3B; color:#fff; position:absolute; top:23px; left:10px;}
-
-#footerPanhtml{width:70px; height:24px; display:block; position:absolute; top:49px; left:5px;}
-#footerPanhtml a{width:65px; height:24px; display:block; background:url(/images/pages/html-normal.gif) 0 0 no-repeat #3B3B3B; color:#fff; font-size:13px; line-height:23px; font-weight:bold; text-decoration:none;text-transform:uppercase; padding:0 0 0 5px;}
-#footerPanhtml a:hover{background:url(/images/pages/html-hover.gif) 0 0 no-repeat #3B3B3B; color:#fff;}
-#footerPancss{width:58px; height:24px; display:block; position:absolute; top:50px; left:80px;}
-#footerPancss a{width:49px; height:24px; display:block; background:url(/images/pages/css-normal.gif) 0 0 no-repeat #3B3B3C; color:#3B3B3B; font-size:13px; line-height:24px; font-weight:bold; text-decoration:none; text-transform:uppercase; padding:0 0 0 10px;}
-#footerPancss a:hover{background:url(/images/pages/css-hover.gif) 0 0 no-repeat #3B3B3B; color:#3B3B3C; text-decoration:none;}
-
-
+/**************************
+CONTENT AND COLUMNS
+**************************/
+.outer {
+padding-left: 165px;  
+}
+* html .outer {
+/*** No need for hacking IE on this layout ***/
+}
+.inner {
+width: 595px; /*** This width is for non-IE browsers. Mozilla makes this necessary. Be sure to check your layout in different browsers if you changes this value. Especially IE7 seems to create a horisontal scroll if this value is set too large ***/
+}
+* html .inner {
+width: 100%;
+}
+/*** div.inner is wider than its container, div.outer, and so overlaps to the right, pushing
+div.right into the proper position. IE expands div.outer instead, requiring a Tan hack to avoid 
+blowing the layout apart. IE gets the original 100% width as in the Livingstone layout.
+***/
+.float-wrap {
+float: left;
+width: 760px;
+margin-left: -165px; /*** Same length as .outer padding-left but with negative value ***/
+}
+* html .float-wrap {
+/*** No need for hacking IE on this layout ***/
+}
+#content {
+float: right;
+width: 600px;
+background: #fff;
+}
+* html #content {
+position: relative;  /*** IE needs this  ***/
+}
+.contentWrap {
+padding: 5px;
+}
+.contentWrap ol, .contentWrap ul {
+margin: 3px 0 5px 35px;
+}
+.contentWrap li {
+padding-bottom: 2px;
+}
+/**************************
+LEFT COLUMN
+**************************/
+/*** div.left is in div.float-wrap, and when div.float-wrap is neg margined to the left, 
+div.left is carried over into the proper position. 
+***/
+#left {
+float: left;
+width: 150px;
+background: #fcc; 
+min-height: 250px;
+padding: 5px;
+}
+* html #left {
+position: relative;  /*** IE needs this  ***/
+height: 250px;
+}
+#left ul {
+list-style: none;
+padding-bottom: 4px;
+}
+#left li {
+padding-bottom: 2px;
+}
+/*************************
+RIGHT COLUMN
+**************************/
+#right {
+float: left;
+width: 750px;
+background: #cfc;
+padding: 5px;
+height: 40px;
+margin-left: -165px; /*** Same length as .outer padding-left but with negative value ***/
+}
+* html #right {
+position: relative;  /*** IE needs this  ***/
+}
+#right ul {
+list-style: none;
+}
+#right li {
+display: inline;
+padding-right: 15px;
+}
+/**************************
+FOOTER
+**************************/
+#footer {
+width: 760px;
+margin: 0 auto;
+text-align: center;
+background-color: yellow;
+}
