@@ -1,6 +1,7 @@
 <% post_url ||= { :action => :live_search } -%>
 <% @live_search_count ||= 0 -%>
 <% @live_search_count += 1 -%>
+<% label ||= '' -%>
 <%= start_form_tag({:action=> "search"}, { :onSubmit => "Element.show('search_loading#{@live_search_count.to_s}');" }) %>
 <!-- I want to include some tickler text (gray, dissappearing text) in the search box, indicated by a local :tickler_text -->
 <b><%= label.blank? ? "Live Search" : label %>:</b> <%= text_field_tag 'searchtext'+@live_search_count.to_s %>

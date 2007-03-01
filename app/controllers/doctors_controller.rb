@@ -80,10 +80,10 @@ class DoctorsController < ApplicationController
     end
   end
 
-  # GET /:doctor_alias/dashboard
+  # GET /:domain/dashboard
   def dashboard
     #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
-#    is_valid_doctor(params[:doctor_alias])
+#    is_valid_doctor(params[:domain])
   end
 
   def form_types

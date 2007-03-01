@@ -6,8 +6,8 @@ module RouteObjectMapping
       @current_doctor ||= logged_in? ? current_user.domain : false
     end
     
-    def user_is_ssadmin?
-      logged_in? ? current_doctor == 'ssadmin' : false
+    def user_is_admin?
+      logged_in? ? current_doctor == 'admin' : false
     end
 
     # Store the given user in the session.
@@ -25,27 +25,27 @@ module RouteObjectMapping
 
     def validate_doctor_and_form_type
      #Keep non-ssadmin people out of ssadmin dashboard
-      redirect_back_or_default(doctor_dashboard_url(current_user.domain.alias)) if params[:doctor_alias] == "ssadmin" and logged_in? and !(current_user.domain.alias == "ssadmin")
+      redirect_back_or_default(mydashboard_url(current_user.domain)) if params[:domain] == "manage" and logged_in? and !(current_user.domain == "manage")
      #Keep people out of doctors that are not their own or do not exist
-      redirect_if_invalid_doctor_alias(params[:doctor_alias]) if !params[:doctor_alias].blank?
+      redirect_if_invalid_doctor_alias(params[:domain]) if !params[:domain].blank?
      #Keep people away from form types that don't belong to their doctor or do not exist
       redirect_if_invalid_form_type(params[:form_type]) if !params[:form_type].blank?
     end
 
-    def require_ssadmin_except_for_show
-      redirect_if_invalid_doctor_alias('ssadmin') unless params[:action] == 'show'
+    def require_admin_except_for_show
+      redirect_if_invalid_doctor_alias('manage') unless params[:action] == 'show'
     end
   private
     def redirect_if_invalid_doctor_alias(doc_alias)
       if logged_in?
         if !(current_user.domain == doc_alias)
           store_location
-          redirect_to_url(doctor_dashboard_path(current_user.domain))
+          redirect_to_url(mydashboard_path(current_user.domain))
         end
       else
-        if Doctor.exists?(doc_alias) or doc_alias == "ssadmin"
-          store_location
-          redirect_to_url(doctor_login_url(doc_alias))
+        if Doctor.exists?(doc_alias) or doc_alias == "manage"
+          store_location unless request.path =~ /manage\/login\/?$/ || request.path =~ /manage\/?$/
+          redirect_to_url(login_url(doc_alias))
         else
           redirect_back_or_default('/')
         end

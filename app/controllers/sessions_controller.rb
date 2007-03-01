@@ -3,20 +3,32 @@ class SessionsController < ApplicationController
 
   # render new.rhtml
   def new
+#Could check for a valid doctor (params[:domain]) and show an alternative login form (using email address) if not found.
   end
 
   def create
-    if params[:doctor_alias] == 'ssadmin'
-      self.current_user = Admin.authenticate(params[:username], params[:password])
+    if params[:domain] == 'manage'
+      auth = Admin
+#      self.current_user = Admin.authenticate(params[:username], params[:password])
+#        flash[:notice] = "Admin validate:" + self.current_user.to_yaml
     else
-      self.current_user = User.authenticate(params[:username], params[:password], params[:doctor_alias])
+      auth = User
+#        flash[:notice] = "User validate."
+#      self.current_user = User.authenticate(params[:username], params[:password], params[:domain])
     end
-    if logged_in?
-      flash[:notice] = "Welcome " + self.current_user.friendly_name + "."
-      redirect_back_or_default(doctor_dashboard_url(params[:doctor_alias]))
+    user = auth.valid_username?(params[:username])
+    if user
+      self.current_user = auth.authenticate(params[:username], params[:password], params[:domain])
+      if logged_in?
+        flash[:notice] = "Welcome " + self.current_user.friendly_name + "."
+        redirect_back_or_default(mydashboard_url(params[:domain]))
+      else
+        flash[:notice] = "Failed to log in."
+        render :action => 'new'
+      end
     else
       if params[:username]
-        flash[:notice] = "Invalid username or password."
+        flash[:notice] = "Invalid username ("+params[:username]+")."
       end
       render :action => 'new'
     end
@@ -27,6 +39,6 @@ class SessionsController < ApplicationController
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default(doctor_login_url(doc_al))
+    redirect_back_or_default(login_url(doc_al))
   end
 end

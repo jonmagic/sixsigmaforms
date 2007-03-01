@@ -14,11 +14,8 @@ ActionController::Routing::Routes.draw do |map|
 #/logout
   map.connect '/logout', :controller => 'sessions', :action => 'destroy'
 
-#/manage/login
-  map.admin_login '/manage/login', :controller => 'sessions', :action => 'create', :domain => 'admin'
-
-#/mydoc/login
-  map.doctor_login '/:doctor_alias/login', :controller => 'sessions', :action => 'create', :domain => 'doctor'
+#/mydoc/login OR /manage/login
+  map.login '/:domain/login', :controller => 'sessions', :action => 'create'
 
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
@@ -28,41 +25,41 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :admins, :path_prefix => '/manage', :controller => 'manage/admins'
 
 #/manage/doctors/[new,create,show,destroy,etc]
-  map.resources :doctors, :path_prefix => '/manage', :controller => 'manage/doctors'
+  map.resources :doctors, :path_prefix => '/manage', :controller => 'manage/doctors', :collection => { :live_search => :any, :search => :any }
 
 #/manage/pages/[new,create,show,destroy,etc]
   map.resources :pages, :path_prefix => '/manage'
 
 #/manage/:action/:id
-  map.admin_dashboard '/manage/:action/:id', :controller => 'manage/admins', :action => 'dashboard'
+  map.admin_dashboard '/manage', :controller => 'manage/admins', :action => 'dashboard'
 
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 
 
+#/mydoc
+  map.mydashboard '/:domain', :controller => 'doctors', :action => 'dashboard'
+
 #/mydoc/patients/:action/:id
-  map.resources :patients, :path_prefix => '/:doctor_alias', :collection => { :live_search => :any, :search => :any } #index is search
+  map.resources :patients, :path_prefix => '/:domain', :collection => { :live_search => :any, :search => :any }
 
 #/mydoc/users/[new,create,show,destroy,etc]
-  map.resources :users, :path_prefix => '/:doctor_alias', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
+  map.resources :users, :path_prefix => '/:domain', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
 
 #/mydoc/forms/CMS1500/[new,show,edit,etc]
-  map.resources :forms, :path_prefix => '/:doctor_alias' do |form|
+  map.resources :forms, :path_prefix => '/:domain' do |form|
 #/mydoc/forms/CMS1500/157/notes/[show,edit,create]
     form.resources :notes
   end
 
 #/mydoc/forms/chooser
-  map.form_type_chooser '/:doctor_alias/forms/chooser', :controller => 'forms', :action => 'chooser'
+  map.form_type_chooser '/:domain/forms/chooser', :controller => 'forms', :action => 'chooser'
 
 #/mydoc/profile
-  map.doctor_profile '/:doctor_alias/profile', :controller => 'doctors', :action => 'show'
+  map.doctor_profile '/:domain/profile', :controller => 'doctors', :action => 'show'
 
 #/mydoc/profile/edit
-  map.edit_doctor_profile '/:doctor_alias/profile/edit', :controller => 'doctors', :action => 'edit'
-
-#/mydoc
-  map.doctor_dashboard '/:doctor_alias', :controller => 'doctors', :action => 'dashboard'
+  map.edit_doctor_profile '/:domain/profile/edit', :controller => 'doctors', :action => 'edit'
 
 
 # * * * * * * * * * * * * * * * * * * * * * * * *

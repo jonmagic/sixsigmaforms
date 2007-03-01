@@ -1,7 +1,4 @@
-class Manage::AdminsDoctorsController < ApplicationController
-
-#The AdminsDoctors controller exists for the SixSigma Admins to manage Doctors.
-
+class Manage::DoctorsController < ApplicationController
   before_filter :validate_doctor_and_form_type
   layout 'admin'
 
@@ -16,13 +13,24 @@ class Manage::AdminsDoctorsController < ApplicationController
   end
 
 # Need to create a search action in case user hits enter on the live_search box, or else disable hard-submit on the form.
+  def search
+    @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)
+    if @phrase.blank?
+      render :nothing => true
+    else
+      @sqlphrase = "%" + @phrase.to_s + "%"
+      @results = Doctor.find(:all, :conditions => [ "friendly_name LIKE ? OR alias LIKE ? OR telephone LIKE ?", @sqlphrase, @sqlphrase, @sqlphrase])
+      @search_entity = @results.length == 1 ? "Doctor" : "Doctors"
+    end
+  end
+
   def live_search
     @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)
     if @phrase.blank?
       render :nothing => true
     else
       @sqlphrase = "%" + @phrase.to_s + "%"
-      @results = Doctor.find(:all, :conditions => [ "friendly_name LIKE ? OR alias LIKE ?", @sqlphrase, @sqlphrase])
+      @results = Doctor.find(:all, :conditions => [ "friendly_name LIKE ? OR alias LIKE ? OR telephone LIKE ?", @sqlphrase, @sqlphrase, @sqlphrase])
       @search_entity = @results.length == 1 ? "Doctor" : "Doctors"
       render(:file => 'shared/live_search_results', :use_full_path => true)
     end

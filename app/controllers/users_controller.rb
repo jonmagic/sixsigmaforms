@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.find_all_by_doctor_id(Doctor.id_of_alias(params[:doctor_alias]))
+    @users = User.find_all_by_doctor_id(Doctor.id_of_alias(params[:domain]))
     respond_to do |format|
       format.html # index.rhtml
       format.xml  { render :xml => @users.to_xml }
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   # render new.rhtml
   def new
    @user = User.new
-   @user.doctor_id = Doctor.id_of_alias(params[:doctor_alias])
+   @user.doctor_id = Doctor.id_of_alias(params[:domain])
   end
 
 # Need to create a search action in case user hits enter on the live_search box, or else disable hard-submit on the form.
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     @user = User.new
     @user.friendly_name = params[:user][:friendly_name]
     @user.email = params[:user][:email]
-    @user.doctor_id = Doctor.id_of_alias(params[:doctor_alias])
+    @user.doctor_id = Doctor.id_of_alias(params[:domain])
     if @user.save
       redirect_back_or_default(users_path)
       flash[:notice] = "User #{@user.friendly_name} has been created."
@@ -71,7 +71,7 @@ class UsersController < ApplicationController
               #Log the user in
               self.current_user = @user
               flash[:notice] = "Signup complete! #{@user.username} is ready for login."
-              format.html { redirect_to user_url(:doctor_alias => params[:doctor_alias], :id => @user) }
+              format.html { redirect_to user_url(:domain => params[:domain], :id => @user) }
               format.xml  { head :ok }
             else
               format.html { render :action => "register" }
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
         render "users/register_activation"
       end
     else
-      redirect_back_or_default(doctor_user_path(:doctor_alias => params[:doctor_alias], :action => 'register'))
+      redirect_back_or_default(doctor_user_path(:domain => params[:domain], :action => 'register'))
     end
   end
 
@@ -125,7 +125,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to doctor_user_path(:doctor_alias => params[:doctor_alias]) }
+      format.html { redirect_to doctor_user_path(:domain => params[:domain]) }
       format.xml  { head :ok }
     end
   end

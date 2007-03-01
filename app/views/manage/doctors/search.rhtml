@@ -1,3 +1,11 @@
+<p><%= @results.length %> <%= @search_entity.blank? ? "Items" : @search_entity %> containing <em><%= @phrase %></em>:</p>
+<div>
+<table>
+  <thead>
+    <th>Name</th>
+    <th>Alias</th>
+    <th>Telephone</th>
+  </thead>
 <% for doctor in @results %>
   <tr>
     <td><%= doctor.friendly_name %></td>
@@ -8,3 +16,5 @@
     <td><%= link_to 'Destroy', doctor_path(doctor), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
+</table>
+</div>

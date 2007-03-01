@@ -23,15 +23,30 @@ class Admin < ActiveRecord::Base
   end
 
   def domain
-    "ssadmin"
+    "manage"
+  end
+
+  def self.is_admin?(user)
+    mock = Admin.find_by_username(user.username)
+    mock.blank? ? nil : mock.email == user.email
+  end
+
+  def is_admin?
+    true
   end
 
   # Returns true if the user has just been activated.
   def recently_activated?
     @just_activated
   end 
+
+  def self.valid_username?(username)
+    u = find :first, :conditions => ['username = ?', username]
+    !u.blank? ? u : nil
+  end
+
   # Authenticates a user by their username and unencrypted password.  Returns the user or nil.
-  def self.authenticate(username, password)
+  def self.authenticate(username, password, domain='manage')
 #    u = find :first, :conditions => ['username = ? and activated_at IS NOT NULL', username] # need to get the salt
     u = find :first, :conditions => ['username = ?', username] # :first, :conditions => ['username = ?', username] # need to get the salt
     u && u.authenticated?(password) ? u : nil
@@ -57,6 +72,8 @@ class Admin < ActiveRecord::Base
 
   protected
 
+
+#Need to validate_uniqueness_of email address throughout User model as well!
     def validate_on_update
       old_admin = Admin.find_by_activation_code(activation_code) if !activation_code.blank?
       activation_code_valid = !old_admin.blank?

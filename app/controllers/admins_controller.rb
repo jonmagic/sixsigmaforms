@@ -89,7 +89,7 @@ class AdminsController < ApplicationController
   def dashboard
     #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
     store_location  #I don't think I need this because it automatically redirects to the dashboard, but maybe this is helpful?
-    redirect_to doctor_login_url('ssadmin') unless user_is_ssadmin?
+    redirect_to login_url('manage') unless user_is_admin?
     
   end
 

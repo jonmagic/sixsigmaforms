@@ -1,5 +1,5 @@
 class Manage::PagesController < ApplicationController
-  before_filter :require_ssadmin_except_for_show
+  before_filter :require_admin_except_for_show
   layout 'admin'
 
   # GET /pages
