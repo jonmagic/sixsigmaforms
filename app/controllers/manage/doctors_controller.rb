@@ -1,4 +1,4 @@
-class AdminsDoctorsController < ApplicationController
+class Manage::AdminsDoctorsController < ApplicationController
 
 #The AdminsDoctors controller exists for the SixSigma Admins to manage Doctors.
 
