@@ -23,6 +23,10 @@ class Doctor < ActiveRecord::Base
   end
 
   protected
+    def validate_on_create
+      errors.add(:alias, "cannot be set to <em>\"#{self.alias}\"</em>. Please choose another alias.") if ['pages', 'login', 'logout', 'manage'].include?(self.alias)
+    end
+
     def validate_on_update
       old_doctor = Doctor.find_by_id(id)
 

@@ -1,4 +1,5 @@
 class Manage::AdminsController < ApplicationController
+  before_filter :require_admin
   layout 'admin'
 
   # GET /admins
@@ -78,7 +79,7 @@ class Manage::AdminsController < ApplicationController
   # GET /doctors/1
   # GET /doctors/1.xml
   def show
-    @admin = Admin.find(params[:id])
+    @admin = Admin.find_by_id(params[:id]) || current_user
     respond_to do |format|
       format.html # show.rhtml
       format.xml  { render :xml => @admin.to_xml }
@@ -104,4 +105,9 @@ class Manage::AdminsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+    def require_admin
+      access_denied if !current_user.is_admin?
+    end
 end

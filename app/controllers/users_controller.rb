@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_login_except_register_and_activate
+  before_filter :require_doctor_or_admin_for_certain_actions
 
   # render show.rhtml
   def show
@@ -148,5 +149,9 @@ class UsersController < ApplicationController
       return if logged_in? or params[:action] == 'register' or params[:action] == 'activate'
       store_location
       redirect_to login_url(params[:domain])
+    end
+    
+    def require_doctor_or_admin_for_certain_actions
+      access_denied if !current_user.is_doctor_or_admin? and (['destroy', 'create', 'live_search', 'search', 'new', 'index'].include?(params[:action]))
     end
 end

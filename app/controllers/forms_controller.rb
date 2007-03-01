@@ -3,8 +3,13 @@ class FormsController < ApplicationController
   def draft
   end
 
+  #GET /forms/:status
   def index
-    #This is to be the 'search' feature
+    
   end
 
+  private
+    def require_admin
+      access_denied if !current_user.is_admin?
+    end
 end

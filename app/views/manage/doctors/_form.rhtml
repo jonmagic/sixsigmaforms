@@ -1,5 +1,5 @@
 <% form_method ||= :post %>
-<% form_for(:doctor, :url => submit_url, :method => form_method) do |f| %>
+<% form_for(:doctor, :url => submit_url, :html => {:method => form_method}) do |f| %>
 <%= error_messages_for :doctor %>
 <%= "Your doctor alias is <em>#{@doctor.alias}</em>." if !@user.username.blank? and error_message_on(:user, :username).blank? -%>
 <% if @doctor.alias.blank? or !error_message_on(:doctor, :alias).blank? -%>

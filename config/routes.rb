@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   # The priority is based upon order of creation: first created -> highest priority.
 
 #/sessions/[new,create,destroy]
-  map.resources :sessions
+#  map.resources :sessions
 
 #/pages/[show, etc]
   map.page '/pages/:stub', :controller => 'pages', :action => 'show', :stub => 'index'
@@ -16,22 +16,33 @@ ActionController::Routing::Routes.draw do |map|
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 
+#* * * * * * *
+# A D M I N S *
+#* * * * * * *
 
 #/manage/admins/[new,create,show,destroy,etc]
   map.resources :admins, :path_prefix => '/manage', :controller => 'manage/admins'
 
-#/manage/doctors/[new,create,show,destroy,etc]
+#/manage/doctors/[new,show,etc]
   map.resources :doctors, :path_prefix => '/manage', :controller => 'manage/doctors', :collection => { :live_search => :any, :search => :any }
 
 #/manage/pages/[new,create,show,destroy,etc]
   map.resources :pages, :path_prefix => '/manage', :controller => 'manage/pages'
 
-#/manage/:action/:id
+#/manage
   map.admin_dashboard '/manage', :controller => 'manage/admins', :action => 'dashboard'
+  map.admin_account '/manage/account', :controller => 'manage/admins', :action => 'show'
 
+#Do we want admins to use a different controller for forms than doctors?
+#/forms/:status
+#The following may conflict with map.resources :forms, below.
+#  map.forms '/forms/:status', :controller => 'forms', :action => 'index'
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 
+#* * * * * * * *
+# D O C T O R S *
+#* * * * * * * *
 
 #/mydoc
   map.mydashboard '/:domain', :controller => 'doctors', :action => 'dashboard'
@@ -58,9 +69,9 @@ ActionController::Routing::Routes.draw do |map|
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
-  map.connect ':controller/service.wsdl', :action => 'wsdl'
+#  map.connect ':controller/service.wsdl', :action => 'wsdl'
 
   # Install the default route as the lowest priority.
-  map.connect ':controller/:action/:id.:format'
-  map.connect ':controller/:action/:id'
+#  map.connect ':controller/:action/:id.:format'
+#  map.connect ':controller/:action/:id'
 end

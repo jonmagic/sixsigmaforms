@@ -29,8 +29,8 @@ module RouteObjectMapping
     end
 
     def validate_doctor_and_form_type
-     #Keep non-ssadmin people out of ssadmin dashboard
-      redirect_back_or_default(mydashboard_url(current_user.domain)) if domain == "manage" and logged_in? and !(current_user.domain == "manage")
+#     #Keep non-admin people out of admin dashboard
+#      redirect_back_or_default(mydashboard_url(current_user.domain)) if domain == "manage" and logged_in? and !(current_user.domain == "manage")
      #Keep people out of doctors that are not their own or do not exist
       redirect_if_invalid_doctor_alias(domain)
      #Keep people away from form types that don't belong to their doctor or do not exist
@@ -48,7 +48,7 @@ module RouteObjectMapping
           redirect_to_url(mydashboard_path(current_user.domain))
         end
       else
-        if Doctor.exists?(doc_alias) or doc_alias == "manage"
+        if doc_alias == "manage" or Doctor.exists?(doc_alias)
           store_location
           redirect_to_url(login_url(doc_alias))
         else
