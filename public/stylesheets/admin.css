@@ -1,0 +1,134 @@
+/*******************************************************
+TITLE: Fluid Two-Column Layout (Basic) V1.0 (Beta)
+DATE: 20060418
+AUTHOR: The CSS Tinderbox - http://www.csstinderbox.com
+*******************************************************/
+
+body {
+	margin:0;
+	padding:0;
+	background-color:#fff;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:1em;
+	color: #1A1D1D;
+	}
+
+.floatright {
+	float:right;
+	}
+
+a {
+	text-decoration:none;
+	color: #C13B00;
+	}
+
+a:hover {
+	text-decoration:underline;
+
+	color: #C13B00;
+	}
+
+blockquote {
+	margin:1em;
+	padding:.5em;
+	font-size:.9em;
+	background-color:#cccccc;
+	border-top:1px solid #999999;
+	border-bottom:1px solid #999999;
+	}
+
+blockquote p {
+	margin:.2em;
+	}
+
+#header {
+	margin:1em 1em 0 1em;
+	padding:1em 1.5em;
+	height:2em;
+	background-color:#1A1D1D;
+	border:1px solid #5D706F;
+	color: #fff;
+	}
+
+#header h1 { 
+	margin:0; 
+	padding:0;
+	font-size:1.2em;
+	color:#FF6500;
+	}
+
+#header h3 { 
+	margin:0; 
+	padding:0;
+	font-size:.9em;
+	}
+
+#header a {
+	text-decoration:none;
+	color:#fff;
+	}
+
+#leftColumn {
+	position:absolute;
+	left:1.14em;
+	top:6.3em;
+	width:12em;
+	margin:0;
+	font-size:.9em;
+	}
+	
+#leftColumn .box {
+	padding:1em .5em .9em 1em;
+	background:#9EC1CC;
+	border:1px solid #5D7064;
+	margin-bottom:1em;
+}
+
+#leftColumn h2 { 
+	margin:0 0 -1em 0; 
+	padding:0;
+	font-size:1.2em;
+	letter-spacing:.1em;
+	}
+
+#leftColumn ul { 
+	margin:1.5em 0 0 0; 
+	padding:0 1em;
+	list-style:none;
+	}
+
+#leftColumn li { 
+	margin:0 0 .4em 0; 
+	padding:0;
+	}
+
+#leftColumn li a { 
+	margin:0 0 0 .2em;
+	color:#C13B00;
+	text-decoration:none; 
+	}
+
+#leftColumn li a:hover { 
+	color:#C13B00;
+	text-decoration:underline; 
+	}
+
+#centerColumn {
+	right:1.14em;
+	margin-top:.1em;
+	margin-left: 15.50em;
+	margin-right:2.25em;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	margin-left:15.50em;
+	margin-right:1.14em;
+	padding:0em .5em 2em .5em;
+	background: #ffffff;
+	font-size:.9em;
+	}
+
+html>body #centerColumn {
+	margin-left:15.50em;
+	margin-right:1.14em;
+	}
+
