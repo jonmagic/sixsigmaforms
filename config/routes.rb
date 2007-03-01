@@ -28,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :doctors, :path_prefix => '/manage', :controller => 'manage/doctors', :collection => { :live_search => :any, :search => :any }
 
 #/manage/pages/[new,create,show,destroy,etc]
-  map.resources :pages, :path_prefix => '/manage', :controller => 'mangae/pages'
+  map.resources :pages, :path_prefix => '/manage', :controller => 'manage/pages'
 
 #/manage/:action/:id
   map.admin_dashboard '/manage', :controller => 'manage/admins', :action => 'dashboard'
