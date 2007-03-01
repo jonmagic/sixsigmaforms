@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_filter :require_ssadmin_except_for_show
+  layout 'pages'
 
   # GET /pages/1
   # GET /pages/1.xml

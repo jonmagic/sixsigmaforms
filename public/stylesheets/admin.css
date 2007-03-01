@@ -24,8 +24,6 @@ a {
 
 a:hover {
 	text-decoration:underline;
-
-	color: #C13B00;
 	}
 
 blockquote {
@@ -42,13 +40,15 @@ blockquote p {
 	}
 
 #header {
-	margin:1em 1em 0 1em;
-	padding:1em 1.5em;
-	height:2em;
-	background-color:#1A1D1D;
-	border:1px solid #5D706F;
+	padding:.5em 1.5em 1em 1.5em;
+	height:1em;
 	color: #fff;
 	}
+	
+.header {
+	margin:1em 1em 0 1em;
+	background-color:#1A1D1D;
+}
 
 #header h1 { 
 	margin:0; 
@@ -71,17 +71,24 @@ blockquote p {
 #leftColumn {
 	position:absolute;
 	left:1.14em;
-	top:6.7em;
+	top:6.3em;
 	width:12em;
 	margin:0;
 	font-size:.9em;
 	}
 	
-#leftColumn .box {
-	padding:1em .5em .9em 1em;
-	background:#9EC1CC;
-	border:1px solid #5D7064;
+#leftColumn .forms {
+	background:#5D706F;
 	margin-bottom:1em;
+}
+
+#leftColumn .manage {
+	background:#9EC1CC;
+	margin-bottom:1em;
+}
+
+#leftColumn .box {
+	padding:.5em .5em .9em 1.3em;	
 }
 
 #leftColumn h2 { 
@@ -89,6 +96,7 @@ blockquote p {
 	padding:0;
 	font-size:1.2em;
 	letter-spacing:.1em;
+	color:#FF6500;
 	}
 
 #leftColumn ul { 
@@ -104,12 +112,11 @@ blockquote p {
 
 #leftColumn li a { 
 	margin:0 0 0 .2em;
-	color:#C13B00;
+	color:#FFFFFF;
 	text-decoration:none; 
 	}
 
 #leftColumn li a:hover { 
-	color:#C13B00;
 	text-decoration:underline; 
 	}
 
@@ -123,7 +130,6 @@ blockquote p {
 	margin-left:14.50em;
 	margin-right:1.14em;
 	padding:0em .5em 2em .5em;
-	background: #ffffff;
 	font-size:.9em;
 	}
 
