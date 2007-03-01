@@ -1,2 +1,2 @@
-<p><%= @results.length %> <%= @search_entity.blank? ? "Items" : @search_entity %> containing <em><%= @phrase %></em>:</p>
-<div><%= render :partial => 'live_search_results' %></div>
+<p><%= @results.length %> <%= @search_entity.blank? ? "Items" : @search_entity %> containing <em><%= @phrase %></em><%= ":" if @results.length > 0 %></p>
+<div><%= render(:partial => 'live_search_results') if @results.length > 0 %></div>

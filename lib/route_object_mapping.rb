@@ -1,5 +1,10 @@
 module RouteObjectMapping
+
   protected
+  
+    def domain
+      @domain ||= params[:domain] || 'manage'
+    end
 
     def current_doctor
       #Is this always what I want to return here?
@@ -25,9 +30,9 @@ module RouteObjectMapping
 
     def validate_doctor_and_form_type
      #Keep non-ssadmin people out of ssadmin dashboard
-      redirect_back_or_default(mydashboard_url(current_user.domain)) if params[:domain] == "manage" and logged_in? and !(current_user.domain == "manage")
+      redirect_back_or_default(mydashboard_url(current_user.domain)) if domain == "manage" and logged_in? and !(current_user.domain == "manage")
      #Keep people out of doctors that are not their own or do not exist
-      redirect_if_invalid_doctor_alias(params[:domain]) if !params[:domain].blank?
+      redirect_if_invalid_doctor_alias(domain)
      #Keep people away from form types that don't belong to their doctor or do not exist
       redirect_if_invalid_form_type(params[:form_type]) if !params[:form_type].blank?
     end
@@ -44,7 +49,7 @@ module RouteObjectMapping
         end
       else
         if Doctor.exists?(doc_alias) or doc_alias == "manage"
-          store_location unless request.path =~ /manage\/login\/?$/ || request.path =~ /manage\/?$/
+          store_location unless request.path =~ /manage\/login\/?$/
           redirect_to_url(login_url(doc_alias))
         else
           redirect_back_or_default('/')

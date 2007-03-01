@@ -32,6 +32,11 @@ class User < ActiveRecord::Base
     self.doctor.alias == self.username
   end
 
+  def self.valid_username?(username)
+    u = find :first, :conditions => ['username = ?', username]
+    !u.blank? ? u : nil
+  end
+
   # Returns true if the user has just been activated.
   def recently_activated?
     @just_activated

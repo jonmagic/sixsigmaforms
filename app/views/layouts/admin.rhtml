@@ -19,7 +19,7 @@
 				<% if logged_in? -%>
 					Logged in as <%= current_user.username %>, from <%= current_user.domain %>. <a href="/logout">Logout</a>
 				<% else -%>
-					Not logged in. <a href="/<%= params[:doctor_alias] ? params[:doctor_alias] : "ssadmin" %>/login">Login</a>
+					Not logged in. <a href="/<%= @domain %>/login">Login</a>
 				<% end -%>
 			</h3>
 			<h1>Six Sigma Management: HipForms</h1>

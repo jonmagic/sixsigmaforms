@@ -9,12 +9,8 @@ class SessionsController < ApplicationController
   def create
     if params[:domain] == 'manage'
       auth = Admin
-#      self.current_user = Admin.authenticate(params[:username], params[:password])
-#        flash[:notice] = "Admin validate:" + self.current_user.to_yaml
     else
       auth = User
-#        flash[:notice] = "User validate."
-#      self.current_user = User.authenticate(params[:username], params[:password], params[:domain])
     end
     user = auth.valid_username?(params[:username])
     if user
