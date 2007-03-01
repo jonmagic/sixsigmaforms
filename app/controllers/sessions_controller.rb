@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
       auth = User
     end
     user = auth.valid_username?(params[:username])
-    if user
+    if !user.blank?
       self.current_user = auth.authenticate(params[:username], params[:password], params[:domain])
       if logged_in?
         flash[:notice] = "Welcome " + self.current_user.friendly_name + "."
@@ -23,9 +23,9 @@ class SessionsController < ApplicationController
         render :action => 'new'
       end
     else
-#      if params[:username]
+      if params[:username]
         flash[:notice] = "Invalid username."
-#      end
+      end
       render :action => 'new'
     end
   end

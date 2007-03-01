@@ -6,13 +6,13 @@ module RouteObjectMapping
       @domain ||= params[:domain] || 'manage'
     end
 
-    def current_doctor
+    def current_domain
       #Is this always what I want to return here?
       @current_doctor ||= logged_in? ? current_user.domain : false
     end
     
     def user_is_admin?
-      logged_in? ? current_doctor == 'admin' : false
+      logged_in? ? current_domain == 'manage' : false
     end
 
     # Store the given user in the session.
