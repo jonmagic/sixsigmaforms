@@ -66,7 +66,8 @@ module AuthenticatedSystem
       respond_to do |accepts|
         accepts.html do
           store_location
-          redirect_to :controller => 'sessions', :action => 'new'
+#          redirect_to :controller => 'sessions', :action => 'new'
+          redirect_to login_url(domain)
         end
         accepts.xml do
           headers["Status"]           = "Unauthorized"

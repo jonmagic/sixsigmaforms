@@ -34,6 +34,15 @@ class Admin < ActiveRecord::Base
   def is_admin?
     true
   end
+  def Admin.is_doctor?
+    false
+  end
+  def is_doctor?
+    false
+  end
+  def is_doctor_or_admin?
+    is_doctor? || is_admin?
+  end
 
   # Returns true if the user has just been activated.
   def recently_activated?

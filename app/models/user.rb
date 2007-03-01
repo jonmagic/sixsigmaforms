@@ -28,8 +28,17 @@ class User < ActiveRecord::Base
     self.doctor.alias
   end
   
-  def is_doctor
-    self.doctor.alias == self.username
+  def self.is_doctor?(user)
+    user.doctor.alias == user.username
+  end
+  def is_doctor?
+    self.class.is_doctor?(self)
+  end
+  def is_admin?
+    false
+  end
+  def is_doctor_or_admin?
+    is_doctor? || is_admin?
   end
 
   def self.valid_username?(username)
@@ -66,6 +75,8 @@ class User < ActiveRecord::Base
   def changing_login
     @login_change = true
   end
+
+
 
   protected
 

@@ -1,45 +1,12 @@
 class UsersController < ApplicationController
+  before_filter :require_login_except_register_and_activate
 
-  # GET /users
-  # GET /users.xml
-  def index
-    @users = User.find_all_by_doctor_id(Doctor.id_of_alias(params[:domain]))
+  # render show.rhtml
+  def show
+    @user = get_user
     respond_to do |format|
-      format.html # index.rhtml
-      format.xml  { render :xml => @users.to_xml }
-    end
-  end
-
-  # render new.rhtml
-  def new
-   @user = User.new
-   @user.doctor_id = Doctor.id_of_alias(params[:domain])
-  end
-
-# Need to create a search action in case user hits enter on the live_search box, or else disable hard-submit on the form.
-
-  def live_search
-    @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)
-    if @phrase.blank?
-      render :nothing => true
-    else
-      @sqlphrase = "%" + @phrase.to_s + "%"
-      @results = User.find(:all, :conditions => [ "friendly_name LIKE ? OR username LIKE ?", @sqlphrase, @sqlphrase])
-      @search_entity = @results.length == 1 ? "User" : "Users"
-      render(:file => 'shared/live_search_results', :use_full_path => true)
-    end
-  end
-
-  def create
-    @user = User.new
-    @user.friendly_name = params[:user][:friendly_name]
-    @user.email = params[:user][:email]
-    @user.doctor_id = Doctor.id_of_alias(params[:domain])
-    if @user.save
-      redirect_back_or_default(users_path)
-      flash[:notice] = "User #{@user.friendly_name} has been created."
-    else
-      render :action => "new"
+      format.html # show.rhtml
+      format.xml  { render :xml => @user.to_xml }
     end
   end
 
@@ -95,8 +62,7 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    @user = User.find(params[:id])
-
+    @user = get_user
     respond_to do |format|
       if @user.update_attributes(params[:user])
         flash[:notice] = "User was successfully updated."
@@ -109,24 +75,78 @@ class UsersController < ApplicationController
     end
   end
 
-  # render show.rhtml
-  def show
-    @user = User.find_by_id(params[:id])
+  # GET /users
+  # GET /users.xml
+  def index
+    return access_denied unless current_user.is_doctor_or_admin?
+    @users = User.find_all_by_doctor_id(Doctor.id_of_alias(params[:domain]))
     respond_to do |format|
-      format.html # show.rhtml
-      format.xml  { render :xml => @user.to_xml }
+      format.html # index.rhtml
+      format.xml  { render :xml => @users.to_xml }
+    end
+  end
+
+  # render new.rhtml
+  def new
+   return access_denied unless current_user.is_doctor_or_admin?
+   @user = User.new
+   @user.doctor_id = Doctor.id_of_alias(params[:domain])
+  end
+
+# Need to create a search action in case user hits enter on the live_search box, or else disable hard-submit on the form.
+
+  def live_search
+    return access_denied unless current_user.is_doctor_or_admin?
+    @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)
+    if @phrase.blank?
+      render :nothing => true
+    else
+      @sqlphrase = "%" + @phrase.to_s + "%"
+      @results = User.find(:all, :conditions => [ "friendly_name LIKE ? OR username LIKE ?", @sqlphrase, @sqlphrase])
+      @search_entity = @results.length == 1 ? "User" : "Users"
+      render(:file => 'shared/live_search_results', :use_full_path => true)
+    end
+  end
+
+  def create
+    return access_denied unless current_user.is_doctor_or_admin?
+    @user = User.new
+    @user.friendly_name = params[:user][:friendly_name]
+    @user.email = params[:user][:email]
+    @user.doctor_id = Doctor.id_of_alias(params[:domain])
+    if @user.save
+      redirect_back_or_default(users_path)
+      flash[:notice] = "User #{@user.friendly_name} has been created."
+    else
+      render :action => "new"
     end
   end
 
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
+    return access_denied unless current_user.is_doctor_or_admin?
     @user = User.find(params[:id])
     @user.destroy
-
     respond_to do |format|
       format.html { redirect_to doctor_user_path(:domain => params[:domain]) }
       format.xml  { head :ok }
     end
   end
+
+  private
+    def get_user
+      if current_user.is_doctor_or_admin?
+        user = User.find(params[:id])
+        return user
+      else
+        return current_user
+      end
+    end
+    
+    def require_login_except_register_and_activate
+      return if logged_in? or params[:action] == 'register' or params[:action] == 'activate'
+      store_location
+      redirect_to login_url(params[:domain])
+    end
 end

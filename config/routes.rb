@@ -1,10 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   # The priority is based upon order of creation: first created -> highest priority.
 
-#/admins/register
-#/users/register
-  map.register_admin '/admins/register', :controller => 'admins', :action => 'register'
-  map.register_user '/users/register', :controller => 'users', :action => 'register'
 #/sessions/[new,create,destroy]
   map.resources :sessions
 
@@ -45,6 +41,7 @@ ActionController::Routing::Routes.draw do |map|
 
 #/mydoc/users/[new,create,show,destroy,etc]
   map.resources :users, :path_prefix => '/:domain', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
+  map.myprofile '/:domain/myprofile/:action', :controller => 'users', :action => 'show'
 
 #/mydoc/forms/CMS1500/[new,show,edit,etc]
   map.resources :forms, :path_prefix => '/:domain' do |form|
@@ -54,12 +51,6 @@ ActionController::Routing::Routes.draw do |map|
 
 #/mydoc/forms/chooser
   map.form_type_chooser '/:domain/forms/chooser', :controller => 'forms', :action => 'chooser'
-
-#/mydoc/profile
-  map.doctor_profile '/:domain/profile', :controller => 'doctors', :action => 'show'
-
-#/mydoc/profile/edit
-  map.edit_doctor_profile '/:domain/profile/edit', :controller => 'doctors', :action => 'edit'
 
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
