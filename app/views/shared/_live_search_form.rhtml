@@ -1,8 +1,9 @@
-<% post_url ||= { :action => :live_search } -%>
+<% post_url ||= { :action => :search } -%>
+<% live_url ||= { :action => :live_search } -%>
 <% @live_search_count ||= 0 -%>
 <% @live_search_count += 1 -%>
 <% label ||= '' -%>
-<%= start_form_tag({:action=> "search"}, { :onSubmit => "Element.show('search_loading#{@live_search_count.to_s}');" }) %>
+<%= form_tag(post_url, { :onSubmit => "Element.show('search_loading#{@live_search_count.to_s}');" }) %>
 <!-- I want to include some tickler text (gray, dissappearing text) in the search box, indicated by a local :tickler_text -->
 <b><%= label.blank? ? "Live Search" : label %>:</b> <%= text_field_tag 'searchtext'+@live_search_count.to_s %>
 <%= end_form_tag %>
@@ -12,7 +13,7 @@
                  :update => 'search_hits'+@live_search_count.to_s,
                  :loading => "Element.show('search_loading#{@live_search_count.to_s}')",
                  :complete => "Element.hide('search_loading#{@live_search_count.to_s}')",
-                 :url => post_url) %>
+                 :url => live_url) %>
 
 <div style="height:19px"><img alt="loading..." id="search_loading<%= @live_search_count.to_s %>" src="/images/ajax/barloader.gif" style="display:none;" /></div>
 <div id="search_hits<%= @live_search_count.to_s %>"></div>

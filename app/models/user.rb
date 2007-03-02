@@ -41,6 +41,10 @@ class User < ActiveRecord::Base
     is_doctor? || is_admin?
   end
 
+  #Return an array of the drafts that belong to this user.
+  def drafts
+  end
+
   def self.valid_username?(username)
     u = find :first, :conditions => ['username = ?', username]
     !u.blank? ? u : nil

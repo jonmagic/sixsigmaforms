@@ -54,11 +54,15 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :path_prefix => '/:domain', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
   map.myaccount '/:domain/myaccount/:action', :controller => 'users', :action => 'show'
 
+  map.forms_status '/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'list'
+  map.forms '/:domain/forms/:form_type/:action/:id', :controller => 'forms', :form_type => 'chooser', :action => 'draft'
+
+#THIS doesn't actually work because Forms is not a model.
 #/mydoc/forms/CMS1500/[new,show,edit,etc]
-  map.resources :forms, :path_prefix => '/:domain' do |form|
+#  map.resources :forms, :path_prefix => '/:domain' do |form|
 #/mydoc/forms/CMS1500/157/notes/[show,edit,create]
-    form.resources :notes
-  end
+#    form.resources :notes
+#  end
 
 #/mydoc/forms/chooser
   map.form_type_chooser '/:domain/forms/chooser', :controller => 'forms', :action => 'chooser'

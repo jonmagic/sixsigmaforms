@@ -5,7 +5,7 @@
 		<meta name="description" content="Six Sigma Management: HipForms, a HIPAA compliant form completion tool" />
 		<meta name="keywords" content="" />
 		<meta name="author" content="Six Sigma Management" />
-		<title>Six Sigma Management: Six Sigma Admin</title>
+		<title>Six Sigma Management: Six Sigma Doctor</title>
 		<%= stylesheet_link_tag 'admin' %>
 		<%= javascript_include_tag 'prototype' %>
 		<%= javascript_include_tag 'controls' %>
@@ -20,7 +20,7 @@
 					<% if logged_in? -%>
 						Logged in as <%= current_user.username %>, from <%= current_user.domain %>. <a href="/logout">Logout</a>
 					<% else -%>
-						Not logged in. <a href="/<%= params[:doctor_alias] ? params[:doctor_alias] : "ssadmin" %>/login">Login</a>
+						Not logged in. <a href="/<%= params[:domain] ? params[:domain] : "manage" %>/login">Login</a>
 					<% end -%>
 				</h3>
 				<h1>Six Sigma Management: HipForms</h1>
@@ -32,9 +32,11 @@
 				<div class="box">
 					<h2>Forms</h2>
 					<ul>
-						<li><%= link_to 'Submitted', '/forms/submitted' %></li>
-						<li><%= link_to 'Reviewed', '/forms/reviewed' %></li>
-						<li><%= link_to 'Archived', '/forms/archived' %></li>
+						<% if "current_user.drafts.count" %>
+						<li><%= link_to 'Drafts (#{current_user.drafts.count})', forms_status_url(:domain => current_user.domain, :form_status => 'draft') %></li>
+            <% end %>
+						<li><%= link_to '', '/forms/reviewed' %></li>
+						<li><%= link_to '', '/forms/archived' %></li>
 					</ul>
 				</div>
 			</div>

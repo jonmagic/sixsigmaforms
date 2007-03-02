@@ -1,13 +1,13 @@
-<% if current_user.is_doctor -%>
+<% if current_user.is_doctor? -%>
 <h1>Doctor Admin Dashboard</h1>
 
-<%= render :partial => 'shared/live_search_form', :locals => { :label => "Search Patients", :post_url => live_search_patients_url(params[:doctor_alias]) } %>
+<%= render :partial => 'shared/live_search_form', :locals => { :post_url => 'patients', :label => "Search Patients", :live_url => live_search_patients_url(:domain => params[:domain]) } %>
 
-<%= render :partial => 'shared/live_search_form', :locals => { :label => "Search Users", :post_url => live_search_users_url(params[:doctor_alias]) } %>
+<%= render :partial => 'shared/live_search_form', :locals => { :post_url => 'users', :label => "Search Users", :live_url => live_search_users_url(:domain => params[:domain]) } %>
 
 <% else -%>
 <h1>Doctor Assistant Dashboard</h1>
 
-<%= render :partial => 'shared/live_search_form', :locals => { :post_url => patients_url(:doctor_alias => params[:doctor_alias], :action => 'live_search') } %>
+<%= render :partial => 'shared/live_search_form', :locals => { :post_url => patients_url(:domain => params[:domain], :action => 'live_search') } %>
 
 <% end -%>

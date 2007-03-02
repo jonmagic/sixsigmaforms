@@ -11,10 +11,6 @@ module RouteObjectMapping
       @current_doctor ||= logged_in? ? current_user.domain : false
     end
     
-    def user_is_admin?
-      logged_in? ? current_domain == 'manage' : false
-    end
-
     # Store the given user in the session.
     def current_doctor=(new_doctor)
       @current_doctor = new_doctor

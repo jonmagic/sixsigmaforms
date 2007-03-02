@@ -1,9 +1,8 @@
 class CreateNotes < ActiveRecord::Migration
   def self.up
     create_table :notes do |t|
-      t.column :form_type,              :integer
-      t.column :form_id,                :integer
-      t.column :author_type,            :integer
+      t.column :form_instance_id,       :integer
+      t.column :author_type,            :string #Admin or User
       t.column :author_id,              :integer
       t.column :text,                   :text
       t.column :created_at,             :datetime
