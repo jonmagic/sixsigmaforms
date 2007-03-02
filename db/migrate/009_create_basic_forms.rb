@@ -99,7 +99,6 @@ class CreateBasicForms < ActiveRecord::Migration
       t.column :tertiary_plan_number,               :string
       t.column :tertiary_group_number,              :string
 
-      
     end
    #Also add this form type into the form_types table
     execute 'INSERT INTO form_types(friendly_name, model, required_fields, can_have_notes) VALUES("CMS-1500", "BasicForm", "' + ['doctor_id', 'account_number', 'last_name', 'first_name', 'sex', 'birth_date', 'address', 'city', 'state', 'zipcode', 'encounter_form_number', 'provider_name', 'location', 'admit_date', 'discharge_date', 'new_patient', 'primary_insurance_company', 'primary_relationship', 'primary_contract_number', 'primary_plan_number', 'primary_group_number'].to_yaml + '", 1)'
