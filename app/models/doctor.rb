@@ -66,8 +66,4 @@ class Doctor < ActiveRecord::Base
     def make_activation_code
       self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
     end
-
-    def login_change?
-      :action == 'activate' || :action == 'change_password'
-    end
 end
