@@ -1,0 +1,13 @@
+<h1>Listing forms</h1>
+
+<table>
+  <tr>
+  </tr>
+  
+<% for form in @forms %>
+  <tr>
+    <td><%= form.model %></td>
+    <td><%= form.id %></td>
+  </tr>
+<% end %>
+</table>

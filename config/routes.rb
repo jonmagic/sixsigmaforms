@@ -31,12 +31,12 @@ ActionController::Routing::Routes.draw do |map|
 
 #/manage
   map.admin_dashboard '/manage', :controller => 'manage/admins', :action => 'dashboard'
-  map.admin_account '/manage/account', :controller => 'manage/admins', :action => 'show'
+  map.admin_account '/manage/myaccount/:action', :controller => 'manage/admins', :action => 'show'
 
 #Do we want admins to use a different controller for forms than doctors?
 #/forms/:status
 #The following may conflict with map.resources :forms, below.
-#  map.forms '/forms/:status', :controller => 'forms', :action => 'index'
+  map.admin_forms '/forms/:status', :controller => 'manage/forms', :action => 'index'
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
 
 #/mydoc/users/[new,create,show,destroy,etc]
   map.resources :users, :path_prefix => '/:domain', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
-  map.myprofile '/:domain/myprofile/:action', :controller => 'users', :action => 'show'
+  map.myaccount '/:domain/myaccount/:action', :controller => 'users', :action => 'show'
 
 #/mydoc/forms/CMS1500/[new,show,edit,etc]
   map.resources :forms, :path_prefix => '/:domain' do |form|

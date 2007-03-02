@@ -2,6 +2,8 @@ class CreateBasicForms < ActiveRecord::Migration
   def self.up
     create_table :basic_forms do |t|
       t.column :doctor_id,                          :integer
+      t.column :status,                             :integer, :default => 1
+
       t.column :account_number,                     :string
       t.column :last_name,                          :string   #CMS 2a
       t.column :first_name,                         :string   #CMS 2b

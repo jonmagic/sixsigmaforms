@@ -2,13 +2,13 @@ class AdminNotifier < ActionMailer::Base
   def signup_notification(user)
     setup_email(user)
     @subject    += 'Continue Registration'
-    @body[:url]  = "http://localhost:3000/admins/register?activation_code=#{user.activation_code}"
+    @body[:url]  = myaccount_url(:domain => user.domain, :action => 'register', :activation_code => user.activation_code)
   end
   
   def activation(user)
     setup_email(user)
     @subject    += 'Your account has been activated!'
-    @body[:url]  = "http://localhost:3000/admins/#{user.id}"
+    @body[:url]  = "http://localhost:3000/manage/myaccount"
   end
   
   protected

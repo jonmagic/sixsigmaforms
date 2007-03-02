@@ -1,5 +1,5 @@
 <%= error_messages_for :admin %>
-<% form_for :admin, :url => admins_path+'/activate' do |f| -%>
+<% form_for :admin, :url => myaccount_url(:domain => @admin.domain, :action => 'activate') do |f| -%>
 <p>Hello, <%= @admin.friendly_name %><%= ", your username is <em>#{@admin.username}</em>. <br />Please create a password." if !@admin.username.blank? -%>
 <%= ". Please create a username and password." if @admin.username.blank? -%>
 

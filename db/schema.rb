@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 11) do
 
   create_table "basic_forms", :force => true do |t|
     t.column "doctor_id",                          :integer
+    t.column "status",                             :integer
     t.column "account_number",                     :string
     t.column "last_name",                          :string
     t.column "first_name",                         :string

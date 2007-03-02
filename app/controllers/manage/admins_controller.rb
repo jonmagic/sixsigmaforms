@@ -1,5 +1,5 @@
 class Manage::AdminsController < ApplicationController
-  before_filter :require_admin
+  before_filter :require_admin_except_register_and_activate
   layout 'admin'
 
   # GET /admins
@@ -56,7 +56,7 @@ class Manage::AdminsController < ApplicationController
               #Log the user in
               self.current_user = @admin
               flash[:notice] = "Signup complete! #{@admin.username} is ready for login."
-              format.html { redirect_to admin_url(@admin) }
+              format.html { redirect_to myaccount_url(:domain => @admin.domain) }
               format.xml  { head :ok }
             else
               format.html { render :action => "register" }
@@ -72,7 +72,7 @@ class Manage::AdminsController < ApplicationController
         render "admins/register_activation"
       end
     else
-      redirect_to admins_path+'/register'
+      redirect_to myaccount_url(:domain => @admin.domain, :action => 'register')
     end
   end
 
@@ -107,7 +107,8 @@ class Manage::AdminsController < ApplicationController
   end
 
   private
-    def require_admin
-      access_denied if !current_user.is_admin?
+    def require_admin_except_register_and_activate
+      return if (logged_in? and current_user.is_admin?) or params[:action] == 'register' or params[:action] == 'activate'
+      access_denied
     end
 end
