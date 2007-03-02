@@ -1,5 +1,4 @@
 class Manage::PagesController < ApplicationController
-  before_filter :require_admin_except_for_show
   layout 'admin'
 
   # GET /pages
@@ -42,7 +41,7 @@ class Manage::PagesController < ApplicationController
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
-        format.html { redirect_to page_url(@page) }
+        format.html { redirect_to pages_url }
         format.xml  { head :created, :location => page_url(@page) }
       else
         format.html { render :action => "new" }
@@ -59,7 +58,7 @@ class Manage::PagesController < ApplicationController
     respond_to do |format|
       if @page.update_attributes(params[:page])
         flash[:notice] = 'Page was successfully updated.'
-        format.html { redirect_to page_url(@page) }
+        format.html { redirect_to pages_path }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

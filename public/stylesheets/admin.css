@@ -138,3 +138,6 @@ html>body #centerColumn {
 	margin-right:1.14em;
 	}
 
+label {
+	font-weight:bold;
+}

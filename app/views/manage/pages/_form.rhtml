@@ -1,0 +1,11 @@
+<% form_method ||= :post %>
+	<% form_for(:page, :url => submit_url, :html => {:method => form_method}) do |f| %>
+	<%= error_messages_for :page %>
+	<p><label for="title">Page Title</label><br/>
+	<%= f.text_field :title %></p>
+	<p><label for="body">Page Content</label><br/>
+	<div id="page_body"><textarea name="page[body]" dojoType="Editor2"><% if !@page.nil? %><%= @page.body %><% end %></textarea></div></p>
+	<p><label for="stub">Page Stub (URL)</label><br/>
+	<%= f.text_field :stub %></p>
+	<p><%= submit_tag submit %></p>
+<% end %>

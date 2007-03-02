@@ -3,50 +3,20 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title><%= @page ? @page.title : controller.action_name %></title>
-		<%= stylesheet_link_tag 'pages.css' %>
+		<%= stylesheet_link_tag 'pages' %>
 	</head>
 	<body>
-		<div id="mainContainer">
+		<div id="container">
 			<div id="header">
-				<h1><a href="/" title="Six Sigma Management">Six Sigma Management</a></h1>
-				<h2>Billing, Recruiting, and Health Care Contractors</h2>
+				<h1>Six Sigma Management, LLC</h1>
 			</div>
-			<div class="outer">
-				<div class="inner">
-					<div class="float-wrap">
-			        	<div id="content"> 
-			          		<div class="contentWrap">
-								<%= yield %>
-							</div>
-						</div>
-						<!-- end centered div -->
-				        <div id="left"> 
-							<ul>
-								<li><a href="/pages/index">Home</a></li>
-								<li><a href="/pages/billing_services">Billing Services</a></li>
-								<li><a href="/pages/recruiting_and_staffing">Recruiting &amp; Staffing</a></li>
-								<li><a href="/pages/health_care_contracting">Health Care Contracting</a></li>
-								<li><a href="/pages/about_us">About Us</a></li>
-								<li><a href="/pages/contact">Contact</a></li>
-							</ul>
-				        </div>
-						<!-- end left div -->
-						<div class="clear"></div> 
-					</div>
-					<div id="right"> 
-						<h3>Third in source</h3>
-						<ul>
-							<li><a href="/pages/index">Home</a></li>
-							<li><a href="/pages/billing_services">Billing Services</a></li>
-							<li><a href="/pages/recruiting_and_staffing">Recruiting &amp; Staffing</a></li>
-							<li><a href="/pages/health_care_contracting">Health Care Contracting</a></li>
-							<li><a href="/pages/about_us">About Us</a></li>
-							<li><a href="/pages/contact">Contact</a></li>
-						</ul>
-					</div>
-					<!-- end right div -->
-					<div class="clear"></div> 
-				</div>
+			<div id="navbar">
+			</div>
+			<div id="main">
+				<%= yield %>
+			</div>
+			<div id="footer">
+				<p class="copyright">Copyright Six Sigma Management LLC 2007</p>
 			</div>
 		</div>
 	</body>

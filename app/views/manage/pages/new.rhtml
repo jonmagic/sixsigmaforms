@@ -2,11 +2,6 @@
 
 <%= error_messages_for :page %>
 
-<% form_for(:page, :url => pages_path) do |f| %>
-
-  <p>
-    <%= submit_tag "Create" %>
-  </p>
-<% end %>
+<%= render :partial => "form", :locals => { :submit => "Create", :submit_url => pages_path } %>
 
 <%= link_to 'Back', pages_path %>
