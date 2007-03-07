@@ -14,6 +14,10 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/:domain/login', :controller => 'sessions', :action => 'create'
 
 
+# * * * * * * * *
+
+  map.test '/test/:action/:id', :controller => 'manage/test', :action => 'dashboard'
+
 # * * * * * * * * * * * * * * * * * * * * * * * *
 
 #* * * * * * *
@@ -21,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
 #* * * * * * *
 
 #/manage/admins/[new,create,show,destroy,etc]
-  map.resources :admins, :path_prefix => '/manage', :controller => 'manage/admins'
+  map.resources :admins, :path_prefix => '/manage', :controller => 'manage/admins', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
 
 #/manage/doctors/[new,show,etc]
   map.resources :doctors, :path_prefix => '/manage', :controller => 'manage/doctors', :collection => { :live_search => :any, :search => :any }

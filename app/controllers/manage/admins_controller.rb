@@ -21,8 +21,8 @@ class Manage::AdminsController < ApplicationController
     @admin.friendly_name = params[:admin][:friendly_name]
     @admin.email = params[:admin][:email]
     if @admin.save
-      self.current_user = @admin
-      redirect_back_or_default(admin_path(self.current_user))
+#      self.current_user = @admin
+      redirect_back_or_default(admin_path(@admin))
       flash[:notice] = "Thanks for signing up!"
     else
       render :action => 'new'
@@ -36,11 +36,11 @@ class Manage::AdminsController < ApplicationController
       @admin = Admin.find_by_activation_code(act_code)
       if @admin.blank?
         flash[:notice] = "Invalid activation code!"
-        render "admins/register_activation"
+        render "manage/admins/register_activation"
       end
     else
       flash[:notice] = "You must have an activation code to continue!"
-      render "admins/register_activation"
+      render "manage/admins/register_activation"
     end
   end
 
@@ -54,9 +54,9 @@ class Manage::AdminsController < ApplicationController
           respond_to do |format|
             if @admin.update_attributes(params[:admin])
               #Log the user in
-              self.current_user = @admin
+              self.current_user = logged_in? ? self.current_user : @admin
               flash[:notice] = "Signup complete! #{@admin.username} is ready for login."
-              format.html { redirect_to myaccount_url(:domain => @admin.domain) }
+              format.html { redirect_to self.current_user == @admin ? myaccount_url(:domain => @admin.domain) : admin_url(@admin) }
               format.xml  { head :ok }
             else
               format.html { render :action => "register" }
@@ -69,7 +69,7 @@ class Manage::AdminsController < ApplicationController
         end
       else
         flash[:notice] = "Invalid activation code!"
-        render "admins/register_activation"
+        render "manage/admins/register_activation"
       end
     else
       redirect_to myaccount_url(:domain => @admin.domain, :action => 'register')
@@ -90,7 +90,7 @@ class Manage::AdminsController < ApplicationController
   def dashboard
     #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
     store_location  #I don't think I need this because it automatically redirects to the dashboard, but maybe this is helpful?
-    redirect_to login_url('manage') unless user_is_admin?
+    redirect_to login_url('manage') unless current_user.is_admin?
     
   end
 

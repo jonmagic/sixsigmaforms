@@ -11,7 +11,7 @@
     <td><%= admin.email %></td>
     <td>&nbsp;
 <% if !admin.activation_code.blank? %>
-    <%= link_to 'Register!', admins_path+"/register?activation_code="+admin.activation_code %>
+    <%= link_to('Register!', register_admins_path(:activation_code => admin.activation_code)) %>
 <% end %>
     </td>
     <td><%= link_to 'Show', admin_path(admin) %></td>

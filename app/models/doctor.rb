@@ -2,6 +2,7 @@ require 'digest/sha1'
 class Doctor < ActiveRecord::Base
   has_many  :users
   has_many  :patients
+  has_many  :form_instances
   has_and_belongs_to_many :form_types
 
   validates_presence_of     :alias, :friendly_name, :address, :telephone
@@ -57,5 +58,3 @@ class Doctor < ActiveRecord::Base
     end 
 
 end
-
-#Hey anyone, I have an inheritance problem: I have a table with FormTypes and then several different Forms 

@@ -62,6 +62,8 @@ class Manage::DoctorsController < ApplicationController
   # POST /doctors
   # POST /doctors.xml
   def create
+#This really doesn't go here but there might be a need for it to be set?
+  default_url_options(:host => 'localhost:3000')
     @doctor = Doctor.new(params[:doctor])
     @user   = User.new(params[:user])
     @user.username = @doctor.alias
@@ -112,17 +114,17 @@ class Manage::DoctorsController < ApplicationController
 
   # DELETE /doctors/1
   # DELETE /doctors/1.xml
-#  def destroy
+  def destroy
 
 #Must also destroy the admin user and all other users tied with this business. But then what exactly do we want to do with destroying doctors? Do we ever want to destroy them?
 #****
-#    @doctor = Doctor.find(params[:id])
-#    @doctor.destroy
+    @doctor = Doctor.find(params[:id])
+    @doctor.destroy
 
-#    respond_to do |format|
-#      format.html { redirect_to doctors_url }
-#      format.xml  { head :ok }
-#    end
-#  end
+    respond_to do |format|
+      format.html { redirect_to doctors_url }
+      format.xml  { head :ok }
+    end
+  end
 
 end

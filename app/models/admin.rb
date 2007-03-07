@@ -8,7 +8,7 @@ class Admin < ActiveRecord::Base
   validates_length_of       :email, :within => 3..100,          :if => :email_present?
   validates_uniqueness_of   :email, :case_sensitive => false
   validates_length_of       :username, :within => 3..40,        :if => :username_present?
-  validates_uniqueness_of   :username, :case_sensitive => false
+  validates_uniqueness_of   :username, :case_sensitive => false, :if => :username_present?
   validates_presence_of     :password_confirmation,             :if => :password_present?
   validates_confirmation_of :password,                          :if => :password_present?
   validates_length_of       :password, :within => 4..40,        :if => :password_present?

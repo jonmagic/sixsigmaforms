@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 11) do
+ActiveRecord::Schema.define(:version => 12) do
 
   create_table "admins", :force => true do |t|
     t.column "username",         :string
@@ -17,8 +17,6 @@ ActiveRecord::Schema.define(:version => 11) do
   end
 
   create_table "basic_forms", :force => true do |t|
-    t.column "doctor_id",                          :integer
-    t.column "status",                             :integer
     t.column "account_number",                     :string
     t.column "last_name",                          :string
     t.column "first_name",                         :string
@@ -122,25 +120,33 @@ ActiveRecord::Schema.define(:version => 11) do
     t.column "updated_at",     :datetime
   end
 
-  create_table "doctors_form_types", :force => true do |t|
+  create_table "doctors_form_types", :id => false, :force => true do |t|
     t.column "doctor_id",    :integer
     t.column "form_type_id", :integer
   end
 
+  create_table "form_instances", :force => true do |t|
+    t.column "form_type_id", :integer
+    t.column "form_id",      :integer
+    t.column "form_type",    :integer
+    t.column "doctor_id",    :integer
+    t.column "user_id",      :integer
+    t.column "status",       :integer, :default => 1
+  end
+
   create_table "form_types", :force => true do |t|
     t.column "friendly_name",   :string
-    t.column "model",           :string
+    t.column "form_type",       :string
     t.column "required_fields", :string
     t.column "can_have_notes",  :boolean
   end
 
   create_table "notes", :force => true do |t|
-    t.column "form_type",   :integer
-    t.column "form_id",     :integer
-    t.column "author_type", :integer
-    t.column "author_id",   :integer
-    t.column "text",        :text
-    t.column "created_at",  :datetime
+    t.column "form_instance_id", :integer
+    t.column "author_type",      :string
+    t.column "author_id",        :integer
+    t.column "text",             :text
+    t.column "created_at",       :datetime
   end
 
   create_table "pages", :force => true do |t|
@@ -224,7 +230,7 @@ ActiveRecord::Schema.define(:version => 11) do
     t.column "email",                :string
     t.column "crypted_password",     :string,   :limit => 40
     t.column "salt",                 :string,   :limit => 40
-    t.column "key_diff",             :binary
+    t.column "encryption_key",       :binary
     t.column "status",               :string
     t.column "password_change_date", :string
     t.column "activation_code",      :string,   :limit => 40
