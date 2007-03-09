@@ -1,8 +1,14 @@
 <p>This text is within draft.rhtml</p>
 
-<p>This form will be tied to <%= @patient.id.blank? ? "a NEW patient" : "#{@patient.first_name} #{@patient.last_name}" %>.</p>
+<p>This form will be tied to <%= @patient.id.blank? ? "a NEW patient" : "<em>#{@patient.first_name} #{@patient.last_name}</em>" %>, for doctor <em><%= link_to @patient.doctor.friendly_name, mydashboard_url(:domain => @patient.doctor.alias) %></em>.</p>
 <%= error_messages_for :basic_form %>
 <% form_for(@form_type, :url => forms_url(:form_type => @form_type, :action => @form.new_record? ? 'create' : 'update', :id => @form.new_record? ? nil : @form.id)) do |f| %>
 <%= hidden_field :patient,  :id, :value => @patient.id %>
 <%= render :partial => @form_type.fromCamelCase, :locals => {:f => f} %>
+<% end -%>
+<% if !@form.new_record? -%>
+<h4>Notes</h4>
+	<% @form.form_instance.notes.each do |note| -%>
+		[note]
+	<% end -%>
 <% end -%>

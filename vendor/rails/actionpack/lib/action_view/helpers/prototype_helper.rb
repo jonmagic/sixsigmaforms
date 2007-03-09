@@ -667,12 +667,13 @@ module ActionView
         end
 
         callback = options[:function] || remote_function(options)
-        javascript  = "new #{klass}('#{name}', "
+        javascript  = "observer = new #{klass}('#{name}', "
         javascript << "#{options[:frequency]}, " if options[:frequency]
         javascript << "function(element, value) {"
         javascript << "#{callback}}"
         javascript << ", '#{options[:on]}'" if options[:on]
-        javascript << ")"
+        javascript << ");"
+        javascript << " observer.lastValue = ''"
         javascript_tag(javascript)
       end
           
