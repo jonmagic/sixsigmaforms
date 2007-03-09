@@ -152,6 +152,6 @@ class UsersController < ApplicationController
     end
     
     def require_doctor_or_admin_for_certain_actions
-      access_denied if !current_user.is_doctor_or_admin? and (['destroy', 'create', 'live_search', 'search', 'new', 'index'].include?(params[:action]))
+      access_denied if (!logged_in? or !current_user.is_doctor_or_admin?) and (['destroy', 'create', 'live_search', 'search', 'new', 'index'].include?(params[:action]))
     end
 end

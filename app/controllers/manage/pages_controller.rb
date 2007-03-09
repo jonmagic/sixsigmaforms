@@ -41,8 +41,8 @@ class Manage::PagesController < ApplicationController
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
-        format.html { redirect_to pages_url }
-        format.xml  { head :created, :location => page_url(@page) }
+        format.html { redirect_to manage_pages_url }
+        format.xml  { head :created, :location => manage_page_url(@page) }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @page.errors.to_xml }
@@ -58,7 +58,7 @@ class Manage::PagesController < ApplicationController
     respond_to do |format|
       if @page.update_attributes(params[:page])
         flash[:notice] = 'Page was successfully updated.'
-        format.html { redirect_to pages_path }
+        format.html { redirect_to manage_pages_path }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -74,7 +74,7 @@ class Manage::PagesController < ApplicationController
     @page.destroy
 
     respond_to do |format|
-      format.html { redirect_to pages_url }
+      format.html { redirect_to manage_pages_url }
       format.xml  { head :ok }
     end
   end

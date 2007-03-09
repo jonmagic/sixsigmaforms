@@ -1,2 +1,3 @@
+<% proxy_partial ||= 'live_search_results' -%>
 <p><%= @results.length %> <%= @search_entity.blank? ? "Items" : @search_entity %> containing <em><%= @phrase %></em><%= ":" if @results.length > 0 %></p>
-<div><%= render(:partial => 'live_search_results') if @results.length > 0 %></div>
+<div><%= render(:partial => proxy_partial) if show_null_results || @results.length > 0 %></div>

@@ -9,10 +9,13 @@ class CreateFormInstances < ActiveRecord::Migration
       t.column :form_type,                        :integer
 #has_one :doctor
       t.column :doctor_id,                        :integer
+#has_one :patient
+      t.column :patient_id,                       :integer
 #has_one :user, :as => 'author'
-      t.column :user_id,                          :integer
+      t.column :user_id,                          :integer #effectively 'created_by'
 #Other attributes
-      t.column :status,                           :integer, :default => 1
+      t.column :status_number,                    :integer, :default => 1
+      t.column :created_at,                       :date
     end
   end
 

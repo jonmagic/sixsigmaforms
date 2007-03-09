@@ -14,9 +14,3 @@ class Manage::FormsController < ApplicationController
     end
 end
 
-class String < Object
-  def to_status_number
-    num = ['draft', 'submitted', 'reviewed', 'accepted', 'archived'].index(self.downcase)
-    num.nil? ? nil : num+1
-  end
-end

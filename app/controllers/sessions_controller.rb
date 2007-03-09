@@ -31,10 +31,14 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    doc_al = self.current_user.domain
-    cookies.delete :auth_token
-    reset_session
-    flash[:notice] = "You have been logged out."
-    redirect_back_or_default(login_url(doc_al))
+    if logged_in?
+      doc_al = self.current_user.domain
+      cookies.delete :auth_token
+      reset_session
+      flash[:notice] = "You have been logged out."
+      redirect_back_or_default(login_url(doc_al))
+    else
+      redirect_back_or_default(manage_pages_url)
+    end
   end
 end

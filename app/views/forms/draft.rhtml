@@ -1,1 +1,8 @@
-<p>Hi! This is where you'll see the draft of a new form! We'll include in here a partial including the specific form, which will automatically pull in the patient information.</p>
+<p>This text is within draft.rhtml</p>
+
+<p>This form will be tied to <%= @patient.id.blank? ? "a NEW patient" : "#{@patient.first_name} #{@patient.last_name}" %>.</p>
+<%= error_messages_for :basic_form %>
+<% form_for(@form_type, :url => forms_url(:form_type => @form_type, :action => @form.new_record? ? 'create' : 'update', :id => @form.new_record? ? nil : @form.id)) do |f| %>
+<%= hidden_field :patient,  :id, :value => @patient.id %>
+<%= render :partial => @form_type.fromCamelCase, :locals => {:f => f} %>
+<% end -%>

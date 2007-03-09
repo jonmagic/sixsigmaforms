@@ -1,8 +1,8 @@
 require 'digest/sha1'
 class Doctor < ActiveRecord::Base
-  has_many  :users
-  has_many  :patients
-  has_many  :form_instances
+  has_many  :users, :dependent => :destroy
+  has_many  :patients, :dependent => :destroy
+  has_many  :form_instances, :dependent => :destroy
   has_and_belongs_to_many :form_types
 
   validates_presence_of     :alias, :friendly_name, :address, :telephone
@@ -10,6 +10,18 @@ class Doctor < ActiveRecord::Base
   validates_uniqueness_of   :alias, :case_sensitive => false
 
   before_create             :make_encryption_key
+
+  def self.form(type_name)
+    type = FormType.find_by_form_type(type_name)
+    type.nil? ? nil : type.form_type.constantize
+  end
+  #This is the proxy method to the form data records
+  def form(type_name)
+    type = FormType.find_by_form_type(type_name)
+logger.error "Doctor includes " + (self.form_type_ids.join(', ')) + " But not #{type}?"
+    return nil unless self.form_types.include?(type)
+    type.nil? ? nil : type.form_type.constantize
+  end
 
   def admin
     User.find_by_username(self.alias)

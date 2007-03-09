@@ -141,3 +141,7 @@ html>body #centerColumn {
 label {
 	font-weight:bold;
 }
+
+.patient_result {
+	cursor: pointer;
+}

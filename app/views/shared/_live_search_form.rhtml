@@ -1,5 +1,5 @@
-<% post_url ||= { :action => :search } -%>
-<% live_url ||= { :action => :live_search } -%>
+<% post_url ||= 'search' -%>
+<% live_url ||= 'live_search' -%>
 <% @live_search_count ||= 0 -%>
 <% @live_search_count += 1 -%>
 <% label ||= '' -%>
@@ -10,10 +10,12 @@
 
 <%= observe_field('searchtext'+@live_search_count.to_s,
                  :frequency => 0.5,
-                 :update => 'search_hits'+@live_search_count.to_s,
+                 :update => results_div || ('search_hits'+@live_search_count.to_s),
                  :loading => "Element.show('search_loading#{@live_search_count.to_s}')",
                  :complete => "Element.hide('search_loading#{@live_search_count.to_s}')",
                  :url => live_url) %>
 
 <div style="height:19px"><img alt="loading..." id="search_loading<%= @live_search_count.to_s %>" src="/images/ajax/barloader.gif" style="display:none;" /></div>
+<% if results_div.blank? -%>
 <div id="search_hits<%= @live_search_count.to_s %>"></div>
+<% end -%>

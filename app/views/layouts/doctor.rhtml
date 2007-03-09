@@ -55,9 +55,7 @@
 		</div><!--//end #leftColumn//-->
 
 		<div id="centerColumn">
-			<p>Tabs: <%= link_to 'Manage Users', users_url(:doctor_alias => params[:doctor_alias]) %> | <%= link_to 'Manage Forms', forms_url(:doctor_alias => params[:doctor_alias]) %></p>
 			<p style="color: green">&nbsp;<%= flash[:notice] %></p>
-
 			<%= yield  %>
 		</div>
 		<!--//end #centerColumn//-->

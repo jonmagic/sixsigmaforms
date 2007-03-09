@@ -1,0 +1,7 @@
+<p>* Form <em><%= @form_type %></em>, instance #<em><%= @form.form_instance.id %></em> *</p>
+<p>Doctor: <em><%= link_to @form.form_instance.doctor.friendly_name, mydashboard_path(:domain => params[:domain]) %></em></p>
+<p>Patient: <em><%= link_to "#{@form.first_name} #{@form.last_name}", patient_path(:domain => params[:domain], :id => @form.form_instance.patient_id) %></em></p>
+<p>Birth Date: <em><%= @form.birth_date %></em></p>
+<p>Address: <%= @form.address %>, <%= @form.city %>, <%= @form.state %> <%= @form.zipcode %></p>
+<p>Provider: <%= @form.provider_name %></p>
+<%= link_to 'Edit', forms_path(:domain => params[:domain], :form_type => @form_type, :id => params[:id]) %>

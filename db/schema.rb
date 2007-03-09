@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 12) do
   end
 
   create_table "basic_forms", :force => true do |t|
+    t.column "form_type",                          :string
     t.column "account_number",                     :string
     t.column "last_name",                          :string
     t.column "first_name",                         :string
@@ -126,12 +127,14 @@ ActiveRecord::Schema.define(:version => 12) do
   end
 
   create_table "form_instances", :force => true do |t|
-    t.column "form_type_id", :integer
-    t.column "form_id",      :integer
-    t.column "form_type",    :integer
-    t.column "doctor_id",    :integer
-    t.column "user_id",      :integer
-    t.column "status",       :integer, :default => 1
+    t.column "form_type_id",  :integer
+    t.column "form_id",       :integer
+    t.column "form_type",     :integer
+    t.column "doctor_id",     :integer
+    t.column "patient_id",    :integer
+    t.column "user_id",       :integer
+    t.column "status_number", :integer, :default => 1
+    t.column "created_at",    :date
   end
 
   create_table "form_types", :force => true do |t|
@@ -156,6 +159,7 @@ ActiveRecord::Schema.define(:version => 12) do
   end
 
   create_table "patients", :force => true do |t|
+    t.column "doctor_id",                        :integer
     t.column "account_number",                   :string
     t.column "last_name",                        :string
     t.column "first_name",                       :string

@@ -1,0 +1,23 @@
+<table>
+  <thead>
+    <th>Account Number</th>
+    <th>Last Name</th>
+    <th>First Name</th>
+  </thead>
+<% for patient in @results %>
+  <tr class='patient_result' onclick="document.location='<%= patient_url(:domain => current_user.domain, :id => patient.id) %>'">
+    <td><%= patient.account_number %></td>
+    <td><%= patient.last_name %></td>
+    <td><%= patient.first_name %></td>
+		<td><%= link_to 'History', patient_path(:domain => params[:domain], :id => patient.id) %></td>
+		<td>
+		<% current_user.doctor.form_types.each do |ft| -%>
+			<a href="<%= forms_path(:form_type => ft.form_type, :patient_id => patient.id) %>"><%= ft.friendly_name %></a>
+		<% end -%>
+
+    </td>
+    <td><%= link_to 'Destroy', patient_path(:domain => params[:domain], :id => patient.id), :confirm => 'Are you sure?', :method => :delete %></td>
+
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,4 @@
+New Patient:<br />
+<% current_user.doctor.form_types.each do |ft| -%>
+	&nbsp;&nbsp;&nbsp;<a href="<%= forms_path(:form_type => ft.form_type) %>">+<%= ft.friendly_name %></a><br />
+<% end -%>

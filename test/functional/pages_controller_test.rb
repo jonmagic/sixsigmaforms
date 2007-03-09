@@ -29,7 +29,7 @@ class PagesControllerTest < Test::Unit::TestCase
     post :create, :page => { }
     assert_equal old_count+1, Page.count
     
-    assert_redirected_to page_path(assigns(:page))
+    assert_redirected_to manage_page_path(assigns(:page))
   end
 
   def test_should_show_page
@@ -44,7 +44,7 @@ class PagesControllerTest < Test::Unit::TestCase
   
   def test_should_update_page
     put :update, :id => 1, :page => { }
-    assert_redirected_to page_path(assigns(:page))
+    assert_redirected_to manage_page_path(assigns(:page))
   end
   
   def test_should_destroy_page
@@ -52,6 +52,6 @@ class PagesControllerTest < Test::Unit::TestCase
     delete :destroy, :id => 1
     assert_equal old_count-1, Page.count
     
-    assert_redirected_to pages_path
+    assert_redirected_to manage_pages_path
   end
 end

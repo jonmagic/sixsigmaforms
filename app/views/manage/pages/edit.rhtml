@@ -2,7 +2,7 @@
 
 <%= error_messages_for :page %>
 
-<%= render :partial => "form", :locals => { :submit => "Update", :submit_url => page_path(:id => @page.id), :form_method => :put } %>
+<%= render :partial => "form", :locals => { :submit => "Update", :submit_url => manage_page_path(:id => @page.id), :form_method => :put } %>
 
-<%= link_to 'Show', page_path(@page) %> |
-<%= link_to 'Back', pages_path %>
+<%= link_to 'Show', manage_page_path(@page) %> |
+<%= link_to 'Back', manage_pages_path %>

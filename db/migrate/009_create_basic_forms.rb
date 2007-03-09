@@ -1,6 +1,8 @@
 class CreateBasicForms < ActiveRecord::Migration
   def self.up
     create_table :basic_forms do |t|
+      t.column :form_type,                          :string
+
       t.column :account_number,                     :string
       t.column :last_name,                          :string   #CMS 2a
       t.column :first_name,                         :string   #CMS 2b
