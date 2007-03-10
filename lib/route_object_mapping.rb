@@ -17,11 +17,15 @@ module RouteObjectMapping
     end
     
     def current_form_type
-      !FormType.find_by_type(form_type).blank? ? FormType.find_by_type(form_type).type.to_sym : nil
+      !FormType.find_by_form_type(params[:form_type]).blank? ? FormType.find_by_form_type(params[:form_type]).form_type.constantize : nil
     end
     
+    def current_form_instance
+      FormInstance.find_by_form_type_and_form_id(params[:form_type], params[:form_id])
+    end
+
     def current_form
-      current_form_type.find_by_id(form_id)
+      current_form_type.find_by_id(params[:form_id])
     end
 
     def validate_doctor_and_form_type
@@ -54,6 +58,6 @@ module RouteObjectMapping
     end
     
     def redirect_if_invalid_form_type(form_type)
-      redirect_back_or_default(form_type_chooser_url) if !find_by_type(form_type).blank? and current_doctor.form_ids.include?(find_by_type(form_type).id)
+      redirect_back_or_default(form_type_chooser_url) if !find_by_form_type(form_type).blank? and current_doctor.form_ids.include?(find_by_form_type(form_type).id)
     end
 end

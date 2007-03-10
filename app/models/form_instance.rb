@@ -1,5 +1,5 @@
 class FormInstance < ActiveRecord::Base
-  has_many :notes
+  has_many :notes, :dependant => :destroy
   belongs_to :doctor
   belongs_to :patient
   belongs_to :form_type  # form_type_id

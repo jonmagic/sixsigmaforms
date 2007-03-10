@@ -59,6 +59,7 @@ ActionController::Routing::Routes.draw do |map|
   map.myaccount '/:domain/myaccount/:action', :controller => 'users', :action => 'show'
 
   map.forms_status '/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'list'
+  map.resources :notes, :path_prefix => '/:domain/forms/:form_type/:form_id'
   map.forms '/:domain/forms/:form_type/:action/:id', :controller => 'forms', :form_type => 'chooser', :action => 'draft'
 
 #THIS doesn't actually work because Forms is not a model.
