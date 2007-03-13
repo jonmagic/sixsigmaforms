@@ -8,8 +8,8 @@
 		<title>Six Sigma Management: Six Sigma Doctor</title>
 		<%= stylesheet_link_tag 'admin' %>
 		<%= javascript_include_tag 'prototype' %>
-		<%= javascript_include_tag 'controls' %>
 		<%= javascript_include_tag 'effects' %>
+		<%= javascript_include_tag 'controls' %>
 		<%= javascript_include_tag 'dragdrop' %>
 		<%= javascript_include_tag 'rounded' %>
 	</head>
@@ -32,8 +32,8 @@
 				<div class="box">
 					<h2>Forms</h2>
 					<ul>
-						<% if "current_user.drafts.count" %>
-						<li><%= link_to 'Drafts (#{current_user.drafts.count})', forms_status_url(:domain => current_user.domain, :form_status => 'draft') %></li>
+						<% if !current_user.drafts.empty? -%>
+						<li><%= link_to "Drafts (#{current_user.drafts.count})", forms_path(:domain => params[:domain], :form_type => current_user.drafts[0].form_type.form_type) %></li>
             <% end %>
 						<li><%= link_to '', '/forms/reviewed' %></li>
 						<li><%= link_to '', '/forms/archived' %></li>

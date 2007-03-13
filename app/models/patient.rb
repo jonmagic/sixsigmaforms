@@ -1,6 +1,7 @@
 class Patient < ActiveRecord::Base
   belongs_to :doctor
   has_many :form_instances, :dependent => :destroy
+  has_many :drafts, :class_name => 'FormInstance', :conditions => "status_number=1"
 
   attr_accessible :doctor_id, :account_number, :last_name, :first_name, :middle_initial, :sex
   attr_accessible :marital_status, :birth_date, :social_security_number, :address, :city, :state

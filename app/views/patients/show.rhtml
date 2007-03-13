@@ -1,5 +1,5 @@
 <p>Patient Name: <%= @patient.first_name%> <%= @patient.middle_initial %> <%= @patient.last_name %> (<%= link_to 'Destroy', patient_path(:domain => params[:domain], :id => @patient.id), :confirm => 'Are you sure?', :method => :delete %>)</p>
-<p>Doctor: <%= @patient.doctor_id %></p>
+<p>Doctor: <%= link_to @patient.doctor.friendly_name, mydashboard_path(:domain => @patient.doctor.alias) %></p>
 <h3>History</h3>
 <% @patient.form_instances.each do |f| -%>
 <p><em><%= link_to "+ #{f.form_type.friendly_name} #{f.created_at}", forms_path(:domain => params[:domain], :action => 'show', :form_type => f.form_type.form_type, :id => f.form_id) %></em></p>

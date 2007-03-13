@@ -60,7 +60,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.forms_status '/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'list'
   map.resources :notes, :path_prefix => '/:domain/forms/:form_type/:form_id'
-  map.forms '/:domain/forms/:form_type/:action/:id', :controller => 'forms', :form_type => 'chooser', :action => 'draft'
+
+  map.formatted_forms '/:domain/forms/:form_type/:action/:id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new'
+  map.forms '/:domain/forms/:form_type/:action/:id', :controller => 'forms', :form_type => 'chooser', :action => 'new'
 
 #THIS doesn't actually work because Forms is not a model.
 #/mydoc/forms/CMS1500/[new,show,edit,etc]

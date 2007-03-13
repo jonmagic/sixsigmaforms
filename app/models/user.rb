@@ -1,6 +1,8 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
   belongs_to :doctor
+  has_many :form_instances
+  has_many :drafts, :class_name => 'FormInstance', :conditions => "status_number=1"
 
   # Virtual attribute for the unencrypted password
   attr_accessor :password
@@ -39,10 +41,6 @@ class User < ActiveRecord::Base
   end
   def is_doctor_or_admin?
     is_doctor? || is_admin?
-  end
-
-  #Return an array of the drafts that belong to this user.
-  def drafts
   end
 
   def self.valid_username?(username)

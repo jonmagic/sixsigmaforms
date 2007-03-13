@@ -1,0 +1,6 @@
+page["save_draft_bttn1"].value = "Saved"
+page["save_draft_bttn1"].disabled = true
+page["save_draft_bttn2"].value = "Saved"
+page["save_draft_bttn2"].disabled = true
+page["draft_save_status"].replace_html "Draft saved at " << Time.now.strftime("%I:%M %p").downcase
+page.visual_effect "highlight", "draft_save_status", :duration => 3

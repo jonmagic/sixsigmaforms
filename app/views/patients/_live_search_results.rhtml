@@ -9,7 +9,7 @@
     <td><%= patient.account_number %></td>
     <td><%= patient.last_name %></td>
     <td><%= patient.first_name %></td>
-		<td><%= link_to 'History', patient_path(:domain => params[:domain], :id => patient.id) %> |</td>
+		<td><%= link_to("Drafts (#{patient.drafts(true).count})", forms_path(:domain => params[:domain], :action => 'draft', :form_type => patient.drafts[0].form_type.form_type, :id => patient.drafts[0].form_id)) + " | " if patient.drafts.count > 0 %><%= link_to 'History', patient_path(:domain => params[:domain], :id => patient.id) %> |</td>
 		<td>
 		<% current_user.doctor.form_types.each do |ft| -%>
 			<a href="<%= forms_path(:form_type => ft.form_type, :patient_id => patient.id) %>"><%= ft.friendly_name %></a>

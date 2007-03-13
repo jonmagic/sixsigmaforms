@@ -15,4 +15,12 @@
 <%= render(:file => 'patients/_new_form', :use_full_path => true) %>
 </div>
 
+<% if current_user.drafts(true).count > 0 -%>
+<h4>Outstanding Drafts</h4>
+	<% current_user.drafts.each do |draft| -%>
+	<p><%= link_to "#{draft.patient.first_name} #{draft.patient.last_name}", forms_url(:action => 'draft', :domain => params[:domain], :form_type => draft.form_type.form_type, :id => draft.form_id) %></p>
+	<% end -%>
+<% end -%>
+
+
 <% end -%>

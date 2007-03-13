@@ -11,11 +11,10 @@ module RouteObjectMapping
       @current_doctor ||= logged_in? ? current_user.domain : false
     end
     
-    # Store the given user in the session.
-    def current_doctor=(new_doctor)
-      @current_doctor = new_doctor
+    def current_doctor
+      current_user.doctor
     end
-    
+
     def current_form_type
       !FormType.find_by_form_type(params[:form_type]).blank? ? FormType.find_by_form_type(params[:form_type]).form_type.constantize : nil
     end
