@@ -50,6 +50,8 @@ ActionController::Routing::Routes.draw do |map|
 
 #/mydoc
   map.mydashboard '/:domain', :controller => 'doctors', :action => 'dashboard'
+  map.edit_my_doctor '/:domain/profile', :controller => 'doctors', :action => 'profile'
+  map.update_my_doctor '/:domain/update', :controller => 'doctors', :action => 'update'
 
 #/mydoc/patients/:action/:id
   map.resources :patients, :path_prefix => '/:domain', :collection => { :live_search => :any, :search => :any }

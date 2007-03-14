@@ -2,7 +2,12 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   belongs_to :doctor
   has_many :form_instances
-  has_many :drafts, :class_name => 'FormInstance', :conditions => "status_number=1"
+  has_many :drafts,    :class_name => 'FormInstance', :conditions => "status_number=1"
+  has_many :submitted, :class_name => 'FormInstance', :conditions => "status_number=2"
+  has_many :reviewed,  :class_name => 'FormInstance', :conditions => "status_number=3"
+  has_many :accepted,  :class_name => 'FormInstance', :conditions => "status_number=4"
+
+  has_many :notes, :as => :author
 
   # Virtual attribute for the unencrypted password
   attr_accessor :password

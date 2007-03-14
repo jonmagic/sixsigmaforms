@@ -1,19 +1,17 @@
 <% if current_user.is_doctor? -%>
 <h1>Doctor Admin Dashboard</h1>
 
-<p>Tabs: <%= link_to 'Manage Users', users_url(:doctor_alias => params[:doctor_alias]) %> | <%= link_to 'Manage Forms', forms_url(:doctor_alias => params[:doctor_alias]) %></p>
+<p>Tabs: <%= link_to 'Manage Users', users_url(:domain => params[:domain]) %> | <%= link_to 'Manage Forms', forms_url(:domain => params[:domain]) %></p>
 
-<%= render :partial => 'shared/live_search_form', :locals => { :post_url => 'patients', :label => "Search Patients", :live_url => live_search_patients_url(:domain => params[:domain]) } %>
+<%= render :partial => 'shared/live_search_form', :locals => { :post_url => 'patients', :live_url => live_search_patients_url(:domain => params[:domain]), :label => "Search Patients" } %>
 
-<%= render :partial => 'shared/live_search_form', :locals => { :post_url => 'users', :label => "Search Users", :live_url => live_search_users_url(:domain => params[:domain]) } %>
+<%= render :partial => 'shared/live_search_form', :locals => { :post_url => 'users', :live_url => live_search_users_url(:domain => params[:domain]), :label => "Search Users" } %>
 
 <% else -%>
 <h1>Doctor Assistant Dashboard</h1>
 
 <%= render :partial => 'shared/live_search_form', :locals => { :label => 'Find Patient', :post_url => search_patients_url(:domain => params[:domain]), :live_url => live_search_patients_url(:domain => params[:domain]), :results_div => 'result_or_new' } %>
-<div id="result_or_new">
-<%= render(:file => 'patients/_new_form', :use_full_path => true) %>
-</div>
+<div id="result_or_new"><%= render(:file => 'patients/_new_form', :use_full_path => true) %></div>
 
 <% if current_user.drafts(true).count > 0 -%>
 <h4>Outstanding Drafts</h4>

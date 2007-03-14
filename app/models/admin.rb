@@ -1,8 +1,13 @@
 require 'digest/sha1'
 class Admin < ActiveRecord::Base
+  has_many :notes, :as => :author
+# These won't work because they would need an 'admin_id' in form_instances. Do we want that?
+  # has_many :reviewed, :class_name => 'FormInstance', :conditions => "status_number=3"
+  # has_many :accepted, :class_name => 'FormInstance', :conditions => "status_number=4"
+
   # Virtual attribute for the unencrypted password
   attr_accessor :password
-  attr_accessor :operation #for the status of activating to enable the activation validations
+  attr_accessor :operation #just to give the controller the ability to enable the activation validations
 
   validates_presence_of     :email, :friendly_name
   validates_length_of       :email, :within => 3..100,          :if => :email_present?

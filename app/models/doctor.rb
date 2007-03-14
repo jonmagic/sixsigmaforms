@@ -19,7 +19,7 @@ class Doctor < ActiveRecord::Base
   #This is the proxy method to the form data records
   def form_model(form_type_name)
     type = FormType.find_by_name(form_type_name)
-logger.error "Doctor includes " + (self.form_type_ids.join(', ')) + ", but NOT #{type}?"
+    logger.error "Attempted unpermitted FormType access: Doctor includes " + (self.form_type_ids.join(', ')) + ", but NOT #{type}?"
     return nil unless self.form_types.include?(type)
     type.nil? ? nil : type.name.constantize
   end
@@ -39,7 +39,6 @@ logger.error "Doctor includes " + (self.form_type_ids.join(', ')) + ", but NOT #
 
     def validate_on_update
       old_doctor = Doctor.find_by_id(id)
-
 #      if operation == 'activate' #Activate
 #        if activation_code_valid
 #          errors.add(:username, "can't be blank") if username.blank? && old_user.username.blank?

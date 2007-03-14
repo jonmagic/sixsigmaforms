@@ -40,14 +40,14 @@ class FormsController < ApplicationController
   def draft
     @form_type = params[:form_type]
     return redirect_to mydashboard_url(:domain => params[:domain]) if @form_type == 'chooser'
-    @form = current_user.doctor.form(@form_type).find_by_id(params[:id])
+    @form = FormType.model_for(@form_type).find_by_id(params[:id])
     @patient = Patient.find_by_id(@form.form_instance.patient_id)
     @values = @form
   end
 
 #This is for submitting edits. This is an ajax-specific function, normally auto-save like gmail but also via a button (like gmail).
   def update
-    @form = current_doctor.form(params[:form_type]).find_by_id(params[:id])
+    @form = FormType.model_for(params[:form_type]).find_by_id(params[:id])
     # flash[:notice] = ""
     if @form.patient.update_attributes(params[params[:form_type]]) & @form.update_attributes(params[params[:form_type]]) & @form.form_instance.update
       # flash[:notice] = flash[:notice]+" Draft saved."
@@ -64,7 +64,7 @@ class FormsController < ApplicationController
   
   def show
     @form_type = params[:form_type]
-    @form = current_user.doctor.form(@form_type).find_by_id(params[:id])
+    @form = FormType.model_for(@form_type).find_by_id(params[:id])
   end
 
 # (rename to "destroy")

@@ -1,0 +1,4 @@
+<h1>Editing doctor</h1>
+<p style="color:red">This is for the Doctor Admin to update the Doctor's profile. It needs secured to doctor-admin only, and look nice.</p>
+
+<%= render :partial => "form", :locals => { :submit => "Update", :submit_url => edit_my_doctor_path(:id => @doctor.id), :form_method => :put } %>
