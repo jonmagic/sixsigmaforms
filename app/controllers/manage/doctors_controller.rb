@@ -13,7 +13,7 @@ class Manage::DoctorsController < ApplicationController
   end
 
 # Need to create a search action in case user hits enter on the live_search box, or else disable hard-submit on the form.
-  def search
+  def search(live?=false)
     @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)
     if @phrase.blank?
       render :nothing => true
@@ -21,25 +21,18 @@ class Manage::DoctorsController < ApplicationController
       @sqlphrase = "%" + @phrase.to_s + "%"
       @results = Doctor.find(:all, :conditions => [ "friendly_name LIKE ? OR alias LIKE ? OR telephone LIKE ?", @sqlphrase, @sqlphrase, @sqlphrase])
       @search_entity = @results.length == 1 ? "Doctor" : "Doctors"
+      render(:file => 'shared/live_search_results', :use_full_path => true) if live?
     end
   end
 
   def live_search
-    @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)
-    if @phrase.blank?
-      render :nothing => true
-    else
-      @sqlphrase = "%" + @phrase.to_s + "%"
-      @results = Doctor.find(:all, :conditions => [ "friendly_name LIKE ? OR alias LIKE ? OR telephone LIKE ?", @sqlphrase, @sqlphrase, @sqlphrase])
-      @search_entity = @results.length == 1 ? "Doctor" : "Doctors"
-      render(:file => 'shared/live_search_results', :use_full_path => true)
-    end
+    search(true)
   end
 
   # GET /doctors/1
   # GET /doctors/1.xml
   def show
-    @doctor = Doctor.find(params[:id])
+    @doctor = Doctor.find_by_id(params[:id])
     @user   = @doctor.admin
     respond_to do |format|
       format.html # show.rhtml
@@ -55,15 +48,15 @@ class Manage::DoctorsController < ApplicationController
 
   # GET /doctors/1;edit
   def edit
-    @doctor = Doctor.find(params[:id])
-    @user =   @doctor.admin
+    @doctor = Doctor.find_by_id(params[:id])
+    @user   = @doctor.admin
   end
 
   # POST /doctors
   # POST /doctors.xml
   def create
 #This really doesn't go here but there might be a need for it to be set?
-  default_url_options(:host => 'localhost:3000')
+#  default_url_options(:host => 'localhost:3000')
     @doctor = Doctor.new(params[:doctor])
     @user   = User.new(params[:user])
     @user.username = @doctor.alias
@@ -104,23 +97,15 @@ class Manage::DoctorsController < ApplicationController
 
   # GET /:doctor_alias/dashboard
   def dashboard
-    #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
-#    is_valid_doctor(params[:doctor_alias])
-  end
-
-  def form_types
-    
   end
 
   # DELETE /doctors/1
   # DELETE /doctors/1.xml
   def destroy
-
-#Must also destroy the admin user and all other users tied with this business. But then what exactly do we want to do with destroying doctors? Do we ever want to destroy them?
+#Use the acts_as_deleted plugin!!!
 #****
     @doctor = Doctor.find(params[:id])
     @doctor.destroy
-
     respond_to do |format|
       format.html { redirect_to doctors_url }
       format.xml  { head :ok }

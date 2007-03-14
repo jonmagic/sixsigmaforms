@@ -1,6 +1,7 @@
 require 'digest/sha1'
 class Doctor < ActiveRecord::Base
-  has_many  :users, :dependent => :destroy
+  has_many  :users, :dependent => :destroy, :conditions => 'username<>"#{self.alias}"'
+  has_one   :admin, :class_name => 'User', :conditions => 'username="#{self.alias}"', :dependent => :destroy
   has_many  :patients, :dependent => :destroy
   has_many  :form_instances, :dependent => :destroy
   has_and_belongs_to_many :form_types
@@ -11,20 +12,16 @@ class Doctor < ActiveRecord::Base
 
   before_create             :make_encryption_key
 
-  def self.form(type_name)
-    type = FormType.find_by_form_type(type_name)
-    type.nil? ? nil : type.form_type.constantize
+  def self.form_model(form_type_name)
+    type = FormType.find_by_name(form_type_name)
+    type.nil? ? nil : type.name.constantize
   end
   #This is the proxy method to the form data records
-  def form(type_name)
-    type = FormType.find_by_form_type(type_name)
-logger.error "Doctor includes " + (self.form_type_ids.join(', ')) + " But not #{type}?"
+  def form_model(form_type_name)
+    type = FormType.find_by_name(form_type_name)
+logger.error "Doctor includes " + (self.form_type_ids.join(', ')) + ", but NOT #{type}?"
     return nil unless self.form_types.include?(type)
-    type.nil? ? nil : type.form_type.constantize
-  end
-
-  def admin
-    User.find_by_username(self.alias)
+    type.nil? ? nil : type.name.constantize
   end
 
   def self.exists?(doc_alias)

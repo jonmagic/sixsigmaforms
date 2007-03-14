@@ -1,5 +1,13 @@
 module FormOperations
-  def type
-    self.form_instance.form_type
+
+  def form_type
+    self.form_types[0]
   end
+  def patient
+    self.patients[0]
+  end
+  def doctor
+    self.doctors[0]
+  end
+
 end

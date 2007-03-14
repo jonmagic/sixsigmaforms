@@ -3,24 +3,29 @@ class FormsController < ApplicationController
 #This is hit first, with an existing OR new patient. The form instance is created and then redirects to the editing ('draft') of the created form.
   def new
     return redirect_to mydashboard_url(:domain => params[:domain]) if params[:form_type] == 'chooser'
-    @patient = Patient.find_by_id(params[:patient_id]) || Patient.create(:doctor_id => current_doctor.id)
-    # @values = @patient
-    @form = current_doctor.form(params[:form_type]).create
+    @patient = Patient.find_by_id(params[:patient_id]) || Patient.create(:doctor => current_doctor)
+    @form_instance = FormInstance.new(
+      :user => current_user,
+      :doctor => current_doctor,
+      :patient => @patient,
+      :form_type => current_form_type,
+      :status => 'draft'
+    )
+    # @form = current_doctor.form_model(params[:form_type]).create
 
     flash[:notice] = "Start..."
     if @form.update_attributes(@patient.attributes)
-      @form.form_instance = FormInstance.new(
-                              :user_id => current_user.id,
-                              :doctor_id => current_doctor.id,
-                              :patient_id => @patient.id,
-                              :form_type => FormType.find_by_form_type(params[:form_type]),
-                              :form_type_id => FormType.find_by_form_type(params[:form_type]).id,
-                              :status => 'draft',
-                              :form => @form)
+      # @form.instance = FormInstance.new(
+      #                         :user_id => current_user.id,
+      #                         :doctor_id => current_doctor.id,
+      #                         :patient_id => @patient.id,
+      #                         :form_type => FormType.find_by_form_type(params[:form_type]),
+      #                         :form_type_id => FormType.find_by_form_type(params[:form_type]).id,
+      #                         :status => 'draft')
       flash[:notice] = flash[:notice]+"<br />\nSaved FormData."
       if @form.form_instance.save
         flash[:notice] = flash[:notice]+"<br />\nSaved FormInstance."
-        redirect_to forms_url(:domain => current_doctor.alias, :form_type => @form.type.form_type, :action => 'draft', :id => @form.id)
+        redirect_to forms_url(:domain => current_doctor.alias, :form_type => @form.type.name, :action => 'draft', :id => @form.id)
       else
         flash[:notice] = flash[:notice]+"<br />\nDid NOT save FormInstance."
         render :action => 'draft'

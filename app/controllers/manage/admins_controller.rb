@@ -31,9 +31,8 @@ class Manage::AdminsController < ApplicationController
 
   # GET /admins/register?activation_code=...
   def register
-    act_code = params[:admin] ? params[:admin][:activation_code] || params[:activation_code] : params[:activation_code]
-    if !act_code.blank?
-      @admin = Admin.find_by_activation_code(act_code)
+    if !given_activation_code.blank?
+      @admin = Admin.find_by_activation_code(given_activation_code)
       if @admin.blank?
         flash[:notice] = "Invalid activation code!"
         render "manage/admins/register_activation"
@@ -45,9 +44,8 @@ class Manage::AdminsController < ApplicationController
   end
 
   def activate
-    act_code = params[:admin] ? params[:admin][:activation_code] || params[:activation_code] : params[:activation_code]
-    if !act_code.blank?
-      @admin = Admin.find_by_activation_code(act_code)
+    if !given_activation_code.blank?
+      @admin = Admin.find_by_activation_code(given_activation_code)
       if !@admin.blank?
         @admin.operation = 'activate'
         if !@admin.activated?
@@ -91,15 +89,13 @@ class Manage::AdminsController < ApplicationController
     #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
     store_location  #I don't think I need this because it automatically redirects to the dashboard, but maybe this is helpful?
     redirect_to login_url('manage') unless current_user.is_admin?
-    
   end
 
   # DELETE /admins/1
   # DELETE /admins/1.xml
   def destroy
-    @admin = Admin.find(params[:id])
+    @admin = Admin.find_by_id(params[:id])
     @admin.destroy
-
     respond_to do |format|
       format.html { redirect_to admins_url }
       format.xml  { head :ok }
@@ -108,7 +104,7 @@ class Manage::AdminsController < ApplicationController
 
   private
     def require_admin_except_register_and_activate
-      return if (logged_in? and current_user.is_admin?) or params[:action] == 'register' or params[:action] == 'activate'
+      return if (logged_in? and current_user.is_admin?) or ['register', 'activate'].include?(params[:action])
       access_denied
     end
 end

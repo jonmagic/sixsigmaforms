@@ -37,7 +37,7 @@ class NotesController < ApplicationController
   # POST /notes.xml
   def create
     @note = Note.new(params[:note])
-    @note.form_instance = current_form_instance #Is this all that's needed to populate form_type and form_id?
+    @note.form_instance = current_form_instance
     @note.author = current_user
     respond_to do |format|
       if @note.save
@@ -74,7 +74,6 @@ class NotesController < ApplicationController
   def destroy
     @note = Note.find(params[:id])
     @note.destroy
-
     respond_to do |format|
       format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :id => params[:form_id]) }
       format.xml  { head :ok }

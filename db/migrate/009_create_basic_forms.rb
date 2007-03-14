@@ -1,8 +1,6 @@
 class CreateBasicForms < ActiveRecord::Migration
   def self.up
-    create_table :basic_forms do |t|
-      t.column :form_type,                          :string
-
+    create_table :basic_forms, :force => true do |t|
       t.column :account_number,                     :string
       t.column :last_name,                          :string   #CMS 2a
       t.column :first_name,                         :string   #CMS 2b
@@ -103,14 +101,14 @@ class CreateBasicForms < ActiveRecord::Migration
 
     end
    #Also add this form type into the form_types table
-    execute 'INSERT INTO form_types(friendly_name, form_type, required_fields, can_have_notes) VALUES("CMS-1500", "BasicForm", "' + ['doctor_id', 'account_number', 'last_name', 'first_name', 'sex', 'birth_date', 'address', 'city', 'state', 'zipcode', 'encounter_form_number', 'provider_name', 'location', 'admit_date', 'discharge_date', 'new_patient', 'primary_insurance_company', 'primary_relationship', 'primary_contract_number', 'primary_plan_number', 'primary_group_number'].to_yaml + '", 1)'
+    execute 'INSERT INTO form_types(friendly_name, name, can_have_notes) VALUES("CMS-1500", "BasicForm", 1)'
    #****
   end
 
   def self.down
     drop_table :basic_forms
    #Remove this form type from the form_types table
-    execute 'DELETE FROM form_types WHERE form_type="BasicForm"'
+    execute 'DELETE FROM form_types WHERE name="BasicForm"'
    #****
   end
 end

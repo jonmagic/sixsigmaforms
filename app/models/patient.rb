@@ -3,7 +3,7 @@ class Patient < ActiveRecord::Base
   has_many :form_instances, :dependent => :destroy
   has_many :drafts, :class_name => 'FormInstance', :conditions => "status_number=1"
 
-  attr_accessible :doctor_id, :account_number, :last_name, :first_name, :middle_initial, :sex
+  attr_accessible :doctor, :doctor_id, :account_number, :last_name, :first_name, :middle_initial, :sex
   attr_accessible :marital_status, :birth_date, :social_security_number, :address, :city, :state
   attr_accessible :zipcode, :telephone, :work_telephone, :work_status, :employment_school
   attr_accessible :provider_name, :referring_provider_name, :location, :authorization_number

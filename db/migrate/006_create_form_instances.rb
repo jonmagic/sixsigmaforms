@@ -5,8 +5,8 @@ class CreateFormInstances < ActiveRecord::Migration
 #belongs_to form_type
       t.column :form_type_id,                     :integer
 #belongs_to polymorphic FormA/FormB/etc
-      t.column :form_id,                          :integer
-      t.column :form_type,                        :integer
+      t.column :form_data_id,                     :integer
+      t.column :form_data_type,                   :integer
 #has_one :doctor
       t.column :doctor_id,                        :integer
 #has_one :patient

@@ -86,10 +86,6 @@ class DoctorsController < ApplicationController
 #    is_valid_doctor(params[:domain])
   end
 
-  def form_types
-    
-  end
-
   # DELETE /doctors/1
   # DELETE /doctors/1.xml
 #  def destroy

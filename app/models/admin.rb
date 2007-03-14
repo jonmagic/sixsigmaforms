@@ -14,11 +14,11 @@ class Admin < ActiveRecord::Base
   validates_length_of       :password, :within => 4..40,        :if => :password_present?
 
   before_save               :encrypt_password
-  after_update              :activate
+  after_update              :auto_activate
   before_create             :make_activation_code 
   
   def activated?
-    adm = Admin.find_by_activation_code(activation_code)
+    adm = Admin.find_by_activation_code(self.activation_code)
     adm && !adm.username.blank? && !adm.password.blank? && adm.activation_code.blank?
   end
 
@@ -26,22 +26,14 @@ class Admin < ActiveRecord::Base
     "manage"
   end
 
-  def self.is_admin?(user)
-    mock = Admin.find_by_username(user.username)
-    mock.blank? ? nil : mock.email == user.email
-  end
-
   def is_admin?
     true
-  end
-  def Admin.is_doctor?
-    false
   end
   def is_doctor?
     false
   end
   def is_doctor_or_admin?
-    is_doctor? || is_admin?
+    true
   end
 
   # Returns true if the user has just been activated.
@@ -112,8 +104,8 @@ class Admin < ActiveRecord::Base
     end
 
     # This automatically activates a user if the prerequisites are met
-    def activate
-      adm = Admin.find_by_activation_code(activation_code) if !activation_code.blank?
+    def auto_activate
+      adm = Admin.find_by_activation_code(self.activation_code) if !self.activation_code.blank?
       return nil if adm.blank?
       if !adm.username.blank? and !adm.crypted_password.blank? and !adm.activation_code.blank?
         @just_activated = true
@@ -128,9 +120,9 @@ class Admin < ActiveRecord::Base
     end
 
     def encrypt_password
-      return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{username}--") if new_record?
-      self.crypted_password = encrypt(password)
+      return if self.password.blank?
+      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{self.username}--") if self.new_record?
+      self.crypted_password = encrypt(self.password)
     end
     
     def make_activation_code
@@ -138,15 +130,15 @@ class Admin < ActiveRecord::Base
     end
 
     def email_present?
-      !email.blank?
+      !self.email.blank?
     end
 
     def username_present?
-      !username.blank?
+      !self.username.blank?
     end
 
     def password_present?
-      !password.blank?
+      !self.password.blank?
     end
 
 end

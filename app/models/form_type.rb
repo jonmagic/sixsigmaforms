@@ -5,4 +5,8 @@ class FormType < ActiveRecord::Base
 
   validates_presence_of :friendly_name, :form_type, :required_fields
 
+  def the_model
+    self.name.constantize
+  end
+
 end

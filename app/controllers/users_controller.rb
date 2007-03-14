@@ -13,9 +13,8 @@ class UsersController < ApplicationController
 
   # GET /admins/register?activation_code=...
   def register
-    act_code = params[:user] ? params[:user][:activation_code] || params[:activation_code] : params[:activation_code]
-    if !act_code.blank?
-      @user = User.find_by_activation_code(act_code)
+    if !given_activation_code.blank?
+      @user = User.find_by_activation_code(given_activation_code)
       if @user.blank?
         flash[:notice] = "Invalid activation code!"
         render "users/register_activation"
@@ -27,10 +26,9 @@ class UsersController < ApplicationController
   end
 
   def activate
-    act_code = params[:user] ? params[:user][:activation_code] || params[:activation_code] : params[:activation_code]
-    if !act_code.blank?
+    if !given_activation_code.blank?
       #Find unregistered user (need to choke if not a valid code)
-      @user = User.find_by_activation_code(act_code)
+      @user = User.find_by_activation_code(given_activation_code)
       if !@user.blank?
         @user.operation = 'activate'
         if !@user.activated?
@@ -114,7 +112,7 @@ class UsersController < ApplicationController
     @user = User.new
     @user.friendly_name = params[:user][:friendly_name]
     @user.email = params[:user][:email]
-    @user.doctor_id = Doctor.id_of_alias(params[:domain])
+    @user.doctor = current_doctor
     if @user.save
       redirect_back_or_default(users_path)
       flash[:notice] = "User #{@user.friendly_name} has been created."
@@ -127,7 +125,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.xml
   def destroy
     return access_denied unless current_user.is_doctor_or_admin?
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
     @user.destroy
     respond_to do |format|
       format.html { redirect_to doctor_user_path(:domain => params[:domain]) }
@@ -137,20 +135,15 @@ class UsersController < ApplicationController
 
   private
     def get_user
-      if current_user.is_doctor_or_admin?
-        user = User.find(params[:id])
-        return user
-      else
-        return current_user
-      end
+      current_user.is_doctor_or_admin? ? User.find_by_id(params[:id]) : current_user
     end
-    
+
     def require_login_except_register_and_activate
       return if logged_in? or params[:action] == 'register' or params[:action] == 'activate'
       store_location
       redirect_to login_url(params[:domain])
     end
-    
+
     def require_doctor_or_admin_for_certain_actions
       access_denied if (!logged_in? or !current_user.is_doctor_or_admin?) and (['destroy', 'create', 'live_search', 'search', 'new', 'index'].include?(params[:action]))
     end
