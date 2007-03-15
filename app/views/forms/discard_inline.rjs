@@ -1,0 +1,7 @@
+if @drafts_count == 0
+  page.select('.if_any_drafts').each do |element|
+    page.visual_effect "fade", element, :duration => 0.3
+  end
+end
+page.visual_effect "fade", "draft_listing_#{params[:form_id]}", :duration => 0.3
+page["drafts_count"].replace_html("#{@drafts_link_text_with_count}")

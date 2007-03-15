@@ -12,7 +12,8 @@ class FormInstance < ActiveRecord::Base
 # Automagically create the form data record whenever a FormInstance is created, and then automagically destroy it when the FormInstance is destroyed.
 # The form data record will always be tied to self.form_data
   def initialize(args)
-    self.form_data = args[:form_type].the_model.new unless !(args.kind_of? Hash) or args[:form_type].the_model.nil?
+    self.form_data = args[:form_type].new unless !(args.kind_of? Hash) or args[:form_type].nil?
+    args[:form_type] = FormType.find_by_name(args[:form_type].to_s)
     super(args)
   end
 

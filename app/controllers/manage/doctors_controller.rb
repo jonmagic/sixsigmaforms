@@ -13,7 +13,7 @@ class Manage::DoctorsController < ApplicationController
   end
 
 # Need to create a search action in case user hits enter on the live_search box, or else disable hard-submit on the form.
-  def search(live?=false)
+  def search(live = false)
     @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)
     if @phrase.blank?
       render :nothing => true
@@ -21,7 +21,8 @@ class Manage::DoctorsController < ApplicationController
       @sqlphrase = "%" + @phrase.to_s + "%"
       @results = Doctor.find(:all, :conditions => [ "friendly_name LIKE ? OR alias LIKE ? OR telephone LIKE ?", @sqlphrase, @sqlphrase, @sqlphrase])
       @search_entity = @results.length == 1 ? "Doctor" : "Doctors"
-      render(:file => 'shared/live_search_results', :use_full_path => true) if live?
+      logger.error "#{@results.length} results."
+      render(:partial => 'shared/live_search_results') if live
     end
   end
 

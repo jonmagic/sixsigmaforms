@@ -60,11 +60,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :path_prefix => '/:domain', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
   map.myaccount '/:domain/myaccount/:action', :controller => 'users', :action => 'show'
 
-  map.forms_status '/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'list'
+  map.forms_status '/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'all', :action => 'index'
   map.resources :notes, :path_prefix => '/:domain/forms/:form_type/:form_id'
 
-  map.formatted_forms '/:domain/forms/:form_type/:action/:id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new'
-  map.forms '/:domain/forms/:form_type/:action/:id', :controller => 'forms', :form_type => 'chooser', :action => 'new'
+  map.formatted_forms '/:domain/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
+  map.forms '/:domain/forms/:form_type/:action/:form_id', :controller => 'forms', :form_type => 'chooser', :action => 'new', :form_id => nil
 
 #THIS doesn't actually work because Forms is not a model.
 #/mydoc/forms/CMS1500/[new,show,edit,etc]

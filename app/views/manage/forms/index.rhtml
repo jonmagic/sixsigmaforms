@@ -1,13 +1,13 @@
-<h1>Listing forms</h1>
+<h1>Listing <%= params[:status] %> forms</h1>
 
 <table>
   <tr>
   </tr>
   
-<% for form in @forms %>
+<% @forms.each do |form| -%>
   <tr>
-    <td><%= form.model %></td>
+    <td><%= form.form_data_type %></td>
     <td><%= form.id %></td>
   </tr>
-<% end %>
+<% end -%>
 </table>

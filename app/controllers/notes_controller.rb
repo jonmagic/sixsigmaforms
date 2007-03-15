@@ -42,10 +42,12 @@ class NotesController < ApplicationController
     respond_to do |format|
       if @note.save
         flash[:notice] = 'Note was successfully created.'
-        format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :id => params[:form_id]) }
-        format.xml  { head :created, :location => forms_url(:action => 'draft', :form_type => params[:form_type], :id => params[:form_id]) }
+        format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
+        format.js   {}
+        format.xml  { head :created, :location => forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
       else
         format.html { render :action => "new" }
+        format.js   {}
         format.xml  { render :xml => @note.errors.to_xml }
       end
     end
@@ -60,10 +62,12 @@ class NotesController < ApplicationController
     respond_to do |format|
       if @note.update_attributes(params[:note])
         flash[:notice] = 'Note was successfully updated.'
-        format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :id => params[:form_id]) }
+        format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
+        format.js   {}
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
+        format.js   {}
         format.xml  { render :xml => @note.errors.to_xml }
       end
     end
@@ -75,7 +79,8 @@ class NotesController < ApplicationController
     @note = Note.find(params[:id])
     @note.destroy
     respond_to do |format|
-      format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :id => params[:form_id]) }
+      format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
+      format.js   {}
       format.xml  { head :ok }
     end
   end

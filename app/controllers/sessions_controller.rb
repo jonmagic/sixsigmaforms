@@ -38,7 +38,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "You have been logged out."
       redirect_back_or_default(login_url(domain))
     else
-      redirect_back_or_default(manage_pages_url)
+      redirect_to page_url
     end
   end
 end

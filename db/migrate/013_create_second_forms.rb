@@ -106,7 +106,7 @@ class CreateSecondForms < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :basic_forms
+    drop_table :second_forms
    #Remove this form type from the form_types table
     execute 'DELETE FROM form_types WHERE name="SecondForm"'
    #****

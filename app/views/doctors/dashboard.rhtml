@@ -1,24 +1,21 @@
 <% if current_user.is_doctor? -%>
 <h1>Doctor Admin Dashboard</h1>
 
-<p>Tabs: <%= link_to 'Manage Users', users_url(:domain => params[:domain]) %> | <%= link_to 'Manage Forms', forms_url(:domain => params[:domain]) %></p>
-
-<%= render :partial => 'shared/live_search_form', :locals => { :post_url => 'patients', :live_url => live_search_patients_url(:domain => params[:domain]), :label => "Search Patients" } %>
-
-<%= render :partial => 'shared/live_search_form', :locals => { :post_url => 'users', :live_url => live_search_users_url(:domain => params[:domain]), :label => "Search Users" } %>
-
 <% else -%>
 <h1>Doctor Assistant Dashboard</h1>
 
+<% end -%>
+
 <%= render :partial => 'shared/live_search_form', :locals => { :label => 'Find Patient', :post_url => search_patients_url(:domain => params[:domain]), :live_url => live_search_patients_url(:domain => params[:domain]), :results_div => 'result_or_new' } %>
-<div id="result_or_new"><%= render(:file => 'patients/_new_form', :use_full_path => true) %></div>
+<div id="result_or_new"><%= render(:partial => 'forms/new_form') %></div>
 
 <% if current_user.drafts(true).count > 0 -%>
+<div class="if_any_drafts">
 <h4>Outstanding Drafts</h4>
 	<% current_user.drafts.each do |draft| -%>
-	<p><%= link_to "#{draft.patient.first_name} #{draft.patient.last_name}", forms_url(:action => 'draft', :domain => params[:domain], :form_type => draft.form_type.form_type, :id => draft.form_id) %></p>
+	<!-- Need to convert this to a partial -->
+	<p id="draft_listing_<%= draft.id %>"><%= link_to "#{draft.patient.first_name} #{draft.patient.last_name} -[#{draft.created_at.strftime("%a %b %d, %I:%M%p")}]-", forms_url(:action => 'draft', :domain => params[:domain], :form_type => draft.form_data_type, :form_id => draft.form_data_id) %> (<%= link_to_remote 'Discard', :confirm => "Discard this draft?", :url => formatted_forms_path(:form_type => draft.form_type.name, :action => 'discard_inline', :form_id => draft.id, :format => 'js') %>)</p>
 	<% end -%>
+</div>
 <% end -%>
 
-
-<% end -%>

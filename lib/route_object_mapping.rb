@@ -1,7 +1,5 @@
 module RouteObjectMapping
 
-  protected
-  
     def domain
       @domain ||= params[:domain] || 'manage'
     end
@@ -19,7 +17,7 @@ module RouteObjectMapping
       current_doctor.form_model(params[:form_type])
     end
     def current_form_instance
-      FormInstance.find_by_form_type_and_form_id(params[:form_type], params[:form_id])
+      current_form_model.find_by_id(params[:form_id]).instance
     end
     def current_form
       current_form_type.find_by_id(params[:form_id])

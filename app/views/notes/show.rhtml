@@ -1,6 +1,1 @@
-<div><%= @note.text %></div>
-
-<!--
-<%= link_to 'Edit', edit_note_path(:domain => params[:domain], :form_type => @note.form_instance.form_type.form_type, :form_id => @note.form_instance.form_id, :id => @note.id) %> |
-<%= link_to 'Back', notes_path %>
--->
+<%= render :partial => 'notes/show_note', :locals => {:note => @note} %>

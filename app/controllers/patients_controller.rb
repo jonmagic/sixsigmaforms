@@ -8,7 +8,7 @@ class PatientsController < ApplicationController
       @sqlphrase = "%" + @phrase.to_s + "%"
       @results = Patient.find(:all, :conditions => [ "account_number LIKE ? OR last_name LIKE ? OR first_name LIKE ? OR social_security_number LIKE ? OR telephone LIKE ?", @sqlphrase, @sqlphrase, @sqlphrase, @sqlphrase, @sqlphrase])
       @search_entity = @results.length == 1 ? "Patient" : "Patients"
-      render(:file => 'shared/live_search_results', :use_full_path => true, :locals => { :proxy_partial => @results.length == 0 ? 'forms/new_form' : 'live_search_results', :show_null_results => true })
+      render(:partial => 'shared/live_search_results', :locals => { :proxy_partial => @results.length == 0 ? 'forms/new_form' : 'live_search_results', :show_null_results => true })
     end
   end
   

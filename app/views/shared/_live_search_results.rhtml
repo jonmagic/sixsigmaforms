@@ -1,4 +1,5 @@
+<% show_null_results ||= 'no' -%>
 <% proxy_partial ||= 'live_search_results' -%>
 <p><%= @results.length %> <%= @search_entity.blank? ? "Items" : @search_entity %> containing <em><%= @phrase %></em><%= ":" if @results.length > 0 %></p>
 <p style="font-size:8pt">I'd like a nice rounded outline and shadow for each result below, on mouse over...</p>
-<div><%= render(:partial => proxy_partial) if show_null_results || @results.length > 0 %></div>
+<div><%= render(:partial => proxy_partial) if !(show_null_results == 'no') || @results.length > 0 %></div>

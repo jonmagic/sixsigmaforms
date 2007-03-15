@@ -128,12 +128,12 @@ ActiveRecord::Schema.define(:version => 13) do
   create_table "form_instances", :force => true do |t|
     t.column "form_type_id",   :integer
     t.column "form_data_id",   :integer
-    t.column "form_data_type", :integer
+    t.column "form_data_type", :string
     t.column "doctor_id",      :integer
     t.column "patient_id",     :integer
     t.column "user_id",        :integer
-    t.column "status_number",  :integer, :default => 1
-    t.column "created_at",     :date
+    t.column "status_number",  :integer,  :default => 1
+    t.column "created_at",     :datetime
   end
 
   create_table "form_types", :force => true do |t|

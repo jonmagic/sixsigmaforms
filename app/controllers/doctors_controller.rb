@@ -11,10 +11,12 @@ class DoctorsController < ApplicationController
 #    is_valid_doctor(params[:domain])
   end
 
+#This should be operational for doctor admins to view and edit their account
   def profile
   end
 
 #This needs to be locked down to do only what it should be allowed to do
+# An Ajax-only action.
   def update
     @doctor = Doctor.find(params[:id])
     @user   = @doctor.admin

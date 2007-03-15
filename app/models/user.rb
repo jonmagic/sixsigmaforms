@@ -53,6 +53,10 @@ class User < ActiveRecord::Base
     !u.blank? ? u : nil
   end
 
+  def forms_with_status(status)
+    FormInstance.find_all_by_user_id_and_status_number(self.id, status.status_to_number)
+  end
+
   # Returns true if the user has just been activated.
   def recently_activated?
     @just_activated

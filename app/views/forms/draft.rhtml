@@ -1,9 +1,9 @@
 <p>This text is within draft.rhtml</p>
 
-<p>This form will be tied to <%= @patient.id.blank? ? "a NEW patient" : "<em>#{@patient.first_name} #{@patient.last_name}</em>" %>, for doctor <em><%= link_to @patient.doctor.friendly_name, mydashboard_url(:domain => @patient.doctor.alias) %></em>.</p>
+<p>This form will be tied to <%= @patient.id.blank? ? "a NEW patient" : "<em>#{@patient.first_name} #{@patient.last_name}</em>" %>, for doctor <em><%= link_to @patient.doctor.friendly_name, mydashboard_url(:domain => params[:domain]) %></em>.</p>
 <%= error_messages_for :basic_form %>
 <span id="draft_save_status"></span>
-<% remote_form_for(@form_type, :html => {:id => 'form_'+@form_type.fromCamelCase}, :url => formatted_forms_url(:form_type => @form_type, :action => @form.new_record? ? 'create' : 'update', :id => @form.new_record? ? nil : @form.id, :format => 'rjs')) do |f| %>
+<% remote_form_for(@form_type, :html => {:id => 'form_'+@form_type.fromCamelCase}, :url => formatted_forms_url(:form_type => @form_type, :action => @form.new_record? ? 'create' : 'update', :form_id => @form.new_record? ? nil : @form.id, :format => 'rjs')) do |f| %>
 
 <%= submit_tag 'Save Draft', :id => 'save_draft_bttn1' %>
 
@@ -12,30 +12,21 @@
 
 <input id="submit_draft_btnn" name="commit" type="button" value="Submit to SixSigma" />
 <%= submit_tag 'Save Draft', :id => 'save_draft_bttn2' %>
-
-
-
-
-
-<!-- :loading => 'Saving...', :success => 'Draft Saved.', :failure => 'Failed to save. :(' -->
 <% end -%>
 
 <%= observe_form 'form_'+@form_type.fromCamelCase,
                 :function => "$('save_draft_bttn1').value = 'Save Draft'; $('save_draft_bttn1').disabled = false; $('save_draft_bttn2').value = 'Save Draft'; $('save_draft_bttn2').disabled = false" %>
-
 <%= observe_form 'form_'+@form_type.fromCamelCase,
-                :frequency => 5,
-								:assigns => 'draft_observe',
-                :loading => "$('draft_save_status').update('Saving...'); $('save_draft_bttn1').value = 'Saving...'; $('save_draft_bttn2').value = 'Saving...'; $('save_draft_bttn1').disabled = true; $('save_draft_bttn2').disabled = true",
-								:url => formatted_forms_url(:form_type => @form_type, :action => 'update', :id => @form.id, :format => 'rjs') %>
+                :frequency => 5, :assigns => 'draft_observe',
+								:url => formatted_forms_url(:form_type => @form_type, :action => 'update', :form_id => @form.id, :format => 'js'),
+								:with => "Form.serialize(\"form_#{@form_type.fromCamelCase}\")" %>
 
 <% if !@form.new_record? -%>
 <h4>Notes</h4>
-	<% @form.form_instance.notes.each do |note| -%>
-	  <div class="note_section" id="note_section_<%= note.id %>">
-		<p class="note_header">[<%= note.created_at %>] by <%= link_to 'Edit', edit_note_path(:domain => params[:domain], :form_type => note.form_instance.form_type.form_type, :form_id => note.form_instance.form_id, :id => note.id) %> / <%= link_to 'Remove', note_path(:domain => params[:domain], :form_type => note.form_instance.form_type.form_type, :form_id => note.form_instance.form_id, :id => note.id), :confirm => 'Delete this note?', :method => :delete %></p>
-		<p class="note_text"><%= note.text %></p>
-		</div>
+  <div id="notes_container">
+	<% @form.instance.notes.each do |note| -%>
+	  <%= render :partial => 'notes/show_note', :locals => {:note => note} %>
 	<% end -%>
-  <p><em><%= link_to_remote 'New Note', {:update => 'new_note_container', :loaded => "$('note_text').select()", :method => :get, :url => new_note_path(:domain => params[:domain], :form_type => @form_type, :form_id => @form.id)}, {:href => '#new_note_container'} %></em></p><div name="new_note_container" id="new_note_container"></div>
+	</div>
+  <%= render :partial => 'notes/form' %>
 <% end -%>

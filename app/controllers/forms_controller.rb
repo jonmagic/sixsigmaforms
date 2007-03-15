@@ -1,5 +1,9 @@
 class FormsController < ApplicationController
 
+  def index
+    @forms = current_user.forms_with_status(params[:form_status])
+  end
+
 #This is hit first, with an existing OR new patient. The form instance is created and then redirects to the editing ('draft') of the created form.
   def new
     return redirect_to mydashboard_url(:domain => params[:domain]) if params[:form_type] == 'chooser'
@@ -8,13 +12,13 @@ class FormsController < ApplicationController
       :user => current_user,
       :doctor => current_doctor,
       :patient => @patient,
-      :form_type => current_form_type,
+      :form_type => current_form_model,
       :status => 'draft'
     )
     # @form = current_doctor.form_model(params[:form_type]).create
 
     flash[:notice] = "Start..."
-    if @form.update_attributes(@patient.attributes)
+    if @form_instance.form_data.update_attributes(@patient.attributes)
       # @form.instance = FormInstance.new(
       #                         :user_id => current_user.id,
       #                         :doctor_id => current_doctor.id,
@@ -23,9 +27,9 @@ class FormsController < ApplicationController
       #                         :form_type_id => FormType.find_by_form_type(params[:form_type]).id,
       #                         :status => 'draft')
       flash[:notice] = flash[:notice]+"<br />\nSaved FormData."
-      if @form.form_instance.save
+      if @form_instance.save
         flash[:notice] = flash[:notice]+"<br />\nSaved FormInstance."
-        redirect_to forms_url(:domain => current_doctor.alias, :form_type => @form.type.name, :action => 'draft', :id => @form.id)
+        redirect_to forms_url(:domain => params[:domain], :form_type => @form_instance.form_data_type, :action => 'draft', :form_id => @form_instance.form_data_id)
       else
         flash[:notice] = flash[:notice]+"<br />\nDid NOT save FormInstance."
         render :action => 'draft'
@@ -40,36 +44,44 @@ class FormsController < ApplicationController
   def draft
     @form_type = params[:form_type]
     return redirect_to mydashboard_url(:domain => params[:domain]) if @form_type == 'chooser'
-    @form = FormType.model_for(@form_type).find_by_id(params[:id])
-    @patient = Patient.find_by_id(@form.form_instance.patient_id)
+    @form = FormType.model_for(@form_type).find_by_id(params[:form_id])
+    @patient = Patient.find_by_id(@form.instance.patient_id)
     @values = @form
   end
 
 #This is for submitting edits. This is an ajax-specific function, normally auto-save like gmail but also via a button (like gmail).
   def update
-    @form = FormType.model_for(params[:form_type]).find_by_id(params[:id])
-    # flash[:notice] = ""
-    if @form.patient.update_attributes(params[params[:form_type]]) & @form.update_attributes(params[params[:form_type]]) & @form.form_instance.update
-      # flash[:notice] = flash[:notice]+" Draft saved."
+    @form = FormType.model_for(params[:form_type]).find_by_id(params[:form_id])
+    if @form.patient.update_attributes(params[params[:form_type]]) & @form.update_attributes(params[params[:form_type]]) & @form.instance.update
+      # flash[:notice] = "Draft saved."
+      @save_status = "Draft saved at " << Time.now.strftime("%I:%M %p").downcase
       if params[:status] == 'submitted'
-        redirect_to forms_url(:action => 'show', :form_type => @form_type, :id => @form.id)
+        redirect_to forms_url(:action => 'show', :form_type => params[:form_type], :form_id => @form.id)
       else
         render :layout => false
-        # render :partial => 'updated', :layout => false
       end
     else
+      @save_status = "ERROR auto-saving!"
       # flash[:notice] = flash[:notice]+" Patient NOT updated."
     end
   end
   
   def show
     @form_type = params[:form_type]
-    @form = FormType.model_for(@form_type).find_by_id(params[:id])
+    @form = FormType.model_for(@form_type).find_by_id(params[:form_id])
   end
 
-# (rename to "destroy")
-  def discard
+  def discard_inline
     #Also destroy patient if this is the only existing form for that patient.
+    @draft = FormInstance.find_by_id(params[:form_id])
+    @draft.destroy
+    @drafts_link_text_with_count = current_user.drafts(true).blank? ? "Drafts" : "Drafts (#{current_user.drafts.count})"
+    @drafts_count = current_user.drafts.count
+    render :layout => false
+  end
+
+#Create this method?
+  def discard
   end
 
 end

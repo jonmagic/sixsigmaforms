@@ -103,7 +103,7 @@ class UsersController < ApplicationController
       @sqlphrase = "%" + @phrase.to_s + "%"
       @results = User.find(:all, :conditions => [ "friendly_name LIKE ? OR username LIKE ?", @sqlphrase, @sqlphrase])
       @search_entity = @results.length == 1 ? "User" : "Users"
-      render(:file => 'shared/live_search_results', :use_full_path => true)
+      render(:partial => 'shared/live_search_results')
     end
   end
 
@@ -112,7 +112,7 @@ class UsersController < ApplicationController
     @user = User.new
     @user.friendly_name = params[:user][:friendly_name]
     @user.email = params[:user][:email]
-    @user.doctor = current_doctor
+    @user.doctor = Doctor.find_by_alias(params[:domain])
     if @user.save
       redirect_back_or_default(users_path)
       flash[:notice] = "User #{@user.friendly_name} has been created."
@@ -135,7 +135,7 @@ class UsersController < ApplicationController
 
   private
     def get_user
-      current_user.is_doctor_or_admin? ? User.find_by_id(params[:id]) : current_user
+      current_user.is_doctor_or_admin? ? User.find_by_id(params[:id]) || current_user : current_user
     end
 
     def require_login_except_register_and_activate
