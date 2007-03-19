@@ -3,6 +3,10 @@ class DoctorsController < ApplicationController
 #The Doctors controller exists for the Doctor Admins to view and manage their own profile,
 # and for Doctor Users to springboard from in their dashboard.
   before_filter :validate_doctor_and_form_type
+  in_place_edit_for :doctor, 'friendly_name'
+  in_place_edit_for :doctor, 'address'
+  in_place_edit_for :doctor, 'telephone'
+  in_place_edit_for :doctor, 'contact_person'
   layout 'doctor'
 
   # GET /:domain/dashboard
@@ -13,6 +17,7 @@ class DoctorsController < ApplicationController
 
 #This should be operational for doctor admins to view and edit their account
   def profile
+    @doctor = current_doctor
   end
 
 #This needs to be locked down to do only what it should be allowed to do

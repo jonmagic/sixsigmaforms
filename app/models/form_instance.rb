@@ -24,6 +24,14 @@ class FormInstance < ActiveRecord::Base
   def status=(value)
     self.status_number = value.status_to_number || self.status_number
   end
+  def self.status_plural(name)
+    stat = name.kind_of?(Fixnum) ? name : name.status_to_number
+    return nil if stat.nil?
+    ['drafts', 'submitted forms', 'reviewed forms', 'accepted forms'][stat-1]
+  end
+  def status_plural(name)
+    FormInstance.status_plural(name)
+  end
 
   # alias_method :vanilla_destroy, :destroy
   # def destroy

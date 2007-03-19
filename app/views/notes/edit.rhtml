@@ -1,11 +1,4 @@
-<h1>Editing note</h1>
-
-<%= error_messages_for :note %>
-
 <% form_for(:note, :url => note_path(:domain => params[:domain], :form_type => params[:form_type], :form_id => params[:form_id], :id => @note.id), :html => { :method => :put }) do |f| %>
-	<p><%= f.text_field :text %>
-  <p><%= submit_tag "Update" %></p>
+	<p><%= f.text_area :text, :rows => 5, :cols => 35, :id => 'edit_note_text_area', :value => "#{@note.text}", :tabindex => 1 %>
+  <p><%= submit_tag "Update", :tabindex => 2 %></p>
 <% end %>
-
-<%= link_to 'Show', note_path(:domain => params[:domain], :form_type => params[:form_type], :form_id => params[:form_id], :id => @note.id) %> |
-<%= link_to 'Back', notes_path %>

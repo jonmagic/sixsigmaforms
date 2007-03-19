@@ -1,0 +1,8 @@
+<h1>My <%= FormInstance.status_plural(params[:form_status]) %></h1>
+<% @my_forms.each do |form| -%>
+	<p id="form_listing_<%= form.id %>"><%= link_to "#{form.patient.first_name} #{form.patient.last_name} -[#{form.created_at.strftime("%a %b %d, %I:%M%p")}]-", forms_url(:action => 'draft', :domain => params[:domain], :form_type => form.form_data_type, :form_id => form.form_data_id) %> (<%= link_to_remote 'Discard', :confirm => "Discard this form?", :url => formatted_forms_path(:form_type => form.form_type.name, :action => 'discard_inline', :form_id => form.id, :format => 'js') %>)</p>
+<% end -%>
+<h1>All <%= FormInstance.status_plural(params[:form_status]) %></h1>
+<% @others_forms.each do |form| -%>
+	<p id="form_listing_<%= form.id %>"><%= link_to "#{form.patient.first_name} #{form.patient.last_name} -[#{form.created_at.strftime("%a %b %d, %I:%M%p")}]-", forms_url(:action => 'draft', :domain => params[:domain], :form_type => form.form_data_type, :form_id => form.form_data_id) %> (<%= link_to_remote 'Discard', :confirm => "Discard this form?", :url => formatted_forms_path(:form_type => form.form_type.name, :action => 'discard_inline', :form_id => form.id, :format => 'js') %>)</p>
+<% end -%>

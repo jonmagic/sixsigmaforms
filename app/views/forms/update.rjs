@@ -4,3 +4,4 @@ page["save_draft_bttn2"].value = "Saved"
 page["save_draft_bttn2"].disabled = true
 page["draft_save_status"].replace_html @save_status
 page.visual_effect "highlight", "draft_save_status", :duration => 3
+page.select('.patient_best_identifier').replace_html(@form.patient.find_best_identifier)

@@ -18,8 +18,12 @@ class Manage::DoctorsController < ApplicationController
     if @phrase.blank?
       render :nothing => true
     else
-      @sqlphrase = "%" + @phrase.to_s + "%"
-      @results = Doctor.find(:all, :conditions => [ "friendly_name LIKE ? OR alias LIKE ? OR telephone LIKE ?", @sqlphrase, @sqlphrase, @sqlphrase])
+      if @phrase == 'all'
+        @results = Doctor.find(:all)
+      else
+        @sqlphrase = "%" + @phrase.to_s + "%"
+        @results = Doctor.find(:all, :conditions => [ "friendly_name LIKE ? OR alias LIKE ? OR telephone LIKE ?", @sqlphrase, @sqlphrase, @sqlphrase])
+      end
       @search_entity = @results.length == 1 ? "Doctor" : "Doctors"
       logger.error "#{@results.length} results."
       render(:partial => 'shared/live_search_results') if live
@@ -37,7 +41,7 @@ class Manage::DoctorsController < ApplicationController
     @user   = @doctor.admin
     respond_to do |format|
       format.html # show.rhtml
-#      format.xml  { render :xml => (:doc => {:doctor => @doctor, :user => @user}).to_xml }
+      # format.xml  { render :xml => (:doctor_account => {:doctor => @doctor, :user => @user}).to_xml }
     end
   end
 

@@ -57,6 +57,10 @@ class User < ActiveRecord::Base
     FormInstance.find_all_by_user_id_and_status_number(self.id, status.status_to_number)
   end
 
+  def others_forms_with_status(status)
+    FormInstance.find(:all, :conditions => ['doctor_id=? AND user_id!=? AND status_number=?', self.doctor.id, self.id, status.status_to_number])
+  end
+
   # Returns true if the user has just been activated.
   def recently_activated?
     @just_activated
@@ -86,7 +90,6 @@ class User < ActiveRecord::Base
   def changing_login
     @login_change = true
   end
-
 
 
   protected

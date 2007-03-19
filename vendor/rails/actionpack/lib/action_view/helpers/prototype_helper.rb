@@ -674,8 +674,10 @@ module ActionView
         javascript << "function(element, value) {"
         javascript << "#{callback}}"
         javascript << ", '#{options[:on]}'" if options[:on]
-        javascript << "); " + options[:assigns] + ".lastValue = ''" if options[:assigns]
-        javascript << ")).lastValue = '';" unless options[:assigns]
+        javascript << ")"
+        javascript << "; " + options[:assigns] + ".lastValue = ''"  if  options[:assigns] &&  options[:start_nil]
+        javascript << ").lastValue = ''"                            if !options[:assigns] &&  options[:start_nil]
+        javascript << ")"                                           if !options[:assigns] && !options[:start_nil]
         javascript_tag(javascript)
       end
           

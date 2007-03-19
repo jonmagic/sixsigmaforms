@@ -30,6 +30,9 @@ class Admin < ActiveRecord::Base
   def domain
     "manage"
   end
+  def doctor
+    domain
+  end
 
   def is_admin?
     true

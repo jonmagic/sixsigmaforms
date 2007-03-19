@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   before_filter :require_login_except_register_and_activate
   before_filter :require_doctor_or_admin_for_certain_actions
+  layout 'doctor'
+  in_place_edit_for :user, 'friendly_name'
+  in_place_edit_for :user, 'email'
 
   # render show.rhtml
   def show
@@ -64,11 +67,12 @@ class UsersController < ApplicationController
     @user = get_user
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        flash[:notice] = "User was successfully updated."
         format.html { redirect_to user_url(@user) }
+        format.js
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
+        format.js
         format.xml  { render :xml => @user.errors.to_xml }
       end
     end
@@ -81,6 +85,7 @@ class UsersController < ApplicationController
     @users = User.find_all_by_doctor_id(Doctor.id_of_alias(params[:domain]))
     respond_to do |format|
       format.html # index.rhtml
+      format.js
       format.xml  { render :xml => @users.to_xml }
     end
   end

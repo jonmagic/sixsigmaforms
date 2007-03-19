@@ -50,7 +50,7 @@ ActionController::Routing::Routes.draw do |map|
 
 #/mydoc
   map.mydashboard '/:domain', :controller => 'doctors', :action => 'dashboard'
-  map.edit_my_doctor '/:domain/profile', :controller => 'doctors', :action => 'profile'
+  map.edit_my_doctor '/:domain/profile/:action', :controller => 'doctors', :action => 'profile'
   map.update_my_doctor '/:domain/update', :controller => 'doctors', :action => 'update'
 
 #/mydoc/patients/:action/:id
@@ -62,20 +62,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.forms_status '/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'all', :action => 'index'
   map.resources :notes, :path_prefix => '/:domain/forms/:form_type/:form_id'
-
   map.formatted_forms '/:domain/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
   map.forms '/:domain/forms/:form_type/:action/:form_id', :controller => 'forms', :form_type => 'chooser', :action => 'new', :form_id => nil
-
-#THIS doesn't actually work because Forms is not a model.
-#/mydoc/forms/CMS1500/[new,show,edit,etc]
-#  map.resources :forms, :path_prefix => '/:domain' do |form|
-#/mydoc/forms/CMS1500/157/notes/[show,edit,create]
-#    form.resources :notes
-#  end
-
-#/mydoc/forms/chooser
-  map.form_type_chooser '/:domain/forms/chooser', :controller => 'forms', :action => 'chooser'
-
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 

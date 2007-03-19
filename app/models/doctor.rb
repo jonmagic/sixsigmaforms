@@ -1,10 +1,14 @@
 require 'digest/sha1'
 class Doctor < ActiveRecord::Base
-  has_many  :users, :dependent => :destroy, :conditions => 'username<>"#{self.alias}"'
-  has_one   :admin, :class_name => 'User', :conditions => 'username="#{self.alias}"', :dependent => :destroy
-  has_many  :patients, :dependent => :destroy
-  has_many  :form_instances, :dependent => :destroy
+  has_many :users, :dependent => :destroy, :conditions => 'username<>"#{self.alias}"'
+  has_one  :admin, :class_name => 'User', :conditions => 'username="#{self.alias}"', :dependent => :destroy
+  has_many :patients, :dependent => :destroy
   has_and_belongs_to_many :form_types
+  has_many :form_instances, :dependent => :destroy
+    has_many :drafts,    :class_name => 'FormInstance', :conditions => "status_number=1"
+    has_many :submitted, :class_name => 'FormInstance', :conditions => "status_number=2"
+    has_many :reviewed,  :class_name => 'FormInstance', :conditions => "status_number=3"
+    has_many :accepted,  :class_name => 'FormInstance', :conditions => "status_number=4"
 
   validates_presence_of     :alias, :friendly_name, :address, :telephone
   validates_length_of       :alias, :within => 5..25
@@ -19,7 +23,7 @@ class Doctor < ActiveRecord::Base
   #This is the proxy method to the form data records
   def form_model(form_type_name)
     type = FormType.find_by_name(form_type_name)
-    logger.error "Attempted unpermitted FormType access: Doctor includes " + (self.form_type_ids.join(', ')) + ", but NOT #{type}?"
+    logger.error "Attempted unpermitted FormType access: Doctor includes " + (self.form_type_ids.join(', ')) + ", but NOT #{type}?" unless self.form_types.include?(type)
     return nil unless self.form_types.include?(type)
     type.nil? ? nil : type.name.constantize
   end
@@ -29,7 +33,13 @@ class Doctor < ActiveRecord::Base
   end
 
   def self.id_of_alias(doc_alias)
-    Doctor.find_by_alias(doc_alias).id
+    doc = Doctor.find_by_alias(doc_alias)
+    doc.nil? ? nil : doc.id
+  end
+
+  def forms_with_status(status)
+logger.error "Finding by #{self.alias} (#{self.id}) and #{status} (#{status.status_to_number})."
+    FormInstance.find_all_by_doctor_id_and_status_number(self.id, status.status_to_number)
   end
 
   protected

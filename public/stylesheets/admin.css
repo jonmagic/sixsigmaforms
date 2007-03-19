@@ -77,6 +77,11 @@ blockquote p {
 	font-size:.9em;
 	}
 	
+#leftColumn .main {
+	background:#5555aa;
+	margin-bottom:1em;
+}
+
 #leftColumn .forms {
 	background:#5D706F;
 	margin-bottom:1em;
@@ -97,7 +102,7 @@ blockquote p {
 	font-size:1.2em;
 	letter-spacing:.1em;
 	color:#FF6500;
-	}
+}
 
 #leftColumn ul { 
 	margin:1.5em 0 0 0; 
@@ -140,4 +145,9 @@ html>body #centerColumn {
 
 label {
 	font-weight:bold;
+}
+
+#draft_save_status {
+	font-size: 10pt;
+	font-style: italic;
 }

@@ -5,7 +5,7 @@
 		<meta name="description" content="Six Sigma Management: HipForms, a HIPAA compliant form completion tool" />
 		<meta name="keywords" content="" />
 		<meta name="author" content="Six Sigma Management" />
-		<title>Six Sigma Management: Six Sigma Doctor</title>
+		<title>Six Sigma Management: <%= @current_doctor.friendly_name %></title>
 		<%= stylesheet_link_tag 'admin' %>
 		<%= javascript_include_tag 'prototype' %>
 		<%= javascript_include_tag 'effects' %>
@@ -28,11 +28,20 @@
 		</div>
 
 		<div id="leftColumn">
+			<div class="main rounded">
+				<div class="box">
+					<h2>Main</h2>
+					<ul>
+						<li><%= link_to 'My Home', mydashboard_path(:domain => params[:domain]) %></li>
+						<li><%= link_to 'My Account', myaccount_path(:domain => params[:domain]) %></li>
+					</ul>
+				</div>
+			</div>
 			<div class="forms rounded">
 				<div class="box">
 					<h2>Forms</h2>
 					<ul>
-						<li><%= link_to "Drafts" + (!current_user.drafts.blank? ? " (#{current_user.drafts.count})" : ''), forms_status_path(:domain => params[:domain], :form_status => 'drafts'), :id => 'drafts_count' %></li>
+						<li><%= link_to "Drafts" + (!current_user.drafts.blank? ? " (#{current_user.drafts.count})" : ''), forms_status_path(:domain => params[:domain], :form_status => 'draft'), :id => 'drafts_count' %></li>
 						<li><%= link_to "Submitted" + (!current_user.submitted.blank? ? " (#{current_user.submitted.count})" : ''), forms_status_path(:domain => params[:domain], :form_status => 'submitted') %></li>
 						<li><%= link_to "Reviewed" + (!current_user.reviewed.blank? ? " (#{current_user.reviewed.count})" : ''), forms_status_path(:domain => params[:domain], :form_status => 'reviewed') %></li>
 						<li><%= link_to "Accepted" + (!current_user.accepted.blank? ? " (#{current_user.accepted.count})" : ''), forms_status_path(:domain => params[:domain], :form_status => 'accepted') %></li>
@@ -45,7 +54,6 @@
 					<h2>Manage</h2>
 					<ul>
 						<li><%= link_to 'Doctor Account', edit_my_doctor_path(:domain => params[:domain]) %></li>
-						<li><%= link_to 'My Account', myaccount_path(:domain => params[:domain]) %></li>
 						<li><%= link_to 'Users', users_path(:domain => params[:domain]) %></li>
 					</ul>
 				</div>

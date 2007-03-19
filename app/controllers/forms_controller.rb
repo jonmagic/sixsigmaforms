@@ -1,7 +1,9 @@
 class FormsController < ApplicationController
+  layout 'doctor'
 
   def index
-    @forms = current_user.forms_with_status(params[:form_status])
+    @my_forms = current_user.forms_with_status(params[:form_status])
+    @others_forms = current_user.others_forms_with_status(params[:form_status])
   end
 
 #This is hit first, with an existing OR new patient. The form instance is created and then redirects to the editing ('draft') of the created form.

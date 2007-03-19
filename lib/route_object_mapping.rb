@@ -1,26 +1,38 @@
 module RouteObjectMapping
 
-    def domain
-      @domain ||= params[:domain] || 'manage'
+    def initiate_global_env
+      if !(current_domain == 'manage')
+        current_doctor
+        current_form_model
+        current_form_instance
+        current_form
+      end
+      given_activation_code
     end
+
+  class ActionController::Base
+    def default_url_options(options)
+      {:domain => params[:domain]}
+    end
+  end
 
     def current_domain
       #Is this always what I want to return here?
-      @current_doctor ||= logged_in? ? current_user.domain : nil
+      @current_domain ||= logged_in? ? current_user.domain : nil
     end
     def current_doctor
-      current_user.doctor
+      @current_doctor ||= logged_in? ? current_user.doctor : nil
     end
 
 #These are VERY useful!
     def current_form_model
-      current_doctor.form_model(params[:form_type])
+      @current_form_model ||= current_doctor.nil? ? nil : current_doctor.form_model(params[:form_type])
     end
     def current_form_instance
-      current_form_model.find_by_id(params[:form_id]).instance
+      @current_form_instance ||= current_form.nil? ? nil : current_form.instance
     end
     def current_form
-      current_form_type.find_by_id(params[:form_id])
+      @current_form ||= current_form_model.nil? ? nil : current_form_model.find_by_id(params[:form_id])
     end
     def given_activation_code
       @given_activation_code ||= params[:user] ? params[:user][:activation_code] || params[:activation_code] : params[:activation_code]
@@ -29,7 +41,7 @@ module RouteObjectMapping
 #Validate for ACCESS
     def validate_doctor_and_form_type
      #Keep people out of doctors that are not their own or do not exist
-      redirect_if_invalid_doctor_alias(domain)
+      redirect_if_invalid_doctor_alias(current_domain)
      #Keep people away from form types that don't belong to their doctor or do not exist
       redirect_if_invalid_form_type if !params[:form_type].blank?
     end
@@ -43,7 +55,7 @@ module RouteObjectMapping
       if logged_in?
         if !(current_user.domain == domain)
           store_location
-          redirect_to_url(mydashboard_path(current_user.domain))
+          redirect_to_url(mydashboard_path(current_domain))
         end
       else
         if domain == "manage" or Doctor.exists?(domain)

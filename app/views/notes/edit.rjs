@@ -1,0 +1,3 @@
+page["note_text_#{params[:id]}"].replace_html(:file => 'notes/edit', :use_full_path => true, :locals => { :note => @note })
+page["edit_link_#{params[:id]}"].replace("<a id=\"edit_link_#{params[:id]}\" href=\"javascript:void(0)\" onclick=\"\">Save</a>")
+page['edit_note_text_area'].focus()

@@ -15,7 +15,7 @@ class NotesController < ApplicationController
   # GET /notes/1
   # GET /notes/1.xml
   def show
-    @note = Note.find(params[:id])
+    @note = Note.find_by_id(params[:id])
     respond_to do |format|
       format.html # show.rhtml
       format.xml  { render :xml => @note.to_xml }
@@ -30,7 +30,11 @@ class NotesController < ApplicationController
   # GET /notes/1;edit
   def edit
 #Validate that the note relates to the form being accessed?
-    @note = Note.find(params[:id])
+    @note = Note.find_by_id(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # POST /notes
@@ -41,7 +45,6 @@ class NotesController < ApplicationController
     @note.author = current_user
     respond_to do |format|
       if @note.save
-        flash[:notice] = 'Note was successfully created.'
         format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
         format.js   {}
         format.xml  { head :created, :location => forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
@@ -56,12 +59,11 @@ class NotesController < ApplicationController
   # PUT /notes/1
   # PUT /notes/1.xml
   def update
-    @note = Note.find(params[:id])
-    @note.form_instance = current_form_instance #Is this all that's needed to populate form_type and form_id?
+    @note = Note.find_by_id(params[:id])
+    @note.form_instance = current_form_instance
     @note.author = current_user
     respond_to do |format|
       if @note.update_attributes(params[:note])
-        flash[:notice] = 'Note was successfully updated.'
         format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
         format.js   {}
         format.xml  { head :ok }
@@ -76,7 +78,7 @@ class NotesController < ApplicationController
   # DELETE /notes/1
   # DELETE /notes/1.xml
   def destroy
-    @note = Note.find(params[:id])
+    @note = Note.find_by_id(params[:id])
     @note.destroy
     respond_to do |format|
       format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }

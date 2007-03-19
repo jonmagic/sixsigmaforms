@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   session :session_key => '_sixsigma_session_id'
   include AuthenticatedSystem
   include RouteObjectMapping
+  before_filter :initiate_global_env
   layout 'default'
-
+  
 end

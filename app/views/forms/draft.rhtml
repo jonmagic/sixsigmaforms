@@ -1,23 +1,24 @@
 <p>This text is within draft.rhtml</p>
 
-<p>This form will be tied to <%= @patient.id.blank? ? "a NEW patient" : "<em>#{@patient.first_name} #{@patient.last_name}</em>" %>, for doctor <em><%= link_to @patient.doctor.friendly_name, mydashboard_url(:domain => params[:domain]) %></em>.</p>
+<p>This form will be tied to <span class="patient_best_identifier"><%= @patient.find_best_identifier %></span>, for doctor <em><%= link_to @patient.doctor.friendly_name, mydashboard_url(:domain => params[:domain]) %></em>.</p>
 <%= error_messages_for :basic_form %>
-<span id="draft_save_status"></span>
 <% remote_form_for(@form_type, :html => {:id => 'form_'+@form_type.fromCamelCase}, :url => formatted_forms_url(:form_type => @form_type, :action => @form.new_record? ? 'create' : 'update', :form_id => @form.new_record? ? nil : @form.id, :format => 'rjs')) do |f| %>
 
-<%= submit_tag 'Save Draft', :id => 'save_draft_bttn1' %>
+<%= submit_tag 'Save Draft', :id => 'save_draft_bttn1' %><span id="draft_save_status"></span>
 
 	<%= hidden_field_tag :patient_id, @patient.id %>
 	<%= render :partial => @form_type.fromCamelCase, :locals => {:f => f} %>
 
-<input id="submit_draft_btnn" name="commit" type="button" value="Submit to SixSigma" />
+<input id="submit_draft_btnn" name="commit" type="button" value="Submit to SixSigma" onclick="this.form.action=<%=  %>" />
 <%= submit_tag 'Save Draft', :id => 'save_draft_bttn2' %>
 <% end -%>
 
 <%= observe_form 'form_'+@form_type.fromCamelCase,
                 :function => "$('save_draft_bttn1').value = 'Save Draft'; $('save_draft_bttn1').disabled = false; $('save_draft_bttn2').value = 'Save Draft'; $('save_draft_bttn2').disabled = false" %>
 <%= observe_form 'form_'+@form_type.fromCamelCase,
-                :frequency => 5, :assigns => 'draft_observe',
+                :frequency => 5,
+								:assigns => 'draft_observe',
+								:start_nil => false,
 								:url => formatted_forms_url(:form_type => @form_type, :action => 'update', :form_id => @form.id, :format => 'js'),
 								:with => "Form.serialize(\"form_#{@form_type.fromCamelCase}\")" %>
 
