@@ -8,7 +8,7 @@ class FormsController < ApplicationController
 
 #This is hit first, with an existing OR new patient. The form instance is created and then redirects to the editing ('draft') of the created form.
   def new
-    return redirect_to mydashboard_url(:domain => params[:domain]) if params[:form_type] == 'chooser'
+    return redirect_to mydashboard_url() if params[:form_type] == 'chooser'
     @patient = Patient.find_by_id(params[:patient_id]) || Patient.create(:doctor => current_doctor)
     @form_instance = FormInstance.new(
       :user => current_user,
@@ -31,7 +31,7 @@ class FormsController < ApplicationController
       flash[:notice] = flash[:notice]+"<br />\nSaved FormData."
       if @form_instance.save
         flash[:notice] = flash[:notice]+"<br />\nSaved FormInstance."
-        redirect_to forms_url(:domain => params[:domain], :form_type => @form_instance.form_data_type, :action => 'draft', :form_id => @form_instance.form_data_id)
+        redirect_to forms_url(:form_type => @form_instance.form_data_type, :action => 'draft', :form_id => @form_instance.form_data_id)
       else
         flash[:notice] = flash[:notice]+"<br />\nDid NOT save FormInstance."
         render :action => 'draft'
@@ -45,7 +45,7 @@ class FormsController < ApplicationController
 #Actually think of this as 'edit'
   def draft
     @form_type = params[:form_type]
-    return redirect_to mydashboard_url(:domain => params[:domain]) if @form_type == 'chooser'
+    return redirect_to mydashboard_url() if @form_type == 'chooser'
     @form = FormType.model_for(@form_type).find_by_id(params[:form_id])
     @patient = Patient.find_by_id(@form.instance.patient_id)
     @values = @form

@@ -1,4 +1,4 @@
-<% form_for(:note, :url => note_path(:domain => params[:domain], :form_type => params[:form_type], :form_id => params[:form_id], :id => @note.id), :html => { :method => :put }) do |f| %>
+<% form_for(:note, :url => note_path(:form_type => params[:form_type], :form_id => params[:form_id], :id => @note.id), :html => { :method => :put }) do |f| %>
 	<p><%= f.text_area :text, :rows => 5, :cols => 35, :id => 'edit_note_text_area', :value => "#{@note.text}", :tabindex => 1 %>
   <p><%= submit_tag "Update", :tabindex => 2 %></p>
 <% end %>

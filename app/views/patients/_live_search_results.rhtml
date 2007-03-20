@@ -9,9 +9,9 @@
     <td><%= patient.account_number %></td>
     <td><%= patient.last_name %></td>
     <td><%= patient.first_name %></td>
-		<td><%= link_to("drafts (#{patient.drafts(true).count})", forms_path(:domain => params[:domain], :action => 'draft', :form_type => patient.drafts[0].form_data_type, :form_id => patient.drafts[0].form_data_id)) + " | " if patient.drafts.count > 0 %><%= link_to 'History', patient_path(:domain => params[:domain], :id => patient.id) %> |</td>
+		<td><%= link_to("drafts (#{patient.drafts(true).count})", forms_path(:action => 'draft', :form_type => patient.drafts[0].form_data_type, :form_id => patient.drafts[0].form_data_id)) + " | " if patient.drafts.count > 0 %><%= link_to 'History', patient_path(:id => patient.id) %> |</td>
 		<td><%= (current_user.doctor.form_types.collect {|ft| link_to ft.friendly_name, forms_path(:form_type => ft.name, :patient_id => patient.id)}).join(" / ") %></td>
-    <td>| <%= link_to 'Destroy', patient_path(:domain => params[:domain], :id => patient.id), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>| <%= link_to 'Destroy', patient_path(:id => patient.id), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

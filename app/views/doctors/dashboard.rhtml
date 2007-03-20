@@ -6,7 +6,7 @@
 
 <% end -%>
 
-<%= render :partial => 'shared/live_search_form', :locals => { :label => 'Find Patient', :post_url => search_patients_url(:domain => params[:domain]), :live_url => live_search_patients_url(:domain => params[:domain]), :results_div => 'result_or_new' } %>
+<%= render :partial => 'shared/live_search_form', :locals => { :label => 'Find Patient', :post_url => search_patients_url(), :live_url => live_search_patients_url(), :results_div => 'result_or_new' } %>
 <div id="result_or_new"><%= render(:partial => 'forms/new_form') %></div>
 
 <% if current_user.drafts(true).count > 0 -%>
@@ -14,7 +14,7 @@
 <h4>Outstanding Drafts</h4>
 	<% current_user.drafts.each do |draft| -%>
 	<!-- Need to convert this to a partial -->
-	<p id="draft_listing_<%= draft.id %>"><%= link_to "#{draft.patient.first_name} #{draft.patient.last_name} -[#{draft.created_at.strftime("%a %b %d, %I:%M%p")}]-", forms_url(:action => 'draft', :domain => params[:domain], :form_type => draft.form_data_type, :form_id => draft.form_data_id) %> (<%= link_to_remote 'Discard', :confirm => "Discard this draft?", :url => formatted_forms_path(:form_type => draft.form_type.name, :action => 'discard_inline', :form_id => draft.id, :format => 'js') %>)</p>
+	<p id="draft_listing_<%= draft.id %>"><%= link_to "#{draft.patient.first_name} #{draft.patient.last_name} -[#{draft.created_at.strftime("%a %b %d, %I:%M%p")}]-", forms_url(:action => 'draft', :form_type => draft.form_data_type, :form_id => draft.form_data_id) %> (<%= link_to_remote 'Discard', :confirm => "Discard this draft?", :url => formatted_forms_path(:form_type => draft.form_type.name, :action => 'discard_inline', :form_id => draft.id, :format => 'js') %>)</p>
 	<% end -%>
 </div>
 <% end -%>

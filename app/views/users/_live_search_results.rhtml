@@ -7,7 +7,7 @@
     <%= link_to 'Register!', register_users_path(params[:domain])+"?activation_code="+user.activation_code %>
 <% end %>
     </td>
-    <td><%= link_to 'Show', user_path(:domain => params[:domain], :action=> 'show', :id => user.id) %></td>
-    <td><%= link_to 'Destroy', user_path(:domain => params[:domain], :id => user.id), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', user_path(:action=> 'show', :id => user.id) %></td>
+    <td><%= link_to 'Destroy', user_path(:id => user.id), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>

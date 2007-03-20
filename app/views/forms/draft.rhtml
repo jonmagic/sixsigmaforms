@@ -1,6 +1,6 @@
 <p>This text is within draft.rhtml</p>
 
-<p>This form will be tied to <span class="patient_best_identifier"><%= @patient.find_best_identifier %></span>, for doctor <em><%= link_to @patient.doctor.friendly_name, mydashboard_url(:domain => params[:domain]) %></em>.</p>
+<p>This form will be tied to <span class="patient_best_identifier"><%= @patient.find_best_identifier %></span>, for doctor <em><%= link_to @patient.doctor.friendly_name, mydashboard_url() %></em>.</p>
 <%= error_messages_for :basic_form %>
 <% remote_form_for(@form_type, :html => {:id => 'form_'+@form_type.fromCamelCase}, :url => formatted_forms_url(:form_type => @form_type, :action => @form.new_record? ? 'create' : 'update', :form_id => @form.new_record? ? nil : @form.id, :format => 'rjs')) do |f| %>
 

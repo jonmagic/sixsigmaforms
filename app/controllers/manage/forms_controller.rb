@@ -1,4 +1,6 @@
 class Manage::FormsController < ApplicationController
+  
+  layout 'admin'
 
 #This is the Admins' controller for manipulating forms. It isn't very completed yet.
   def draft

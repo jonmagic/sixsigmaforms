@@ -40,7 +40,7 @@ class UsersController < ApplicationController
               #Log the user in
               self.current_user = @user
               flash[:notice] = "Signup complete! #{@user.username} is ready for login."
-              format.html { redirect_to user_url(:domain => params[:domain], :id => @user) }
+              format.html { redirect_to user_url(:id => @user) }
               format.xml  { head :ok }
             else
               format.html { render :action => "register" }
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
         render "users/register_activation"
       end
     else
-      redirect_back_or_default(doctor_user_path(:domain => params[:domain], :action => 'register'))
+      redirect_back_or_default(doctor_user_path(:action => 'register'))
     end
   end
 
@@ -133,7 +133,7 @@ class UsersController < ApplicationController
     @user = User.find_by_id(params[:id])
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to doctor_user_path(:domain => params[:domain]) }
+      format.html { redirect_to doctor_user_path() }
       format.xml  { head :ok }
     end
   end
