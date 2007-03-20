@@ -5,6 +5,9 @@ class FormInstance < ActiveRecord::Base
   belongs_to :form_type  #Uses column form_type_id
   belongs_to :form_data, :polymorphic => true, :dependent => :destroy #(, :extend => ...)  #Uses columns form_data_type, form_data_id
   has_many :notes, :dependent => :destroy
+  after_create   :log_create
+  after_update   :log_update
+  before_destroy :log_destroy
 
 #Creating a new FormInstance:
 #  FormInstance.new(:doctor => Doctor, :user => current_user, :patient => Patient, :form_type => FormType, [[:form_data => AUTO-CREATES NEW]])
@@ -22,12 +25,13 @@ class FormInstance < ActiveRecord::Base
   end
 
   def status=(value)
+    return nil if value.status_to_number == 6
     self.status_number = value.status_to_number || self.status_number
   end
   def self.status_plural(name)
     stat = name.kind_of?(Fixnum) ? name : name.status_to_number
     return nil if stat.nil?
-    ['drafts', 'submitted forms', 'reviewed forms', 'accepted forms'][stat-1]
+    ['drafts', 'submitted forms', 'forms in review', 'accepted forms', 'archived forms', 'forms'][stat-1]
   end
   def status_plural(name)
     FormInstance.status_plural(name)
@@ -43,5 +47,16 @@ class FormInstance < ActiveRecord::Base
   # # Finally, destroy the FormInstance
   #   return self.vanilla_destroy(*args)
   # end
+
+  private
+    def log_create
+      Log.create(:log_type => 'create:FormInstance', :data => {})
+    end
+    def log_update
+      Log.create(:log_type => 'update:FormInstance', :data => {})
+    end
+    def log_destroy
+      Log.create(:log_type => 'destroy:FormInstance', :data => {})
+    end
 
 end

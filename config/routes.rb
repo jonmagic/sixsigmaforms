@@ -34,13 +34,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pages, :path_prefix => '/manage', :name_prefix => 'manage_', :controller => 'manage/pages'
 
 #/manage
-  map.admin_dashboard '/manage', :controller => 'manage/admins', :action => 'dashboard'
+  map.admin_dashboard '/manage', :controller => 'manage/admins', :action => 'dashboard', :domain => 'manage'
   map.admin_account '/manage/myaccount/:action', :controller => 'manage/admins', :action => 'show'
 
 #Do we want admins to use a different controller for forms than doctors?
 #/forms/:status
 #The following may conflict with map.resources :forms, below.
-  map.admin_forms '/forms/:status', :controller => 'manage/forms', :action => 'index'
+  map.admin_forms '/forms/:status', :controller => 'manage/forms', :action => 'index', :domain => 'manage'
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -67,6 +67,7 @@ ActionController::Routing::Routes.draw do |map|
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 
+  map.logs '/manage/logs/:action', :controller => 'logs', :action => 'history'
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'

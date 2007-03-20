@@ -46,6 +46,7 @@ class Manage::AdminsController < ApplicationController
   def activate
     if !given_activation_code.blank?
       @admin = Admin.find_by_activation_code(given_activation_code)
+logger.error "Activating? #{@admin.friendly_name}, #{@admin}"
       if !@admin.blank?
         @admin.operation = 'activate'
         if !@admin.activated?
@@ -54,7 +55,7 @@ class Manage::AdminsController < ApplicationController
               #Log the user in
               self.current_user = logged_in? ? self.current_user : @admin
               flash[:notice] = "Signup complete! #{@admin.username} is ready for login."
-              format.html { redirect_to self.current_user == @admin ? myaccount_url(:domain => @admin.domain) : admin_url(@admin) }
+              format.html { redirect_to self.current_user == @admin ? myaccount_url : admin_url(@admin) }
               format.xml  { head :ok }
             else
               format.html { render :action => "register" }
@@ -70,7 +71,8 @@ class Manage::AdminsController < ApplicationController
         render "manage/admins/register_activation"
       end
     else
-      redirect_to myaccount_url(:domain => @admin.domain, :action => 'register')
+logger.error "Couldn't find Activation Code!"
+      redirect_to myaccount_url(:action => 'register')
     end
   end
 

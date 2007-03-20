@@ -5,7 +5,7 @@ end
 
 class String < Object
   def status_to_number
-    num = ['draft', 'submitted', 'reviewed', 'accepted', 'archived'].index(self.downcase)
+    num = ['draft', 'submitted', 'reviewed', 'accepted', 'archived', 'all'].index(self.downcase)
     num.nil? ? nil : num+1
   end
 
@@ -16,6 +16,6 @@ end
 
 class Fixnum < Integer
   def number_to_status
-    txt = ['draft', 'submitted', 'reviewed', 'accepted', 'archived'][self-1]
+    txt = ['draft', 'submitted', 'reviewed', 'accepted', 'archived', 'all'][self-1]
   end
 end

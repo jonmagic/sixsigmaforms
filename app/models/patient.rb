@@ -3,6 +3,10 @@ class Patient < ActiveRecord::Base
   has_many :form_instances, :dependent => :destroy
   has_many :drafts, :class_name => 'FormInstance', :conditions => "status_number=1"
 
+  after_create   :log_create
+  after_update   :log_update
+  before_destroy :log_destroy
+
   attr_accessible :doctor, :doctor_id, :account_number, :last_name, :first_name, :middle_initial, :sex
   attr_accessible :marital_status, :birth_date, :social_security_number, :address, :city, :state
   attr_accessible :zipcode, :telephone, :work_telephone, :work_status, :employment_school
@@ -12,7 +16,18 @@ class Patient < ActiveRecord::Base
   attr_accessible :tertiary_insurance_company, :tertiary_address, :tertiary_city, :tertiary_state, :tertiary_zipcode, :tertiary_telephone, :tertiary_first_name, :tertiary_middle_initial, :tertiary_last_name, :tertiary_relationship, :tertiary_birth_date, :tertiary_social_security_number, :tertiary_contract_number, :tertiary_plan_number, :tertiary_group_number
 
   def find_best_identifier
-    self.first_name.length > 1 ? (self.last_name.length > 1 ? "#{self.last_name}, #{self.first_name}" : (self.account_number.length > 1 ? "#{self.first_name}, ##{self.account_number}" : self.first_name)) : (self.last_name.length > 1 ? (self.account_number.length > 1 ? "#{self.last_name}, ##{self.account_number}" : "#{self.last_name}") : (self.account_number.length > 1 ? "patient ##{self.account_number}" : "(new patient)"))
+    (!self.first_name.nil? && self.first_name.length > 1) ? ((!self.last_name.nil? && self.last_name.length > 1) ? "#{self.last_name}, #{self.first_name}" : ((!self.account_number.nil? && self.account_number.length > 1) ? "#{self.first_name}, ##{self.account_number}" : self.first_name)) : ((!self.last_name.nil? && self.last_name.length > 1) ? ((!self.account_number.nil? && self.account_number.length > 1) ? "#{self.last_name}, ##{self.account_number}" : "#{self.last_name}") : ((!self.account_number.nil? && self.account_number.length > 1) ? "patient ##{self.account_number}" : "(new patient)"))
   end
+
+  private
+    def log_create
+      Log.create(:log_type => 'create:Patient', :data => {})
+    end
+    def log_update
+      Log.create(:log_type => 'update:Patient', :data => {})
+    end
+    def log_destroy
+      Log.create(:log_type => 'destroy:Patient', :data => {})
+    end
 
 end

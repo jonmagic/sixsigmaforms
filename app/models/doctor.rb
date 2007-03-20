@@ -14,7 +14,10 @@ class Doctor < ActiveRecord::Base
   validates_length_of       :alias, :within => 5..25
   validates_uniqueness_of   :alias, :case_sensitive => false
 
-  before_create             :make_encryption_key
+  before_create  :make_encryption_key
+  after_create   :log_create
+  after_update   :log_update
+  before_destroy :log_destroy
 
   def self.form_model(form_type_name)
     type = FormType.find_by_name(form_type_name)
@@ -74,5 +77,16 @@ logger.error "Finding by #{self.alias} (#{self.id}) and #{status} (#{status.stat
     def make_encryption_key
       self.encryption_key = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
     end 
+
+    private
+      def log_create
+        Log.create(:log_type => 'create:Doctor', :data => {})
+      end
+      def log_update
+        Log.create(:log_type => 'update:Doctor', :data => {})
+      end
+      def log_destroy
+        Log.create(:log_type => 'destroy:Doctor', :data => {})
+      end
 
 end

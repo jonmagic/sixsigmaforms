@@ -11,20 +11,20 @@ body {
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 	font-size:1em;
 	color: #1A1D1D;
-	}
+}
 
 .floatright {
 	float:right;
-	}
+}
 
 a {
 	text-decoration:none;
 	color: #C13B00;
-	}
+}
 
 a:hover {
 	text-decoration:underline;
-	}
+}
 
 blockquote {
 	margin:1em;
@@ -33,17 +33,17 @@ blockquote {
 	background-color:#cccccc;
 	border-top:1px solid #999999;
 	border-bottom:1px solid #999999;
-	}
+}
 
 blockquote p {
 	margin:.2em;
-	}
+}
 
 #header {
 	padding:.5em 1.5em 1em 1.5em;
 	height:1em;
 	color: #fff;
-	}
+}
 	
 .header {
 	margin:1em 1em 0 1em;
@@ -55,18 +55,18 @@ blockquote p {
 	padding:0;
 	font-size:1.2em;
 	color:#FF6500;
-	}
+}
 
 #header h3 { 
 	margin:0; 
 	padding:0;
 	font-size:.9em;
-	}
+}
 
 #header a {
 	text-decoration:none;
 	color:#fff;
-	}
+}
 
 #leftColumn {
 	position:absolute;
@@ -75,7 +75,7 @@ blockquote p {
 	width:12em;
 	margin:0;
 	font-size:.9em;
-	}
+}
 	
 #leftColumn .main {
 	background:#5555aa;
@@ -108,22 +108,22 @@ blockquote p {
 	margin:1.5em 0 0 0; 
 	padding:.5em 1em;
 	list-style:none;
-	}
+}
 
 #leftColumn li { 
 	margin:0 0 .4em 0; 
 	padding:0;
-	}
+}
 
 #leftColumn li a { 
 	margin:0 0 0 .2em;
 	color:#FFFFFF;
 	text-decoration:none; 
-	}
+}
 
 #leftColumn li a:hover { 
 	text-decoration:underline; 
-	}
+}
 
 #centerColumn {
 	right:1.14em;
@@ -136,12 +136,22 @@ blockquote p {
 	margin-right:1.14em;
 	padding:0em .5em 2em .5em;
 	font-size:.9em;
-	}
+}
 
 html>body #centerColumn {
 	margin-left:14.50em;
 	margin-right:1.14em;
-	}
+}
+
+.note_section .note_header {
+	font-size: 10pt;
+	font-style: italic;
+}
+
+.note_section .note_controls {
+	font-size: 8pt;
+	font-style: none;
+}
 
 label {
 	font-weight:bold;

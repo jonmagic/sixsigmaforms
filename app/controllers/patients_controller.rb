@@ -1,4 +1,5 @@
 class PatientsController < ApplicationController
+  layout 'doctor'
 
   def live_search
     @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)

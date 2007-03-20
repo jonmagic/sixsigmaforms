@@ -1,5 +1,11 @@
 module RouteObjectMapping
 
+  class ActionController::Base
+    def default_url_options(options)
+      {:domain => logged_in? ? current_user.domain : (params[:domain] || 'manage')}
+    end
+  end
+
     def initiate_global_env
       if !(current_domain == 'manage')
         current_doctor
@@ -10,18 +16,12 @@ module RouteObjectMapping
       given_activation_code
     end
 
-  class ActionController::Base
-    def default_url_options(options)
-      {:domain => params[:domain]}
-    end
-  end
-
     def current_domain
       #Is this always what I want to return here?
-      @current_domain ||= logged_in? ? current_user.domain : nil
+      @current_domain ||= logged_in? ? current_user.domain : (params[:domain] || 'manage')
     end
     def current_doctor
-      @current_doctor ||= logged_in? ? current_user.doctor : nil
+      @current_doctor ||= logged_in? ? current_user.doctor : nil #could default to Doctor.new(:friendly_name => 'Manage', :alias => 'manage')
     end
 
 #These are VERY useful!
@@ -35,7 +35,7 @@ module RouteObjectMapping
       @current_form ||= current_form_model.nil? ? nil : current_form_model.find_by_id(params[:form_id])
     end
     def given_activation_code
-      @given_activation_code ||= params[:user] ? params[:user][:activation_code] || params[:activation_code] : params[:activation_code]
+      @given_activation_code ||= params[:user] ? (params[:user][:activation_code] || params[:activation_code]) : (params[:admin] ? (params[:admin][:activation_code] || params[:activation_code]) : params[:activation_code])
     end
 
 #Validate for ACCESS

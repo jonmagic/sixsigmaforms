@@ -2,13 +2,18 @@ class FormsController < ApplicationController
   layout 'doctor'
 
   def index
-    @my_forms = current_user.forms_with_status(params[:form_status])
-    @others_forms = current_user.others_forms_with_status(params[:form_status])
+    if params[:form_status] == 'all'
+      @my_forms = current_user.form_instances
+      @others_forms = current_user.others_form_instances
+    else
+      @my_forms = current_user.forms_with_status(params[:form_status])
+      @others_forms = current_user.others_forms_with_status(params[:form_status])
+    end
   end
 
 #This is hit first, with an existing OR new patient. The form instance is created and then redirects to the editing ('draft') of the created form.
   def new
-    return redirect_to mydashboard_url() if params[:form_type] == 'chooser'
+    return redirect_to mydashboard_url if params[:form_type] == 'chooser'
     @patient = Patient.find_by_id(params[:patient_id]) || Patient.create(:doctor => current_doctor)
     @form_instance = FormInstance.new(
       :user => current_user,
@@ -44,9 +49,18 @@ class FormsController < ApplicationController
 
 #Actually think of this as 'edit'
   def draft
+#Redirect to view the form if not allowed to edit
+# * * * *
     @form_type = params[:form_type]
-    return redirect_to mydashboard_url() if @form_type == 'chooser'
+    return redirect_to mydashboard_url if @form_type == 'chooser'
     @form = FormType.model_for(@form_type).find_by_id(params[:form_id])
+    # Drop the status down to draft!
+    if !(@form.instance.status == 'draft')
+      @form.instance.status = 'draft'
+      if @form.instance.save
+        Log.create(:log_type => 'status:update', :data => {})
+      end
+    end
     @patient = Patient.find_by_id(@form.instance.patient_id)
     @values = @form
   end
@@ -57,8 +71,12 @@ class FormsController < ApplicationController
     if @form.patient.update_attributes(params[params[:form_type]]) & @form.update_attributes(params[params[:form_type]]) & @form.instance.update
       # flash[:notice] = "Draft saved."
       @save_status = "Draft saved at " << Time.now.strftime("%I:%M %p").downcase
-      if params[:status] == 'submitted'
-        redirect_to forms_url(:action => 'show', :form_type => params[:form_type], :form_id => @form.id)
+      if !(params[:form_instance][:status] == @form.instance.status)
+        @form.instance.status = params[:form_instance][:status]
+        if @form.instance.save
+          Log.create(:log_type => 'status:update', :data => {})
+        end
+        redirect_to forms_status_url(:action => 'index', :form_status => @form.instance.status)
       else
         render :layout => false
       end
@@ -68,7 +86,7 @@ class FormsController < ApplicationController
     end
   end
   
-  def show
+  def view
     @form_type = params[:form_type]
     @form = FormType.model_for(@form_type).find_by_id(params[:form_id])
   end

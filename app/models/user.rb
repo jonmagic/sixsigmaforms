@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
   before_save               :encrypt_password
   after_update              :activate
   before_create             :make_activation_code 
+
+  after_create   :log_create
+  after_update   :log_update
+  before_destroy :log_destroy
   
   def activated?
     adm = Admin.find_by_activation_code(activation_code)
@@ -53,10 +57,12 @@ class User < ActiveRecord::Base
     !u.blank? ? u : nil
   end
 
+  def others_form_instances
+    FormInstance.find(:all, :conditions => ['doctor_id=? AND user_id!=?', self.doctor.id, self.id])
+  end
   def forms_with_status(status)
     FormInstance.find_all_by_user_id_and_status_number(self.id, status.status_to_number)
   end
-
   def others_forms_with_status(status)
     FormInstance.find(:all, :conditions => ['doctor_id=? AND user_id!=? AND status_number=?', self.doctor.id, self.id, status.status_to_number])
   end
@@ -159,5 +165,16 @@ class User < ActiveRecord::Base
     def password_present?
       !password.blank?
     end
+
+    private
+      def log_create
+        Log.create(:log_type => 'create:User', :data => {})
+      end
+      def log_update
+        Log.create(:log_type => 'update:User', :data => {})
+      end
+      def log_destroy
+        Log.create(:log_type => 'destroy:User', :data => {})
+      end
 
 end

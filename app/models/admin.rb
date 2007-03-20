@@ -21,6 +21,9 @@ class Admin < ActiveRecord::Base
   before_save               :encrypt_password
   after_update              :auto_activate
   before_create             :make_activation_code 
+
+  after_create   :log_create
+  after_update   :log_update
   
   def activated?
     adm = Admin.find_by_activation_code(self.activation_code)
@@ -81,7 +84,6 @@ class Admin < ActiveRecord::Base
 
   protected
 
-
 #Need to validate_uniqueness_of email address throughout User model as well!
     def validate_on_update
       old_admin = Admin.find_by_activation_code(activation_code) if !activation_code.blank?
@@ -123,7 +125,9 @@ class Admin < ActiveRecord::Base
 # validate_on_update runs, after which this method (activate) runs. In order to save, it has to validate_on_update again.
 # In the first validate_on_update, it has an activation_code present, but after passing through this, it doesn't, so
 # validate_on_update has to find by id instead. This should be reliable, but maybe just touchy if someone changes anything.
-        self.save
+        if self.save
+          Log.create(:log_type => 'activate:Admin', :data => {})
+        end
       end
     end
 
@@ -147,6 +151,19 @@ class Admin < ActiveRecord::Base
 
     def password_present?
       !self.password.blank?
+    end
+
+  private
+    def log_create
+      #Creating admin. Log the creator and the created.
+      Log.create(:log_type => 'create:Admin', :data => {})
+    end
+    def log_update
+      #Updating admin. Log the changed fields.
+      Log.create(:log_type => 'update:Admin', :data => {})
+    end
+    def log_destroy
+      Log.create(:log_type => 'destroy:Admin', :data => {})
     end
 
 end
