@@ -2,7 +2,8 @@ module RouteObjectMapping
 
   class ActionController::Base
     def default_url_options(options)
-      {:domain => logged_in? ? current_user.domain : (params[:domain] || 'manage')}
+      domain = logged_in? ? current_user.domain : params[:domain]
+      {:domain => domain} unless domain == 'manage'
     end
   end
 

@@ -34,8 +34,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pages, :path_prefix => '/manage', :name_prefix => 'manage_', :controller => 'manage/pages'
 
 #/manage
-  map.admin_dashboard '/manage', :controller => 'manage/admins', :action => 'dashboard', :domain => 'manage'
+  map.admin_dashboard '/manage', :controller => 'manage/admins', :action => 'dashboard'
   map.admin_account '/manage/myaccount/:action', :controller => 'manage/admins', :action => 'show'
+
+#/manage/users/[new,create,show,destroy,etc]
+  map.resources :users, :path_prefix => '/manage/doctors/:doctor_alias', :controller => 'manage/users', :name_prefix => 'manage_', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
 
 #Do we want admins to use a different controller for forms than doctors?
 #/forms/:status
