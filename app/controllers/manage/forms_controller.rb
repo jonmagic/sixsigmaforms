@@ -8,7 +8,7 @@ class Manage::FormsController < ApplicationController
 
   #GET /forms/:status
   def index
-    @forms = FormInstance.find_all_by_status_number(params[:status].status_to_number)
+    @forms = FormInstance.find_all_by_status_number(params[:form_status].status_to_number)
   end
 
   private

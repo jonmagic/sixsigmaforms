@@ -1,13 +1,7 @@
-<h1>Listing <%= params[:status] %> forms</h1>
-
-<table>
-  <tr>
-  </tr>
-  
+<h1>All <%= FormInstance.status_plural(params[:form_status]) %></h1>
 <% @forms.each do |form| -%>
-  <tr>
-    <td><%= form.form_data_type %></td>
-    <td><%= form.id %></td>
-  </tr>
+  <%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %>
 <% end -%>
-</table>
+<% if @my_forms.blank? -%>
+	<em>&lt;no current <%= FormInstance.status_plural(params[:form_status]) %>&gt;</em>
+<% end -%>

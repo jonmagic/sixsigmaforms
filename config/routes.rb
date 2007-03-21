@@ -43,7 +43,7 @@ ActionController::Routing::Routes.draw do |map|
 #Do we want admins to use a different controller for forms than doctors?
 #/forms/:status
 #The following may conflict with map.resources :forms, below.
-  map.admin_forms '/forms/:status', :controller => 'manage/forms', :action => 'index'
+  map.admin_forms '/forms/:form_status/:action/:form_type/:form_id', :controller => 'manage/forms', :action => 'index', :form_type => nil, :form_id => nil
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 
