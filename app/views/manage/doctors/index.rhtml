@@ -1,7 +1,7 @@
 <h1>Manage Doctors</h1>
 
-<%= render :partial => 'shared/live_search_form', :locals => { :post_url => search_doctors_url, :live_url => live_search_doctors_url, :tickler_text => "Start by finding doctors..." } %>
-
+<%= render :partial => 'shared/live_search_form', :locals => { :post_url => search_doctors_url, :live_url => live_search_doctors_url, :tickler_text => "Start by finding doctors...", :results_div => 'doctor_results' } %>
+<!-- show all -->
+<div id="doctor_results"></div>
 <br />
-
 <%= link_to 'New doctor', new_doctor_path %>
