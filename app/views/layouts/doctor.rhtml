@@ -5,7 +5,7 @@
 		<meta name="description" content="Six Sigma Management: HipForms, a HIPAA compliant form completion tool" />
 		<meta name="keywords" content="" />
 		<meta name="author" content="Six Sigma Management" />
-		<title>Six Sigma Management: <%= @current_doctor.friendly_name %></title>
+		<title>Six Sigma Management: <%= @current_domain %></title>
 		<%= stylesheet_link_tag 'admin' %>
 		<%= javascript_include_tag 'prototype' %>
 		<%= javascript_include_tag 'effects' %>
@@ -18,7 +18,7 @@
 			<div id="header">
 				<h3 class="floatright">
 					<% if logged_in? -%>
-						Logged in as <%= current_user.username %>, from <%= current_user.domain %>. <a href="/logout">Logout</a>
+						Logged in as <%= current_user.friendly_name %>, from <%= current_user.domain %>. <a href="/logout">Logout</a>
 					<% else -%>
 						Not logged in. <a href="/<%= params[:domain] ? params[:domain] : "manage" %>/login">Login</a>
 					<% end -%>
@@ -37,6 +37,7 @@
 					</ul>
 				</div>
 			</div>
+			<% if logged_in? -%>
 			<div class="forms rounded">
 				<div class="box">
 					<h2>Forms</h2>
@@ -48,6 +49,7 @@
 					</ul>
 				</div>
 			</div>
+			<% end -%>
 <% if current_user.is_doctor? -%>
 			<div class="manage rounded">
 				<div class="box">

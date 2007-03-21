@@ -2,19 +2,21 @@
 
 <table>
   <thead>
+		<th>Name</th>
+		<th>Username</th>
+		<th>Registration</th>
+		<th>Controls</th>
   </thead>
-  
 <% @users.each do |user| -%>
   <tr<%= " class='doctor_admin'" if user.is_doctor? %>>
     <td><%= user.friendly_name %></td>
     <td><%= user.username %></td>
     <td>&nbsp;
 <% if !user.activation_code.blank? -%>
-    <%= link_to 'Register!', register_users_path(params[:domain])+"?activation_code="+user.activation_code %>
+    <%= link_to 'Register!', register_users_path(:domain => user.doctor.alias)+"?activation_code="+user.activation_code %>
 <% end -%>
-    </td>
-    <td><%= link_to 'Show', manage_user_path(:doctor_alias => user.doctor.alias, :action=> 'show', :id => user.id) %></td>
-    <td><%= link_to 'Destroy', manage_user_path(:doctor_alias => user.doctor.alias, :id => user.id), :confirm => 'Are you sure?', :method => :delete %></td>
+  	</td>
+    <td><%= link_to 'Show', manage_user_path(:doctor_alias => user.doctor.alias, :action=> 'show', :id => user.id) %> / <%= link_to 'Destroy', manage_user_path(:doctor_alias => user.doctor.alias, :id => user.id), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end -%>
 </table>

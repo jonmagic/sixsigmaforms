@@ -50,8 +50,6 @@ module RouteObjectMapping
       redirect_if_invalid_doctor_alias('manage') unless params[:action] == 'show'
     end
 
-
-  private
     def redirect_if_invalid_doctor_alias(domain)
       if logged_in?
         if !(current_user.domain == domain)

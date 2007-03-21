@@ -8,7 +8,7 @@ module AuthenticatedSystem
     
     # Accesses the current user from the session.
     def current_user
-      @current_user ||= (session[:user] && (session[:domain] == 'manage' ? Admin.find_by_id(session[:user]) : User.find_by_id(session[:user]))) || :false
+      @current_user ||= ((session[:user] || given_activation_code) && (session[:domain] == 'manage' ? (Admin.find_by_id(session[:user]) || Admin.find_by_activation_code(given_activation_code)) : (User.find_by_id(session[:user]) || User.find_by_activation_code(given_activation_code)))) || :false
     end
     
     # Store the given user in the session.

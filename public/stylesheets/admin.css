@@ -93,7 +93,7 @@ blockquote p {
 }
 
 #leftColumn .box {
-	padding:.5em .5em .9em 1.3em;	
+	padding:.4em .3em .5em 1.4em;
 }
 
 #leftColumn h2 { 
@@ -106,7 +106,7 @@ blockquote p {
 
 #leftColumn ul { 
 	margin:1.5em 0 0 0; 
-	padding:.5em 1em;
+	padding:0 1em;
 	list-style:none;
 }
 
@@ -115,10 +115,18 @@ blockquote p {
 	padding:0;
 }
 
-#leftColumn li a { 
+.box a { 
 	margin:0 0 0 .2em;
 	color:#FFFFFF;
 	text-decoration:none; 
+}
+
+.box hr {
+	background-color:#FFFFFF;
+	border:1px solid #FFFFFF;
+	width:80px;
+	height:2px;
+	margin-right:60px;
 }
 
 #leftColumn li a:hover { 

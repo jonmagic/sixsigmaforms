@@ -18,7 +18,9 @@ class UsersController < ApplicationController
   def register
     if !given_activation_code.blank?
       @user = User.find_by_activation_code(given_activation_code)
-      if @user.blank?
+      if !@user.blank?
+        current_user = @user
+      else
         flash[:notice] = "Invalid activation code!"
         render "users/register_activation"
       end
@@ -33,6 +35,7 @@ class UsersController < ApplicationController
       #Find unregistered user (need to choke if not a valid code)
       @user = User.find_by_activation_code(given_activation_code)
       if !@user.blank?
+        current_user = @user
         @user.operation = 'activate'
         if !@user.activated?
           respond_to do |format|
@@ -40,7 +43,7 @@ class UsersController < ApplicationController
               #Log the user in
               self.current_user = @user
               flash[:notice] = "Signup complete! #{@user.username} is ready for login."
-              format.html { redirect_to user_url(:id => @user) }
+              format.html { redirect_to myaccount_url }
               format.xml  { head :ok }
             else
               format.html { render :action => "register" }
@@ -144,6 +147,12 @@ class UsersController < ApplicationController
     end
 
     def require_login_except_register_and_activate
+      #User is automatically logged out if logged in
+      if logged_in? and (params[:action] == 'register' or params[:action] == 'activate')
+        cookies.delete :auth_token
+        reset_session
+      end
+      #****
       return if logged_in? or params[:action] == 'register' or params[:action] == 'activate'
       store_location
       redirect_to login_url(params[:domain])
