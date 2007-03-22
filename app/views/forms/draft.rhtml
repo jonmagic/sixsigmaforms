@@ -1,8 +1,8 @@
-<p>This form will be tied to <span class="patient_best_identifier"><%= @patient.find_best_identifier %></span>.</p>
+<!--<p>This form will be tied to <span class="patient_best_identifier"><%= @patient.find_best_identifier %></span>.</p>
+
+<%= submit_tag 'Save Draft', :id => 'save_draft_bttn1' %><span id="draft_save_status"></span>-->
 <%= error_messages_for :basic_form %>
 <% remote_form_for(@form_type, :html => {:id => 'form_'+@form_type.fromCamelCase}, :url => formatted_forms_url(:form_type => @form_type, :action => 'update', :form_id => @form.id, :format => 'js')) do |f| %>
-
-<%= submit_tag 'Save Draft', :id => 'save_draft_bttn1' %><span id="draft_save_status"></span>
 
 	<%= hidden_field_tag :patient_id, @patient.id %>
 	<%= render :partial => @form_type.fromCamelCase, :locals => {:f => f} %>

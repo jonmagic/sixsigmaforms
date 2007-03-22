@@ -1,0 +1,48 @@
+* {
+	margin:0;
+	padding:0;
+}
+body {
+	margin:0;
+	padding:0;
+	background-color:#fff;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color: #1A1D1D;
+	font-size:80%;
+}
+
+.floatright {
+	float:right;
+}
+
+a {
+	text-decoration:none;
+	color: #C13B00;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+blockquote {
+	margin:1em;
+	padding:.5em;
+	font-size:.9em;
+	background-color:#cccccc;
+	border-top:1px solid #999999;
+	border-bottom:1px solid #999999;
+}
+
+blockquote p {
+	margin:.2em;
+}
+
+
+#draft_save_status {
+	font-size: 10pt;
+	font-style: italic;
+}
+
+label {
+	font-weight:bold;
+}

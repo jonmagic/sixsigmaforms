@@ -1,73 +1,3 @@
-/*******************************************************
-TITLE: Fluid Two-Column Layout (Basic) V1.0 (Beta)
-DATE: 20060418
-AUTHOR: The CSS Tinderbox - http://www.csstinderbox.com
-*******************************************************/
-
-body {
-	margin:0;
-	padding:0;
-	background-color:#fff;
-	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:1em;
-	color: #1A1D1D;
-}
-
-.floatright {
-	float:right;
-}
-
-a {
-	text-decoration:none;
-	color: #C13B00;
-}
-
-a:hover {
-	text-decoration:underline;
-}
-
-blockquote {
-	margin:1em;
-	padding:.5em;
-	font-size:.9em;
-	background-color:#cccccc;
-	border-top:1px solid #999999;
-	border-bottom:1px solid #999999;
-}
-
-blockquote p {
-	margin:.2em;
-}
-
-#header {
-	padding:.5em 1.5em 1em 1.5em;
-	height:1em;
-	color: #fff;
-}
-	
-.header {
-	margin:1em 1em 0 1em;
-	background-color:#1A1D1D;
-}
-
-#header h1 { 
-	margin:0; 
-	padding:0;
-	font-size:1.2em;
-	color:#FF6500;
-}
-
-#header h3 { 
-	margin:0; 
-	padding:0;
-	font-size:.9em;
-}
-
-#header a {
-	text-decoration:none;
-	color:#fff;
-}
-
 #leftColumn {
 	position:absolute;
 	left:1.14em;
@@ -159,13 +89,4 @@ html>body #centerColumn {
 .note_section .note_controls {
 	font-size: 8pt;
 	font-style: none;
-}
-
-label {
-	font-weight:bold;
-}
-
-#draft_save_status {
-	font-size: 10pt;
-	font-style: italic;
 }

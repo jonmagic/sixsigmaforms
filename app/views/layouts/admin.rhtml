@@ -42,13 +42,13 @@
 	<body>
 		<div class="header">
 			<div id="header">
-				<h3 class="floatright">
+				<span class="floatright">
 					<% if logged_in? -%>
-						Logged in as <%= current_user.friendly_name %>, from <%= current_user.domain %>. <a href="/logout">Logout</a>
+						Welcome <%= current_user.friendly_name %>, <a href="/logout">Logout?</a>
 					<% else -%>
 						Not logged in. <%= link_to 'Login', login_url(:domain => 'manage') %>
 					<% end -%>
-				</h3>
+				</span>
 				<h1>Six Sigma Management: HipForms</h1>
 			</div><!--//end #header//-->
 		</div>
