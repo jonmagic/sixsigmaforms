@@ -31,6 +31,7 @@ class Admin < ActiveRecord::Base
   end
 
   def domain
+logger.error "Admin domain: sixsigma\n"
     'sixsigma'
   end
   def doctor
@@ -41,6 +42,9 @@ class Admin < ActiveRecord::Base
     true
   end
   def is_doctor?
+    false
+  end
+  def is_doctor_user?
     false
   end
   def is_doctor_or_admin?
@@ -58,7 +62,7 @@ class Admin < ActiveRecord::Base
   end
 
   # Authenticates a user by their username and unencrypted password.  Returns the user or nil.
-  def self.authenticate(username, password, domain='sixsigma')
+  def self.authenticate(username, password)
 #    u = find :first, :conditions => ['username = ? and activated_at IS NOT NULL', username] # need to get the salt
     u = Admin.find_by_username(username) # need to get the salt
     u && u.authenticated?(password) ? u : nil

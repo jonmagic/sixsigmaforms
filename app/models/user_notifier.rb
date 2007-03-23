@@ -3,7 +3,7 @@ class UserNotifier < ActionMailer::Base
     setup_email(user)
     @subject    += 'Please activate your new account'
     @body[:url]  = "http://localhost:3000/#{user.domain}/myaccount/register?activation_code=#{user.activation_code}"
-    #myaccount_url(:domain => user.domain, :action => 'register', :activation_code => user.activation_code)
+    #user_account_url(:domain => user.domain, :action => 'register', :activation_code => user.activation_code)
   end
   
   def activation(user)

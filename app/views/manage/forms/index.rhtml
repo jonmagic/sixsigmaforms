@@ -2,6 +2,3 @@
 <% @forms.each do |form| -%>
   <%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %>
 <% end -%>
-<% if @my_forms.blank? -%>
-	<em>&lt;no current <%= FormInstance.status_plural(params[:form_status]) %>&gt;</em>
-<% end -%>

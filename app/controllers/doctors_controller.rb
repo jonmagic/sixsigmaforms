@@ -13,18 +13,19 @@ class DoctorsController < ApplicationController
 
   # GET /:domain/dashboard
   def dashboard
-    #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
-    restrict('allow only doctor admins')
+    restrict('allow only doctor users')
   end
 
 #This should be operational for doctor admins to view and edit their account
   def profile
+    restrict('allow only doctor admins')
     @doctor = current_doctor
   end
 
 #This needs to be locked down to do only what it should be allowed to do
 # An Ajax-only action.
   def update
+    restrict('allow only doctor admins')
     @doctor = Doctor.find(params[:id])
     @user   = @doctor.admin
     respond_to do |format|

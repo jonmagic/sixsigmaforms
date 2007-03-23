@@ -1,6 +1,6 @@
 
 <p>* Form <em><%= @form_type %></em>, instance #<em><%= @form.instance.id %>.<%= @form.id %></em> *</p>
-<p>Doctor: <em><%= link_to @form.instance.doctor.friendly_name, doctor_dashboard_path() %></em></p>
+<p>Doctor: <em><%= link_to @form.instance.doctor.friendly_name, doctor_dashboard_path %></em></p>
 <p>Patient: <em><%= link_to "#{@form.first_name} #{@form.last_name}", patient_path(:id => @form.instance.patient_id) %></em></p>
 <p>Birth Date: <em><%= @form.birth_date %></em></p>
 <p>Address: <%= @form.address %>, <%= @form.city %>, <%= @form.state %> <%= @form.zipcode %></p>

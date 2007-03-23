@@ -26,7 +26,7 @@ class Doctor < ActiveRecord::Base
   #This is the proxy method to the form data records
   def form_model(form_type_name)
     type = FormType.find_by_name(form_type_name)
-    logger.error "Attempted unpermitted FormType access: Doctor includes " + (self.form_type_ids.join(', ')) + ", but NOT #{type}?" unless self.form_types.include?(type)
+    # logger.error "Attempted unpermitted FormType access: Doctor includes " + (self.form_type_ids.join(', ')) + ", but NOT #{type}?" unless self.form_types.include?(type)
     return nil unless self.form_types.include?(type)
     type.nil? ? nil : type.name.constantize
   end
@@ -41,7 +41,7 @@ class Doctor < ActiveRecord::Base
   end
 
   def forms_with_status(status)
-logger.error "Finding by #{self.alias} (#{self.id}) and #{status} (#{status.status_to_number})."
+# logger.error "Finding by #{self.alias} (#{self.id}) and #{status} (#{status.status_to_number})."
     FormInstance.find_all_by_doctor_id_and_status_number(self.id, status.status_to_number)
   end
 

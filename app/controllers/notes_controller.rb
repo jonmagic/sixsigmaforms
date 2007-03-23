@@ -4,6 +4,7 @@ class NotesController < ApplicationController
   # GET /notes
   # GET /notes.xml
   def index
+    restrict('allow only doctor users')
     @form_instance = FormInstance.find_by_form_type_and_form_id(params[:form_type], params[:form_id])
     @notes = Note.find_by_form_instance_id(@form_instance.id)
     respond_to do |format|
@@ -15,6 +16,7 @@ class NotesController < ApplicationController
   # GET /notes/1
   # GET /notes/1.xml
   def show
+    restrict('allow only doctor users')
     @note = Note.find_by_id(params[:id])
     respond_to do |format|
       format.html # show.rhtml
@@ -24,12 +26,13 @@ class NotesController < ApplicationController
 
   # GET /notes/new
   def new
+    restrict('allow only doctor users')
     @note = Note.new
   end
 
   # GET /notes/1;edit
   def edit
-#Validate that the note relates to the form being accessed?
+    restrict('allow only doctor users')
     @note = Note.find_by_id(params[:id])
     respond_to do |format|
       format.html
@@ -40,6 +43,7 @@ class NotesController < ApplicationController
   # POST /notes
   # POST /notes.xml
   def create
+    restrict('allow only doctor users')
     @note = Note.new(params[:note])
     @note.form_instance = current_form_instance
     @note.author = current_user
@@ -59,6 +63,7 @@ class NotesController < ApplicationController
   # PUT /notes/1
   # PUT /notes/1.xml
   def update
+    restrict('allow only doctor users')
     @note = Note.find_by_id(params[:id])
     @note.form_instance = current_form_instance
     @note.author = current_user
@@ -78,6 +83,7 @@ class NotesController < ApplicationController
   # DELETE /notes/1
   # DELETE /notes/1.xml
   def destroy
+    restrict('allow only doctor users')
     @note = Note.find_by_id(params[:id])
     @note.destroy
     respond_to do |format|

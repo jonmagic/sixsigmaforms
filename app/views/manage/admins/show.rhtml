@@ -1,7 +1,4 @@
-<p>Full Name: <%= @admin.friendly_name %></p>
+<p>Full Name: <%= in_place_editor_field :admin, 'friendly_name', {}, :rows => 1, :external_control => "edit_friendly_name_#{@admin.id}", :url => {:action => 'set_admin_friendly_name', :id => @admin.id} %></p>
 <p>Username:  <%= @admin.username %></p>
-<p>Email:     <%= @admin.email %></p>
+<p>Email:     <%= in_place_editor_field :admin, 'email', {}, :rows => 1, :external_control => "edit_email_#{@admin.id}", :url => {:action => 'set_admin_email', :id => @admin.id} %></p>
 <p><%= link_to('Register!', register_admins_path(:activation_code => @admin.activation_code)) if !@admin.activation_code.blank? %>&nbsp;</p>
-
-<%= link_to 'Edit', edit_admin_path(@admin) %> |
-<%= link_to 'Back', admins_path %>

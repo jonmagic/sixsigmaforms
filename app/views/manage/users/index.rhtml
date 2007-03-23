@@ -7,16 +7,23 @@
 		<th>Registration</th>
 		<th>Controls</th>
   </thead>
-<% @users.each do |user| -%>
-  <tr<%= " class='doctor_admin'" if user.is_doctor? %>>
-    <td><%= user.friendly_name %></td>
-    <td><%= user.username %></td>
+<% @users.each do |@user| -%>
+  <tr<%= " class='doctor_admin'" if @user.is_doctor? %>>
+    <td><%= in_place_editor_field :user,
+ 'friendly_name', {}, :rows => 1,
+ :external_control => "edit_friendly_name_#{@user.id}",
+ :url => {:doctor_id => @doctor.id, :action => 'set_user_friendly_name', :id => @user.id} %></td>
+    <td><%= @user.username %></td>
+	    <td><%= in_place_editor_field :user,
+	 'email', {}, :rows => 1,
+	 :external_control => "edit_email_#{@user.id}",
+	 :url => {:doctor_id => @doctor.id, :action => 'set_user_email', :id => @user.id} %></td>
     <td>&nbsp;
-<% if !user.activation_code.blank? -%>
-    <%= link_to 'Register!', register_users_path(:domain => user.doctor.alias)+"?activation_code="+user.activation_code %>
+<% if !@user.activation_code.blank? -%>
+    <%= link_to 'Register!', register_users_path(:domain => @user.doctor.alias)+"?activation_code="+@user.activation_code %>
 <% end -%>
   	</td>
-    <td><%= link_to 'Show', manage_user_path(user.doctor.id, user.id) %> / <%= link_to 'Destroy', manage_user_path(user.doctor.id, user.id), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Reset Password', '' %> / <%= link_to '(Destroy)', manage_user_path(@user.doctor.id, @user.id), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end -%>
 </table>

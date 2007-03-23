@@ -9,11 +9,13 @@ class ApplicationController < ActionController::Base
   include AccessControl
   before_filter :initiate_global_env
   before_filter :add_default_restrictions
-  before_filter :go_to_where_you_belong # If logged in, teleport to own doctor, If not logged in, teleport to accessed_doctor's login page
+  before_filter :go_to_where_you_belong
   layout 'default'
 
   def add_default_restrictions
     add_restriction('allow only doctor admins', current_user.is_doctor?) {flash[:notice] = "Only Doctor Admins can access this. Please login with Doctor Admin credentials."; store_location; redirect_to doctor_login_path(accessed_domain)}
+    add_restriction('allow only admins or doctor admins', current_user.is_doctor_or_admin?) {flash[:notice] = "Only Doctor Admins can access this. Please login with Doctor Admin credentials."; store_location; redirect_to doctor_login_path(accessed_domain)}
+    add_restriction('allow only doctor users', current_user.is_doctor_user?) {flash[:notice] = "Only Doctor Users can access this. Please login."; store_location; redirect_to doctor_login_path(accessed_domain)}
     add_restriction('allow only admins', current_user.is_admin?) {flash[:notice] = "Only SixSigma Admins can access this. Please login with SixSigma Admin credentials."; store_location; redirect_to admin_login_path}
   end
 
@@ -24,10 +26,12 @@ class ApplicationController < ActionController::Base
   end
   def restrict(name, &block)
     @ACL ||= AccessControlList.new
+    logger.error "RESTRICTED" unless @ACL.restrictions[name][:condition]
     @ACL.restrict(name, block)
   end
 
   private
+    # If logged in, teleport to own doctor, If not logged in, teleport to accessed_doctor's login page
     def go_to_where_you_belong
       
     end

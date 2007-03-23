@@ -48,8 +48,11 @@ class User < ActiveRecord::Base
   def is_admin?
     false
   end
+  def is_doctor_user?
+    true
+  end
   def is_doctor_or_admin?
-    is_doctor? || is_admin?
+    is_doctor?
   end
 
   def self.valid_username?(username)

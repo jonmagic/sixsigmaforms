@@ -9,7 +9,7 @@ class SessionsController < ApplicationController  # layout 'doctor'
   def create_admin
     user = Admin.valid_username?(params[:username])
     if !user.blank?
-      self.current_user = Admin.authenticate(params[:username], params[:password], params[:domain])
+      self.current_user = Admin.authenticate(params[:username], params[:password])
       if logged_in?
 logger.error "User: #{self.current_user.friendly_name} #{self.current_user.domain}"
         flash[:notice] = "Welcome " + self.current_user.friendly_name + "."
@@ -43,11 +43,12 @@ logger.error "User: #{self.current_user.friendly_name} #{self.current_user.domai
 
   def destroy
     if logged_in?
-      domain = self.current_user.domain
+      dom = self.current_user.domain
+logger.error "Domain: #{self.current_user.domain}"
       cookies.delete :auth_token
       reset_session
       flash[:notice] = "You have been logged out."
-      redirect_back_or_default(domain == 'sixsigma' ? admin_login_url : doctor_login_url(domain))
+       redirect_to dom == 'sixsigma' ? admin_login_url : doctor_login_url(dom)
     else
       redirect_to page_url
     end

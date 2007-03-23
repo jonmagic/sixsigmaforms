@@ -24,10 +24,23 @@ class Manage::UsersController < ApplicationController
     @user.email = params[:user][:email]
     @user.doctor = Doctor.find_by_id(params[:doctor_id])
     if @user.save
-      redirect_back_or_default(manage_users_path)
+      redirect_back_or_default(manage_users_url)
       flash[:notice] = "User #{@user.friendly_name} has been created."
     else
       render :action => "new"
+    end
+  end
+
+#This would be better as rjs, with the typical fade out deletion.
+  def destroy
+    @user = User.find_by_id(params[:id])
+    if @user.destroy
+      respond_to do |format|
+        format.html { redirect_to manage_users_url }
+        format.xml  { head :ok }
+      end
+    else
+      
     end
   end
 

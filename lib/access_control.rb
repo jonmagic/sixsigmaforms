@@ -16,6 +16,7 @@ module AccessControl
     # Run the specified registered access check, execute the block if no match.
     def restrict(name, block)
       block.nil? ? self.restrictions[name][:default_block].call : block.call unless self.restrictions[name][:condition]
+      return !(self.restrictions[name][:condition])
     end
   end
 end

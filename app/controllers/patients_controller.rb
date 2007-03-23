@@ -2,6 +2,7 @@ class PatientsController < ApplicationController
   layout 'doctor'
 
   def live_search
+    restrict('allow only doctor users')
     @phrase = (request.raw_post || request.query_string).slice(/[^=]+/)
     if @phrase.blank?
       render(:file => 'forms/_new_form', :use_full_path => true)
@@ -20,6 +21,7 @@ class PatientsController < ApplicationController
   # DELETE /patients/1
   # DELETE /patients/1.xml
   def destroy
+    restrict('allow only doctor admins')
     @patient = Patient.find_by_id(params[:id])
     @patient.destroy
     respond_to do |format|

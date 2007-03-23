@@ -21,7 +21,9 @@
 			<h1>Six Sigma Management Form Processor</h1>
 			<h2>Welcome <%= current_user.friendly_name %></h2>
 			<ul>
+<% if current_user.is_doctor? -%>
 				<li>Manage</li>
+<% end -%>
 				<li>
 					<% if logged_in? -%>
 						<a href="/logout">Logout</a>
@@ -33,11 +35,11 @@
 		</div>
 		<div id="main">
 			<ul id="tabmenu">
-				<li><%= link_to "Dashboard", doctor_dashboard_url %></li>				
-				<li class="firstTab"><%= link_to "Drafts" + (!current_user.drafts.blank? ? " (#{current_user.drafts.count})" : ''), doctor_forms_by_status_path(:form_status => 'draft'), :id => 'drafts_count' %></li>
-				<li><%= link_to "Submitted" + (!current_user.submitted.blank? ? " (#{current_user.submitted.count})" : ''), doctor_forms_by_status_path(:form_status => 'submitted'), :class => 'active' %></li>
-				<li><%= link_to "Reviewed" + (!current_user.reviewed.blank? ? " (#{current_user.reviewed.count})" : ''), doctor_forms_by_status_path(:form_status => 'reviewed') %></li>
-				<li><%= link_to "Accepted" + (!current_user.accepted.blank? ? " (#{current_user.accepted.count})" : ''), doctor_forms_by_status_path(:form_status => 'accepted') %></li>
+				<li><%= tab_link_to "Dashboard", doctor_dashboard_url %></li>				
+				<li class="firstTab"><%= tab_link_to "Drafts" + (!current_user.drafts.blank? ? " (#{current_user.drafts.count})" : ''), doctor_forms_by_status_path(:form_status => 'draft'), :id => 'drafts_count' %></li>
+				<li><%= tab_link_to "Submitted" + (!current_user.submitted.blank? ? " (#{current_user.submitted.count})" : ''), doctor_forms_by_status_path(:form_status => 'submitted') %></li>
+				<li><%= tab_link_to "Reviewed" + (!current_user.reviewed.blank? ? " (#{current_user.reviewed.count})" : ''), doctor_forms_by_status_path(:form_status => 'reviewed') %></li>
+				<li><%= tab_link_to "Accepted" + (!current_user.accepted.blank? ? " (#{current_user.accepted.count})" : ''), doctor_forms_by_status_path(:form_status => 'accepted') %></li>
 			</ul>
 			<div style="background:#C13B00;"><br /></div><br />
 			<div id="messages"><%= flash[:notice] %></div>
