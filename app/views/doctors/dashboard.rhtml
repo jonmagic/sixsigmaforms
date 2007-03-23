@@ -15,7 +15,7 @@
 <ul>
 	<% current_user.drafts.each do |draft| -%>
 	<!-- Need to convert this to a partial -->
-	<li id="draft_listing_<%= draft.id %>"><%= link_to "#{draft.patient.first_name} #{draft.patient.last_name} -[#{draft.created_at.strftime("%a %b %d, %I:%M%p")}]-", doctor_forms_path(:action => 'draft', :form_type => draft.form_data_type, :form_id => draft.form_data_id) %> (<%= link_to_remote 'Discard', :confirm => "Discard this draft?", :url => formatted_doctors_forms_path(:form_type => draft.form_type.name, :action => 'discard_inline', :form_id => draft.id, :format => 'js') %>)</li>
+	<li id="draft_listing_<%= draft.id %>"><%= link_to "#{draft.patient.first_name} #{draft.patient.last_name} -[#{draft.created_at.strftime("%a %b %d, %I:%M%p")}]-", doctor_forms_path(:action => 'draft', :form_type => draft.form_data_type, :form_id => draft.form_data_id) %> (<%= link_to_remote 'Discard', :confirm => "Discard this draft?", :url => formatted_doctor_forms_path(:form_type => draft.form_type.name, :action => 'discard_inline', :form_id => draft.id, :format => 'js') %>)</li>
 	<% end -%>
 </ul>
 </div>
