@@ -59,7 +59,7 @@ class UsersController < ApplicationController
         render "users/register_activation"
       end
     else
-      redirect_back_or_default(doctor_user_path(:action => 'register'))
+      redirect_back_or_default(user_path(:action => 'register'))
     end
   end
 
@@ -136,7 +136,7 @@ class UsersController < ApplicationController
     @user = User.find_by_id(params[:id])
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to doctor_user_path() }
+      format.html { redirect_to user_path() }
       format.xml  { head :ok }
     end
   end

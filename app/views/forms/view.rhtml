@@ -5,4 +5,4 @@
 <p>Birth Date: <em><%= @form.birth_date %></em></p>
 <p>Address: <%= @form.address %>, <%= @form.city %>, <%= @form.state %> <%= @form.zipcode %></p>
 <p>Provider: <%= @form.provider_name %></p>
-<%= link_to 'Edit', forms_path(:form_type => @form_type, :action => 'draft', :form_id => params[:form_id]) %>
+<%= link_to 'Edit', doctor_forms_path(:form_type => @form_type, :action => 'draft', :form_id => params[:form_id]) %>
