@@ -34,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_account   '/sixsigma/manage/myaccount/:action',   :controller => 'manage/admins', :action => 'show'
 
   map.admin_forms_by_status '/sixsigma/forms/status/:form_status',  :controller => 'manage/forms',  :action => 'index', :form_status => 'all'
-  map.formatted_admin_forms '/doctors/:domain/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
+  map.formatted_admin_forms '/sixsigma/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
   map.admin_forms '/sixsigma/forms/:form_type/:action/:form_id', :controller => 'forms', :form_type => 'chooser', :action => 'new', :form_id => nil
   map.resources :notes, :path_prefix => '/sixsigma/forms/:form_type/:form_id', :name_prefix => 'admin_'
 
