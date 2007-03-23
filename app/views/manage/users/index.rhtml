@@ -16,7 +16,7 @@
     <%= link_to 'Register!', register_users_path(:domain => user.doctor.alias)+"?activation_code="+user.activation_code %>
 <% end -%>
   	</td>
-    <td><%= link_to 'Show', manage_user_path(:doctor_alias => user.doctor.alias, :action=> 'show', :id => user.id) %> / <%= link_to 'Destroy', manage_user_path(:doctor_alias => user.doctor.alias, :id => user.id), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', manage_user_path(user.doctor.id, user.id) %> / <%= link_to 'Destroy', manage_user_path(user.doctor.id, user.id), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end -%>
 </table>

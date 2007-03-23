@@ -27,7 +27,7 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_dashboard                     '/sixsigma',        :controller => 'manage/admins', :action => 'dashboard'
   map.resources :admins,  :path_prefix => '/sixsigma/manage', :controller => 'manage/admins', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
   map.resources :doctors, :path_prefix => '/sixsigma/manage', :controller => 'manage/doctors', :collection => { :live_search => :any, :search => :any } do |doctor|
-    doctor.resources :users, :controller => 'manage/users',   :name_prefix => 'manage_', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
+    doctor.resources :users, :controller => 'manage/users',   :name_prefix => 'manage_', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any, :set_user_friendly_name => :any, :set_user_email => :any }
   end
   map.resources :pages, :path_prefix => '/sixsigma/manage',   :controller => 'manage/pages', :name_prefix => 'manage_'
   # map.admin_forms '/sixsigma/forms/:form_status/:action/:form_type/:form_id', :controller => 'manage/forms', :action => 'index', :form_type => nil, :form_id => nil

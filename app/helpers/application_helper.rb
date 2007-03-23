@@ -1,6 +1,13 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  def tab_link_to(name, options = {}, html_options = nil, *parameters_for_method_reference)
+    url = options.is_a?(String) ? options : self.url_for(options, *parameters_for_method_reference)
+    html_options ||= {}
+    html_options[:class] = 'active' if url == request.request_uri
+    link_to(name, options, html_options, parameters_for_method_reference)
+  end
+
 end
 
 class String < Object

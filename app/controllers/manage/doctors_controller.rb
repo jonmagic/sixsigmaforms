@@ -99,7 +99,6 @@ class Manage::DoctorsController < ApplicationController
     end
   end
 
-  # GET /:doctor_alias/dashboard
   def dashboard
   end
 

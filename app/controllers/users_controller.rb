@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_filter :require_login_except_register_and_activate
-  before_filter :require_doctor_or_admin_for_certain_actions
-  layout 'doctor'
+  # before_filter :require_login_except_register_and_activate
+  # before_filter :require_doctor_or_admin_for_certain_actions
   in_place_edit_for :user, 'friendly_name'
   in_place_edit_for :user, 'email'
+  layout 'doctor'
 
   # render show.rhtml
   def show

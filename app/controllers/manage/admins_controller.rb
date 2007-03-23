@@ -1,5 +1,4 @@
 class Manage::AdminsController < ApplicationController
-  # before_filter :require_admin_except_register_and_activate
   layout 'admin'
 
   # GET /admins
