@@ -27,7 +27,7 @@
     	<%= g.text_field :email %>
 <% end -%>
 
-  <% if current_user.domain == "manage" -%>
+  <% if current_user.is_admin? -%>
   <p><label for="form_types">Assigned Form Types</label><br/>
 		<ul>
 		<% FormType.find(:all).each do |t| -%>

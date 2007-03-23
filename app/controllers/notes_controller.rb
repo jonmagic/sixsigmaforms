@@ -45,9 +45,9 @@ class NotesController < ApplicationController
     @note.author = current_user
     respond_to do |format|
       if @note.save
-        format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
+        format.html { redirect_to doctor_forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
         format.js   {}
-        format.xml  { head :created, :location => forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
+        format.xml  { head :created, :location => doctor_forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
       else
         format.html { render :action => "new" }
         format.js   {}
@@ -64,7 +64,7 @@ class NotesController < ApplicationController
     @note.author = current_user
     respond_to do |format|
       if @note.update_attributes(params[:note])
-        format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
+        format.html { redirect_to doctor_forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
         format.js   {}
         format.xml  { head :ok }
       else
@@ -81,7 +81,7 @@ class NotesController < ApplicationController
     @note = Note.find_by_id(params[:id])
     @note.destroy
     respond_to do |format|
-      format.html { redirect_to forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
+      format.html { redirect_to doctor_forms_url(:action => 'draft', :form_type => params[:form_type], :form_id => params[:form_id]) }
       format.js   {}
       format.xml  { head :ok }
     end

@@ -33,11 +33,10 @@ ActionController::Routing::Routes.draw do |map|
   # map.admin_forms '/sixsigma/forms/:form_status/:action/:form_type/:form_id', :controller => 'manage/forms', :action => 'index', :form_type => nil, :form_id => nil
   map.admin_account   '/sixsigma/manage/myaccount/:action',   :controller => 'manage/admins', :action => 'show'
 
-  map.forms_by_status '/sixsigma/forms/status/:form_status',  :controller => 'manage/forms',  :action => 'index', :form_status => 'all'
-
-  map.formatted_forms '/doctors/:domain/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
-  map.forms '/sixsigma/forms/:form_type/:action/:form_id', :controller => 'forms', :form_type => 'chooser', :action => 'new', :form_id => nil
-  map.resources :notes, :path_prefix => '/sixsigma/forms/:form_type/:form_id'
+  map.admin_forms_by_status '/sixsigma/forms/status/:form_status',  :controller => 'manage/forms',  :action => 'index', :form_status => 'all'
+  map.formatted_admin_forms '/doctors/:domain/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
+  map.admin_forms '/sixsigma/forms/:form_type/:action/:form_id', :controller => 'forms', :form_type => 'chooser', :action => 'new', :form_id => nil
+  map.resources :notes, :path_prefix => '/sixsigma/forms/:form_type/:form_id', :name_prefix => 'admin_'
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -53,10 +52,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :path_prefix => '/doctors/:domain', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
   map.myaccount '/doctors/:domain/myaccount/:action', :controller => 'users', :action => 'show'
 
-  map.forms_status '/doctors/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'all', :action => 'index'
-  map.resources :notes, :path_prefix => '/doctors/:domain/forms/:form_type/:form_id'
-  map.formatted_forms '/doctors/:domain/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
-  map.forms '/doctors/:domain/forms/:form_type/:action/:form_id', :controller => 'forms', :form_type => 'chooser', :action => 'new', :form_id => nil
+  map.doctor_forms_by_status '/doctors/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'all', :action => 'index'
+  map.resources :notes, :path_prefix => '/doctors/:domain/forms/:form_type/:form_id', :name_prefix => 'doctor_'
+  map.formatted_doctor_forms '/doctors/:domain/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
+  map.doctor_forms '/doctors/:domain/forms/:form_type/:action/:form_id', :controller => 'forms', :form_type => 'chooser', :action => 'new', :form_id => nil
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 

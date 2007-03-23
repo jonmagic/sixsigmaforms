@@ -2,8 +2,7 @@ module RouteObjectMapping
 
   class ActionController::Base
     def default_url_options(options)
-      domain = logged_in? ? current_user.domain : params[:domain]
-      {:domain => domain} unless domain == 'sixsigma'
+      {:domain => accessed_domain} unless accessed_domain == 'sixsigma'
     end
   end
 
@@ -19,7 +18,7 @@ module RouteObjectMapping
     end
 
     def accessed_domain
-      @accessed_domain ||= params[:domain] || 'sixsigma'
+      @accessed_domain ||= (params[:domain] || 'sixsigma')
     end
     def accessed_doctor
       @accessed_doctor ||= accessed_domain == 'sixsigma' ? Doctor.new(:friendly_name => 'SixSigma') : Doctor.find_by_alias(accessed_domain)
@@ -29,7 +28,7 @@ module RouteObjectMapping
       @current_domain ||= logged_in? ? current_user.domain : (params[:domain] || 'sixsigma')
     end
     def current_doctor
-      @current_doctor ||= logged_in? ? current_user.doctor : nil #could default to Doctor.new(:friendly_name => 'Manage', :alias => 'manage')
+      @current_doctor ||= logged_in? ? current_user.doctor : nil
     end
 
 #These are VERY useful!

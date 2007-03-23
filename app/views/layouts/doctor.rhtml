@@ -26,7 +26,7 @@
 					<% if logged_in? -%>
 						<a href="/logout">Logout</a>
 					<% else -%>
-						Not logged in. <a href="/<%= params[:domain] ? params[:domain] : "manage" %>/login">Login</a>
+						Not logged in. <a href="/<%= @accessed_domain %>/login">Login</a>
 					<% end -%>
 				</li>
 			</ul>		

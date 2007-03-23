@@ -31,7 +31,7 @@ class Admin < ActiveRecord::Base
   end
 
   def domain
-    "manage"
+    'sixsigma'
   end
   def doctor
     domain
@@ -58,7 +58,7 @@ class Admin < ActiveRecord::Base
   end
 
   # Authenticates a user by their username and unencrypted password.  Returns the user or nil.
-  def self.authenticate(username, password, domain='manage')
+  def self.authenticate(username, password, domain='sixsigma')
 #    u = find :first, :conditions => ['username = ? and activated_at IS NOT NULL', username] # need to get the salt
     u = Admin.find_by_username(username) # need to get the salt
     u && u.authenticated?(password) ? u : nil

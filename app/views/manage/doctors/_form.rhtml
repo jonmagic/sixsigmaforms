@@ -26,7 +26,7 @@
     <p><%= g.error_message_on :email %><label for="email">Doctor Email</label><br/>
     <%= g.text_field :email %>
   <% end -%>
-  <% if current_user.domain == "manage" -%>
+  <% if current_user.is_admin? -%>
   <p><label for="form_types">Assigned Form Types</label><br/>
 <!--  <%= select(:doctor, :form_type_ids, FormType.find(:all).collect {|p| [p.friendly_name, p.id]}, {}, { 'multiple size' => 3 }) %></p> -->
 <ul>

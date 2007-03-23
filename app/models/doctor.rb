@@ -47,7 +47,7 @@ logger.error "Finding by #{self.alias} (#{self.id}) and #{status} (#{status.stat
 
   protected
     def validate_on_create
-      errors.add(:alias, "cannot be set to <em>\"#{self.alias}\"</em>. Please choose another alias.") if ['pages', 'login', 'logout', 'manage'].include?(self.alias)
+      errors.add(:alias, "cannot be set to <em>\"#{self.alias}\"</em>. Please choose another alias.") if ['pages', 'login', 'logout', 'manage', 'sixsigma'].include?(self.alias)
     end
 
     def validate_on_update
