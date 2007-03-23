@@ -1,122 +1,41 @@
-#tabNavigation {
-	border-bottom: 1px solid #000;
-	list-style: none outside none;
-	margin: 0;
-	padding: 0
+#tabmenu {
+	color: #fff;
+	border-bottom: 2px solid #333;
+	margin: 12px 0px 0px 0px;
+	padding: 0px;
+	z-index: 1;
+	padding-left: 10px
 }
 
-html #tabNavigation/* */ {
-	padding: 4px 0 2px 0
-}
-
-html>body #tabNavigation {
-	padding: 3px 0 1px 0
-}
-
-head+body #tabNavigation {
-	padding: 4px 0 2px 0
-}
-
-#tabNavigation li {
-	border-left: 1px solid #000;
-	border-right: 1px solid #000;
-	border-top: 1px solid #000;
+#tabmenu li {
 	display: inline;
-	height: 1em;
-	margin: 0 0 0 3px;
-	padding: 0;
-	z-index: 1000
+	overflow: hidden;
+	list-style-type: none;
+	margin:0;
 }
 
-html #tabNavigation li/* */ {
-	height: auto
-}
-
-html>body #tabNavigation li {
-	height: auto;
-	margin: 0 -5px 0 -3px;
-	padding: 3px 5px 2px 5px
-}
-
-html>body ul[id]#tabNavigation li {
-	margin: 0 0 0 3px;
-	padding: 3px 0 2px 0
-}
-
-#tabNavigation a, #tabNavigation a:link, #tabNavigation a:visited {
+#tabmenu a, a.active {
+	color: #FFF;
 	background: #AAA;
-	border-left: 1px solid #CCC;
-	border-right: 1px solid #CCC;
-	border-top: 1px solid #CCC;
-	color: #FFF;
-	height: 1em;
-	padding: 2px 4px 2px 4px;
-	text-decoration: none
-}
+	font: bold 1em "Trebuchet MS", Arial, sans-serif;
+	border: 2px solid black;
+	padding: 2px 5px 0px 5px;
+	margin: 0;
+	text-decoration: none; }
 
-html #tabNavigation a/* */, html #tabNavigation a:link/* */, html #tabNavigation a:visited/* */ {
-	height: auto
-}
+#tabmenu a.active {
+	background-color: #C13B00;
+	color:#FFF;
+	border-bottom: 3px solid #C13B00;
+	}
 
-#tabNavigation a:hover {
+#tabmenu a:hover {
+	color: #fff;
 	background: #666;
-	border-left: 1px solid #888;
-	border-right: 1px solid #888;
-	border-top: 1px solid #888;
+}
+
+#tabmenu a.active:hover {
+	background: #C13B00;
 	color: #FFF;
-}
-
-#tabNavigation a:active {
-	background: #C60;
-	border-left: 1px solid #E80;
-	border-right: 1px solid #E80;
-	border-top: 1px solid #E80;
-	color: #FFF
-}
-
-html>body #tabNavigation li.selectedTab {
-	margin: 0 -5px 0 -3px;
-	padding: 3px 5px 2px 5px
-}
-
-html>body ul[id]#tabNavigation li.selectedTab {
-	margin: 0 0 0 3px;
-	padding: 3px 0 2px 0
-}
-
-#tabNavigation .selectedTab a, #tabNavigation .selectedTab a:link, #tabNavigation .selectedTab a:visited, #tabNavigation .selectedTab a:hover {
-	background: #F90;
-	border-left: 1px solid #FC3;
-	border-right: 1px solid #FC3;
-	border-top: 1px solid #FC3;
-	color: #FFF;
-	margin: -2px 0 0 0;
-	padding: 3px 4px 3px 4px;
-	position: relative;
-	top: 2px
-}
-
-html #tabNavigation .selectedTab a/* */, html #tabNavigation .selectedTab a:link/* */, html #tabNavigation .selectedTab a:visited/* */, html #tabNavigation .selectedTab a:hover/* */ {
-	margin: -1px 0 0 0;
-	top: 1px
-}
-
-html>body #tabNavigation .selectedTab a, html>body #tabNavigation .selectedTab a:link, html>body #tabNavigation .selectedTab a:visited, html>body #tabNavigation .selectedTab a:hover {
-	padding: 2px 4px 2px 4px;
-	top: 0
-}
-
-head:first-child+body #tabNavigation .selectedTab a, head:first-child+body #tabNavigation .selectedTab a:link, head:first-child+body #tabNavigation .selectedTab a:visited, head:first-child+body #tabNavigation .selectedTab a:hover {
-	margin: -1px 0 0 0;
-	padding: 2px 4px 4px 4px;
-	top: 0
-}
-
-head:first-child+body ul[id]#tabNavigation .selectedTab a, head:first-child+body ul[id]#tabNavigation .selectedTab a:link, head:first-child+body ul[id]#tabNavigation .selectedTab a:visited, head:first-child+body ul[id]#tabNavigation .selectedTab a:hover {
-	padding: 3px 4px 3px 4px;
-	top: 1px
-}
-
-.fixTabsIE {
-	visibility: hidden
+	border-bottom: 3px solid #C13B00;	
 }

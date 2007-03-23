@@ -1,13 +1,9 @@
-* {
-	margin:0;
-	padding:0;
-}
 body {
 	margin:0;
 	padding:0;
 	background-color:#fff;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
-	color: #1A1D1D;
+	color: #555;
 	font-size:80%;
 }
 
@@ -33,6 +29,32 @@ blockquote {
 	border-bottom:1px solid #999999;
 }
 
+h3 {
+	padding:0 0 .5em;
+	margin:0;
+}
+
+h4 {
+	padding:1em 0 .5em;
+	margin:0;
+}
+
+p {
+	padding:.5em 0 0;
+	margin:0;
+}
+
+ul, li {
+	margin:0 1em;
+	padding:0;
+}
+
+.form ul, .form li {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
 blockquote p {
 	margin:.2em;
 }
@@ -45,4 +67,58 @@ blockquote p {
 
 label {
 	font-weight:bold;
+}
+
+#header {
+	background-color:#AAA;
+	color:#FFF;
+	height:3.2em;
+	padding:.75em 1em;
+}
+
+#header h1 {
+	font-size:1.5em;
+	color: #666;
+	margin:0;
+	padding:0;
+}
+
+#header h2 {
+	font-size:1.1em;
+	margin:2px 0 0;
+	padding:0;
+}
+
+#header ul {
+	position:absolute;
+	right:.75em;
+	top:.75em;
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+#header li {
+	padding: .2em;
+	list-style:none;	
+}
+
+#header a {
+	color:#FFF;
+}
+
+#main {
+	margin-top:1em;
+}
+
+#content {
+	margin:1em;
+}
+
+#content ul, #content li {
+}
+
+#content li {
+	margin-left:1em;
+	padding-top: .2em;
 }

@@ -5,10 +5,13 @@
 		<meta name="description" content="Six Sigma Management: HipForms, a HIPAA compliant form completion tool" />
 		<meta name="keywords" content="" />
 		<meta name="author" content="Six Sigma Management" />
-		<title>Six Sigma Management: Six Sigma Admin</title>
-		<%= stylesheet_link_tag 'admin' %>
+		<title>Six Sigma Management: <%= @current_domain %></title>
+		<%= stylesheet_link_tag 'common' %>
+		<%= stylesheet_link_tag 'doctor' %>
+		<%= stylesheet_link_tag 'tabs' %>		
 		<%= javascript_include_tag 'prototype' %>
 		<%= javascript_include_tag 'effects' %>
+		<%= javascript_include_tag 'form_effects' %>
 		<%= javascript_include_tag 'controls' %>
 		<%= javascript_include_tag 'dragdrop' %>
 		<%= javascript_include_tag 'rounded' %>
@@ -40,57 +43,43 @@
 		</style>
 	</head>
 	<body>
-		<div class="header">
-			<div id="header">
-				<span class="floatright">
+		<div id="header">
+			<h1>Six Sigma Management Form Processor</h1>
+			<h2>Welcome <%= current_user.friendly_name %></h2>
+			<ul>
+				<li>
+					<% if params[:action] == 'forms' or params[:controller] == 'manage/forms' -%>
+						<%= link_to 'Manage', doctors_path %>
+					<% elsif params[:action] == 'management' or params[:controller] == 'manage/doctors' or params[:controller] == 'manage/pages' or (params[:controller] == 'manage/admins' and !(params[:action] == 'dashboard')) -%>
+						<%= link_to 'Forms', admin_forms_path('submitted') %>
+					<% end %>
+				</li>
+				<li>
 					<% if logged_in? -%>
-						Welcome <%= current_user.friendly_name %>, <a href="/logout">Logout?</a>
+						<a href="/logout">Logout</a>
 					<% else -%>
-						Not logged in. <%= link_to 'Login', login_url(:domain => 'manage') %>
+						Not logged in. <a href="/<%= params[:domain] ? params[:domain] : "manage" %>/login">Login</a>
 					<% end -%>
-				</span>
-				<h1>Six Sigma Management: HipForms</h1>
-			</div><!--//end #header//-->
+				</li>
+			</ul>		
 		</div>
-
-		<div id="leftColumn">
-			<div class="main rounded">
-				<div class="box">
-					<h2>Main</h2>
-					<ul>
-						<li><%= link_to 'Dashboard', admin_dashboard_path %></li>
-						<li><%= link_to 'Forms', admin_forms_path('submitted') %></li>
-						<hr />
-						<li><%= link_to 'My Account', '/manage/myaccount' %></li>
-						<li><%= link_to 'Management', doctors_path %></li>
-					</ul>
-				</div>
-			</div>
-		</div><!--//end #leftColumn//-->
-
-		<div id="centerColumn">
-			<p class="these should be tabs">
-			<% if params[:action] == 'forms' or params[:controller] == 'manage/forms' -%>
-			<%= link_to 'Submitted', admin_forms_path('submitted') %>
-			<%= link_to 'Reviewed', admin_forms_path('reviewed') %>
-			<%= link_to 'Archived', admin_forms_path('archived') %>
-			<% elsif params[:action] == 'management' or params[:controller] == 'manage/doctors' or params[:controller] == 'manage/pages' or (params[:controller] == 'manage/admins' and !(params[:action] == 'dashboard')) -%>
-			<%= link_to 'Admins', admins_path %>
-			<%= link_to 'Doctors', doctors_path %>
-			<%= link_to 'Pages', manage_pages_path %>
-			<!-- <%= link_to '(Backups)', '/manage/backups' %> -->
-			<% end -%>
-			</p>
-
-			<div id="content_container">
-				<%= yield %>
+		<div id="main">
+			<ul id="tabmenu">
+				<% if params[:action] == 'forms' or params[:controller] == 'manage/forms' -%>
+				<li><%= link_to 'Submitted', admin_forms_path('submitted') %></li>
+				<li><%= link_to 'Reviewed', admin_forms_path('reviewed'), :class => 'active' %></li>
+				<li><%= link_to 'Archived', admin_forms_path('archived') %></li>
+				<% elsif params[:action] == 'management' or params[:controller] == 'manage/doctors' or params[:controller] == 'manage/pages' or (params[:controller] == 'manage/admins' and !(params[:action] == 'dashboard')) -%>
+				<li><%= link_to "My Account", :action => 'index' %></li>
+				<li><%= link_to 'Doctors', doctors_path %></li>
+				<li><%= link_to 'Admins', admins_path, :class => 'active' %></li>
+				<li><%= link_to 'Pages', manage_pages_path %></li>
+				<% end -%>
+			</ul>
+			<div style="background:#C13B00;"><br /></div><br />
+			<div id="content">
+				<%= yield  %>
 			</div>
 		</div>
-		<!--//end #centerColumn//-->
-
-		<script type="text/javascript">
-		Rounded('rounded', 10, 10);
-		Rounded('header', 10, 10);
-		</script>
 	</body>
 </html>

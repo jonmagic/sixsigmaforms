@@ -1,4 +1,6 @@
-New Patient:<br />
-<% current_user.doctor.form_types.each do |ft| -%>
-	&nbsp;&nbsp;&nbsp;<%= link_to '+'+ft.friendly_name, "/#{params[:domain]}/forms/#{ft.name}/new" %><br />
-<% end -%>
+<h4>New Patient</h4>
+<ul>
+	<% current_user.doctor.form_types.each do |ft| -%>
+		<li><%= link_to ft.friendly_name, "/#{params[:domain]}/forms/#{ft.name}/new" %></li>
+	<% end -%>
+</ul>

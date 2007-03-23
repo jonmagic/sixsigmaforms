@@ -1,14 +1,23 @@
-<h1>My <%= FormInstance.status_plural(params[:form_status]) %></h1>
-<% @my_forms.each do |form| -%>
-  <%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %>
-<% end -%>
-<% if @my_forms.blank? -%>
-	<em>&lt;no current <%= FormInstance.status_plural(params[:form_status]) %>&gt;</em>
-<% end -%>
-<h1>All <%= FormInstance.status_plural(params[:form_status]) %></h1>
-<% @others_forms.each do |form| -%>
-<%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %>
-<% end -%>
-<% if @others_forms.blank? -%>
-	<em>&lt;no current <%= FormInstance.status_plural(params[:form_status]) %>&gt;</em>
-<% end -%>
+<h3>My <%= FormInstance.status_plural(params[:form_status]) %></h3>
+<ul>
+	<% @my_forms.each do |form| -%>
+	  	<li><%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %></li>
+	<% end -%>
+</ul>
+<ul>
+	<% if @my_forms.blank? -%>
+		<li>&lt;no current <%= FormInstance.status_plural(params[:form_status]) %>&gt;</li>
+	<% end -%>
+</ul>
+<br />
+<h3>All <%= FormInstance.status_plural(params[:form_status]) %></h3>
+<ul>	
+	<% @others_forms.each do |form| -%>
+		<li><%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %></li>
+	<% end -%>
+</ul>
+<ul>
+	<% if @others_forms.blank? -%>
+		<li>&lt;no current <%= FormInstance.status_plural(params[:form_status]) %>&gt;</li>
+	<% end -%>
+</ul>

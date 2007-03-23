@@ -1,9 +1,13 @@
-<p>Patient Name: <%= @patient.first_name%> <%= @patient.middle_initial %> <%= @patient.last_name %></p>
-<h3>History</h3>
-<% @patient.form_instances.each do |f| -%>
-<p><em><%= link_to "+ #{f.form_data_type} #{f.created_at}", forms_path(:action => 'show', :form_type => f.form_data_type, :form_id => f.form_data_id) %></em></p>
-<% end -%>
+<h3>Patient Name: <%= @patient.first_name%> <%= @patient.middle_initial %> <%= @patient.last_name %></h3>
+<h4>History</h4>
+<ul>
+	<% @patient.form_instances.each do |f| -%>
+		<li><%= link_to "#{f.form_data_type} #{f.created_at}", forms_path(:action => 'show', :form_type => f.form_data_type, :form_id => f.form_data_id) %></li>
+	<% end -%>
+</ul>
 <h4>Record New Claim</h4>
-<% current_user.doctor.form_types.each do |ft| -%>
-	&nbsp;&nbsp;&nbsp;<a href="<%= forms_path(:form_type => ft.name, :patient_id => @patient.id) %>">+ <%= ft.friendly_name %></a><br />
-<% end -%>
+<ul>
+	<% current_user.doctor.form_types.each do |ft| -%>
+		<li><a href="<%= forms_path(:form_type => ft.name, :patient_id => @patient.id) %>"><%= ft.friendly_name %></a></li>
+	<% end -%>
+</ul>

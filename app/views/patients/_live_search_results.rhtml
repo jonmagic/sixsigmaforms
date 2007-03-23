@@ -1,11 +1,11 @@
-<table cellspacing="0" cellpadding="10">
+<table>
   <thead>
     <th>Account Number</th>
     <th>Last Name</th>
     <th>First Name</th>
   </thead>
 <% for patient in @results %>
-  <tr class='hilight_result'>
+  <tr class='hilight_result hover'>
     <td><%= patient.account_number %></td>
     <td><%= patient.last_name %></td>
     <td><%= patient.first_name %></td>
