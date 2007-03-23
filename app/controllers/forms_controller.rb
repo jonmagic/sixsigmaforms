@@ -13,7 +13,7 @@ class FormsController < ApplicationController
 
 #This is hit first, with an existing OR new patient. The form instance is created and then redirects to the editing ('draft') of the created form.
   def new
-    return redirect_to mydashboard_url if params[:form_type] == 'chooser'
+    return redirect_to doctor_dashboard_url if params[:form_type] == 'chooser'
     @patient = Patient.find_by_id(params[:patient_id]) || Patient.create(:doctor => current_doctor)
     @form_instance = FormInstance.new(
       :user => current_user,
@@ -52,7 +52,7 @@ class FormsController < ApplicationController
 #Redirect to view the form if not allowed to edit
 # * * * *
     @form_type = params[:form_type]
-    return redirect_to mydashboard_url if @form_type == 'chooser'
+    return redirect_to doctor_dashboard_url if @form_type == 'chooser'
     @form = FormType.model_for(@form_type).find_by_id(params[:form_id])
     # Drop the status down to draft!
     if !(@form.instance.status == 'draft')

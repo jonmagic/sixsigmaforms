@@ -23,7 +23,7 @@ class PatientsController < ApplicationController
     @patient = Patient.find_by_id(params[:id])
     @patient.destroy
     respond_to do |format|
-      format.html { redirect_to mydashboard_path() }
+      format.html { redirect_to doctor_dashboard_path() }
       format.xml  { head :ok }
     end
   end

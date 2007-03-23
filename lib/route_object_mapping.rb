@@ -60,7 +60,7 @@ module RouteObjectMapping
 #       if logged_in?
 #         if !(current_user.domain == domain)
 #           store_location
-#           redirect_to_url(mydashboard_path(current_domain))
+#           redirect_to_url(doctor_dashboard_path(current_domain))
 #         end
 #       else
 #         if domain == "sixsigma" or Doctor.exists?(domain)

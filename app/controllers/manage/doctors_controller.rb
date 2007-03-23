@@ -1,5 +1,4 @@
 class Manage::DoctorsController < ApplicationController
-  before_filter :validate_doctor_and_form_type
   layout 'admin'
 
   # GET /doctors
