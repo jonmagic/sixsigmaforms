@@ -7,24 +7,7 @@ class SessionsController < ApplicationController
 #Could check for a valid doctor (params[:domain]) and show an alternative login form (using email address) if not found.
   end
 
-  def create_admin
-    user = Admin.valid_username?(params[:username])
-    if !user.blank?
-      self.current_user = Admin.authenticate(params[:username], params[:password], params[:domain])
-      if logged_in?
-        flash[:notice] = "Welcome " + self.current_user.friendly_name + "."
-        redirect_back_or_default admin_dashboard_url
-      else
-        flash[:notice] = "Failed to log in."
-        render :action => 'new'
-      end
-    else
-      flash[:notice] = "Invalid username." if params[:username]
-      render :action => 'new_admin'
-    end
-  end
-
-  def create_user
+  def create
     user = User.valid_username?(params[:username])
     if !user.blank?
       self.current_user = User.authenticate(params[:username], params[:password], params[:domain])
@@ -37,7 +20,7 @@ class SessionsController < ApplicationController
       end
     else
       flash[:notice] = "Invalid username." if params[:username]
-      render :action => 'new_user'
+      render :action => 'new'
     end
   end
 
