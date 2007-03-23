@@ -2,21 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title><%= @page ? @page.title : controller.action_name %></title>
-		<%= stylesheet_link_tag 'pages' %>
+		<title>Six Sigma Management, LLC - <%= @page.title %></title>
+		<%= stylesheet_link_tag 'pages' %>		
 	</head>
 	<body>
+		<div id="strip"></div>
 		<div id="container">
 			<div id="header">
-				<h1>Six Sigma Management, LLC</h1>
-			</div>
-			<div id="navbar">
+				
+				<div id="navbar">
+
+				</div>				
 			</div>
 			<div id="main">
 				<%= yield %>
 			</div>
 			<div id="footer">
-				<p class="copyright">Copyright Six Sigma Management LLC 2007</p>
+				<p>Copyright Six Sigma Management LLC 2007</p>
 			</div>
 		</div>
 	</body>
