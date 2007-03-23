@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/logout', :controller => 'sessions', :action => 'destroy'
 
 #/mydoc/login OR /manage/login
-  map.login '/:domain/login', :controller => 'sessions', :action => 'create'
+  map.admin_login '/sixsigma/login', :controller => 'admin_sessions', :action => 'create_admin'
 
 
 # * * * * * * * *
@@ -24,26 +24,20 @@ ActionController::Routing::Routes.draw do |map|
 # A D M I N S *
 #* * * * * * *
 
-#/manage/admins/[new,create,show,destroy,etc]
-  map.resources :admins, :path_prefix => '/manage', :controller => 'manage/admins', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
+  map.admin_dashboard                     '/sixsigma',        :controller => 'manage/admins', :action => 'dashboard'
+  map.resources :admins,  :path_prefix => '/sixsigma/manage', :controller => 'manage/admins', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
+  map.resources :doctors, :path_prefix => '/sixsigma/manage', :controller => 'manage/doctors', :collection => { :live_search => :any, :search => :any } do |doctor|
+    doctor.resources :users, :controller => 'manage/users',   :name_prefix => 'manage_', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
+  end
+  map.resources :pages, :path_prefix => '/sixsigma/manage',   :controller => 'manage/pages', :name_prefix => 'manage_'
+  # map.admin_forms '/sixsigma/forms/:form_status/:action/:form_type/:form_id', :controller => 'manage/forms', :action => 'index', :form_type => nil, :form_id => nil
+  map.admin_account   '/sixsigma/manage/myaccount/:action',   :controller => 'manage/admins', :action => 'show'
 
-#/manage/doctors/[new,show,etc]
-  map.resources :doctors, :path_prefix => '/manage', :controller => 'manage/doctors', :collection => { :live_search => :any, :search => :any }
+  map.forms_by_status '/sixsigma/forms/status/:form_status',  :controller => 'manage/forms',  :action => 'index', :form_status => 'all'
 
-#/manage/pages/[new,create,show,destroy,etc]
-  map.resources :pages, :path_prefix => '/manage', :name_prefix => 'manage_', :controller => 'manage/pages'
-
-#/manage
-  map.admin_account '/manage/myaccount/:action', :controller => 'manage/admins', :action => 'show'
-  map.admin_dashboard '/manage', :controller => 'manage/admins', :action => 'dashboard'
-
-#/manage/users/[new,create,show,destroy,etc]
-  map.resources :users, :path_prefix => '/manage/doctors/:doctor_alias', :controller => 'manage/users', :name_prefix => 'manage_', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
-
-#Do we want admins to use a different controller for forms than doctors?
-#/forms/:status
-#The following may conflict with map.resources :forms, below.
-  map.admin_forms '/forms/:form_status/:action/:form_type/:form_id', :controller => 'manage/forms', :action => 'index', :form_type => nil, :form_id => nil
+  map.formatted_forms '/doctors/:domain/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
+  map.forms '/sixsigma/forms/:form_type/:action/:form_id', :controller => 'forms', :form_type => 'chooser', :action => 'new', :form_id => nil
+  map.resources :notes, :path_prefix => '/sixsigma/forms/:form_type/:form_id'
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -51,22 +45,18 @@ ActionController::Routing::Routes.draw do |map|
 # D O C T O R S *
 #* * * * * * * *
 
-#/mydoc
-  map.mydashboard '/:domain', :controller => 'doctors', :action => 'dashboard'
-  map.edit_my_doctor '/:domain/profile/:action', :controller => 'doctors', :action => 'profile'
-  map.update_my_doctor '/:domain/update', :controller => 'doctors', :action => 'update'
+  map.doctor_dashboard '/doctors/:domain', :controller => 'doctors', :action => 'dashboard'
+  map.doctor_login '/doctors/:domain/login', :controller => 'sessions', :action => 'create_user'
+  map.doctor_profile '/doctors/:domain/profile/:action', :controller => 'doctors', :action => 'profile'
 
-#/mydoc/patients/:action/:id
-  map.resources :patients, :path_prefix => '/:domain', :collection => { :live_search => :any, :search => :any }
+  map.resources :patients, :path_prefix => '/doctors/:domain', :collection => { :live_search => :any, :search => :any }
+  map.resources :users, :path_prefix => '/doctors/:domain', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
+  map.myaccount '/doctors/:domain/myaccount/:action', :controller => 'users', :action => 'show'
 
-#/mydoc/users/[new,create,show,destroy,etc]
-  map.resources :users, :path_prefix => '/:domain', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
-  map.myaccount '/:domain/myaccount/:action', :controller => 'users', :action => 'show'
-
-  map.forms_status '/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'all', :action => 'index'
-  map.resources :notes, :path_prefix => '/:domain/forms/:form_type/:form_id'
-  map.formatted_forms '/:domain/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
-  map.forms '/:domain/forms/:form_type/:action/:form_id', :controller => 'forms', :form_type => 'chooser', :action => 'new', :form_id => nil
+  map.forms_status '/doctors/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'all', :action => 'index'
+  map.resources :notes, :path_prefix => '/doctors/:domain/forms/:form_type/:form_id'
+  map.formatted_forms '/doctors/:domain/forms/:form_type/:action/:form_id.:format', :controller => 'forms', :form_type => 'chooser', :action => 'new', :format => 'html', :form_id => nil
+  map.forms '/doctors/:domain/forms/:form_type/:action/:form_id', :controller => 'forms', :form_type => 'chooser', :action => 'new', :form_id => nil
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 

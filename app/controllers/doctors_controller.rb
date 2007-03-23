@@ -1,18 +1,20 @@
 class DoctorsController < ApplicationController
 
-#The Doctors controller exists for the Doctor Admins to view and manage their own profile,
-# and for Doctor Users to springboard from in their dashboard.
-  before_filter :validate_doctor_and_form_type
   in_place_edit_for :doctor, 'friendly_name'
   in_place_edit_for :doctor, 'address'
   in_place_edit_for :doctor, 'telephone'
   in_place_edit_for :doctor, 'contact_person'
   layout 'doctor'
 
+# AccessControl:
+#  dashboard: anyone logged in to the current accessed_doctor
+#  profile:   only the current accessed_doctor's doctor admin
+#  update:    only the current accessed_doctor's doctor admin
+
   # GET /:domain/dashboard
   def dashboard
     #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
-#    is_valid_doctor(params[:domain])
+    restrict('allow only doctor admins')
   end
 
 #This should be operational for doctor admins to view and edit their account

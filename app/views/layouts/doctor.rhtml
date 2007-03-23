@@ -33,13 +33,14 @@
 		</div>
 		<div id="main">
 			<ul id="tabmenu">
-				<li><%= link_to "Dashboard", :action => 'index' %></li>				
+				<li><%= link_to "Dashboard", doctor_dashboard_url %></li>				
 				<li class="firstTab"><%= link_to "Drafts" + (!current_user.drafts.blank? ? " (#{current_user.drafts.count})" : ''), forms_status_path(:form_status => 'draft'), :id => 'drafts_count' %></li>
 				<li><%= link_to "Submitted" + (!current_user.submitted.blank? ? " (#{current_user.submitted.count})" : ''), forms_status_path(:form_status => 'submitted'), :class => 'active' %></li>
 				<li><%= link_to "Reviewed" + (!current_user.reviewed.blank? ? " (#{current_user.reviewed.count})" : ''), forms_status_path(:form_status => 'reviewed') %></li>
 				<li><%= link_to "Accepted" + (!current_user.accepted.blank? ? " (#{current_user.accepted.count})" : ''), forms_status_path(:form_status => 'accepted') %></li>
 			</ul>
 			<div style="background:#C13B00;"><br /></div><br />
+			<div id="messages"><%= flash[:notice] %></div>
 			<div id="content">
 				<%= yield  %>
 			</div>

@@ -1,5 +1,5 @@
 class Manage::AdminsController < ApplicationController
-  before_filter :require_admin_except_register_and_activate
+  # before_filter :require_admin_except_register_and_activate
   layout 'admin'
 
   # GET /admins
@@ -89,8 +89,7 @@ logger.error "Couldn't find Activation Code!"
   # GET /SixSigma/dashboard
   def dashboard
     #To keep someone from getting a page that doesn't map to a real doctor, anonymous will be expelled from this action to the login page, and anyone logged in will be redirected to their respective doctor
-    store_location  #I don't think I need this because it automatically redirects to the dashboard, but maybe this is helpful?
-    redirect_to login_url('manage') unless current_user.is_admin?
+    restrict('allow only admins')
   end
 
   # DELETE /admins/1

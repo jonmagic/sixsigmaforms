@@ -1,14 +1,14 @@
 module AuthenticatedSystem
   protected
     # Returns true or false if the user is logged in.
-    # Preloads @current_user with the user model if they're logged in.
+    # Preloads @current_user with the User (or Admin or Nobody) model if they're logged in.
     def logged_in?
-      current_user != :false
+      !current_user.kind_of?(Nobody)
     end
     
     # Accesses the current user from the session.
     def current_user
-      @current_user ||= ((session[:user] || given_activation_code) && (session[:domain] == 'manage' ? (Admin.find_by_id(session[:user]) || Admin.find_by_activation_code(given_activation_code)) : (User.find_by_id(session[:user]) || User.find_by_activation_code(given_activation_code)))) || :false
+      @current_user ||= ((session[:user] || given_activation_code) && (session[:domain] == 'sixsigma' ? (Admin.find_by_id(session[:user]) || Admin.find_by_activation_code(given_activation_code)) : (User.find_by_id(session[:user]) || User.find_by_activation_code(given_activation_code)))) || Nobody.new
     end
     
     # Store the given user in the session.
@@ -50,7 +50,7 @@ module AuthenticatedSystem
     #
     def login_required
       username, passwd = get_auth_data
-      self.current_user ||= (session[:domain] != 'manage' ? User.authenticate(username, passwd) : Admin.authenticate(username, passwd)) || :false if username && passwd
+      self.current_user ||= (session[:domain] != 'sixsigma' ? User.authenticate(username, passwd) : Admin.authenticate(username, passwd)) || :false if username && passwd
       logged_in? && authorized? ? true : access_denied
     end
     

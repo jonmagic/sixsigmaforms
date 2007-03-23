@@ -19,3 +19,9 @@ class Fixnum < Integer
     txt = ['draft', 'submitted', 'reviewed', 'accepted', 'archived', 'all'][self-1]
   end
 end
+
+class Array < Object
+  def count
+    self.length
+  end
+end
