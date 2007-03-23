@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/logout', :controller => 'sessions', :action => 'destroy'
 
 #/mydoc/login OR /manage/login
-  map.admin_login '/sixsigma/login', :controller => 'admin_sessions', :action => 'create'
+  map.admin_login '/sixsigma/login', :controller => 'sessions', :action => 'create_admin'
 
 
 # * * * * * * * *
@@ -46,7 +46,7 @@ ActionController::Routing::Routes.draw do |map|
 #* * * * * * * *
 
   map.doctor_dashboard '/doctors/:domain', :controller => 'doctors', :action => 'dashboard'
-  map.doctor_login '/doctors/:domain/login', :controller => 'user_sessions', :action => 'create'
+  map.doctor_login '/doctors/:domain/login', :controller => 'sessions', :action => 'create_user'
   map.doctor_profile '/doctors/:domain/profile/:action', :controller => 'doctors', :action => 'profile'
 
   map.resources :patients, :path_prefix => '/doctors/:domain', :collection => { :live_search => :any, :search => :any }
