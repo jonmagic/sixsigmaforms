@@ -11,9 +11,8 @@ class FormInstance < ActiveRecord::Base
 
 #Creating a new FormInstance:
 #  FormInstance.new(:doctor => Doctor, :user => current_user, :patient => Patient, :form_type => FormType, [[:form_data => AUTO-CREATES NEW]])
-
-# Automagically create the form data record whenever a FormInstance is created, and then automagically destroy it when the FormInstance is destroyed.
-# The form data record will always be tied to self.form_data
+#Automagically create the form data record whenever a FormInstance is created, and then automagically destroy it when the FormInstance is destroyed.
+#  The form data record will always be tied to self.form_data
   def initialize(args)
     self.form_data = args[:form_type].new unless !(args.kind_of? Hash) or args[:form_type].nil?
     args[:form_type] = FormType.find_by_name(args[:form_type].to_s)
@@ -21,20 +20,11 @@ class FormInstance < ActiveRecord::Base
   end
 
   def status
-    self.status_number.number_to_status
+    self.status_number.as_status.text
   end
-
   def status=(value)
-    return nil if value.status_to_number == 6
-    self.status_number = value.status_to_number || self.status_number
-  end
-  def self.status_plural(name)
-    stat = name.kind_of?(Fixnum) ? name : name.status_to_number
-    return nil if stat.nil?
-    ['drafts', 'submitted forms', 'forms in review', 'accepted forms', 'archived forms', 'forms'][stat-1]
-  end
-  def status_plural(name)
-    FormInstance.status_plural(name)
+    return nil if value.as_status.number == 6
+    self.status_number = value.as_status.number || self.status_number
   end
 
   # alias_method :vanilla_destroy, :destroy

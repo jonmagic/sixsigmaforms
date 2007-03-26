@@ -41,8 +41,8 @@ class Doctor < ActiveRecord::Base
   end
 
   def forms_with_status(status)
-# logger.error "Finding by #{self.alias} (#{self.id}) and #{status} (#{status.status_to_number})."
-    FormInstance.find_all_by_doctor_id_and_status_number(self.id, status.status_to_number)
+# logger.error "Finding by #{self.alias} (#{self.id}) and #{status} (#{status.as_status.number})."
+    FormInstance.find_all_by_doctor_id_and_status_number(self.id, status.as_status.number)
   end
 
   protected

@@ -33,7 +33,6 @@ class FormsController < ApplicationController
         :status => 'draft'
       )
 
-      flash[:notice] = "Start..."
       if @form_instance.form_data.update_attributes(@patient.attributes)
         # @form.instance = FormInstance.new(
         #                         :user_id => current_user.id,
@@ -42,16 +41,12 @@ class FormsController < ApplicationController
         #                         :form_type => FormType.find_by_form_type(params[:form_type]),
         #                         :form_type_id => FormType.find_by_form_type(params[:form_type]).id,
         #                         :status => 'draft')
-        flash[:notice] = flash[:notice]+"<br />\nSaved FormData."
         if @form_instance.save
-          flash[:notice] = flash[:notice]+"<br />\nSaved FormInstance."
           redirect_to doctor_forms_url(:form_type => @form_instance.form_data_type, :action => 'draft', :form_id => @form_instance.form_data_id)
         else
-          flash[:notice] = flash[:notice]+"<br />\nDid NOT save FormInstance."
           render :action => 'draft'
         end
       else
-        flash[:notice] = flash[:notice]+"<br />\nDidn't save Anything!"
         render :action => 'draft'
       end
     end
@@ -85,7 +80,7 @@ class FormsController < ApplicationController
       if @form.patient.update_attributes(params[params[:form_type]]) & @form.update_attributes(params[params[:form_type]]) & @form.instance.update
         # flash[:notice] = "Draft saved."
         @save_status = "Draft saved at " << Time.now.strftime("%I:%M %p").downcase
-        if !(params[:form_instance][:status] == @form.instance.status)
+        if params[:form_instance] and !params[:form_instance][:status].blank? and !(params[:form_instance][:status] == @form.instance.status)
           @form.instance.status = params[:form_instance][:status]
           if @form.instance.save
             Log.create(:log_type => 'status:update', :data => {})
@@ -111,10 +106,10 @@ class FormsController < ApplicationController
   def discard_inline
     restrict('allow only doctor users') or begin
       #Also destroy patient if this is the only existing form for that patient.
-      @draft = FormInstance.find_by_id(params[:form_id])
-      @draft.destroy
-      @drafts_link_text_with_count = current_user.drafts(true).blank? ? "Drafts" : "Drafts (#{current_user.drafts.count})"
-      @drafts_count = current_user.drafts.count
+      @form = FormInstance.find_by_id(params[:form_id])
+      @form.destroy
+      @status_link_text_with_count = current_user.forms_with_status(@form.status).blank? ? shortStatus(@form.status) : "Drafts (#{current_user.drafts.count})"
+      @status_count = current_user.forms_with_status(@form.status).count
       render :layout => false
     end
   end

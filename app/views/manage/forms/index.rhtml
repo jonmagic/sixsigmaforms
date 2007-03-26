@@ -1,4 +1,4 @@
-<h1>All <%= FormInstance.status_plural(params[:form_status]) %></h1>
+<h1><%= params[:form_status].as_status.word('uppercase long plural') %></h1>
 <% @forms.each do |form| -%>
   <%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %>
 <% end -%>

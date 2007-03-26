@@ -1,6 +1,6 @@
 class Nobody
   def friendly_name
-    'Nobody'
+    'Please log in'
   end
   def is_doctor?
     false

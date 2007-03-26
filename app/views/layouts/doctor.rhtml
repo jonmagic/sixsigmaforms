@@ -5,7 +5,7 @@
 		<meta name="description" content="Six Sigma Management: HipForms, a HIPAA compliant form completion tool" />
 		<meta name="keywords" content="" />
 		<meta name="author" content="Six Sigma Management" />
-		<title>Six Sigma Management: <%= @current_domain %></title>
+		<title>Six Sigma Management: <%= accessed_doctor.friendly_name %></title>
 		<%= stylesheet_link_tag 'common' %>
 		<%= stylesheet_link_tag 'doctor' %>
 		<%= stylesheet_link_tag 'tabs' %>		
@@ -19,27 +19,31 @@
 	<body>
 		<div id="header">
 			<h1>Six Sigma Management Form Processor</h1>
-			<h2>Welcome <%= current_user.friendly_name %></h2>
+			<h2>@ <%= accessed_doctor.friendly_name %>. <em><%= current_user.friendly_name %></em></h2>
 			<ul>
-<% if current_user.is_doctor? -%>
-				<li>Manage</li>
-<% end -%>
 				<li>
 					<% if logged_in? -%>
 						<a href="/logout">Logout</a>
 					<% else -%>
-						Not logged in. <a href="/<%= @accessed_domain %>/login">Login</a>
+						Not logged in. <a href="/<%= accessed_domain %>/login">Login</a>
 					<% end -%>
 				</li>
+				<% if current_user.is_doctor? -%>
+								<li><%= link_to "Manage", users_path %></li>
+				<% end -%>
 			</ul>		
 		</div>
 		<div id="main">
 			<ul id="tabmenu">
-				<li><%= tab_link_to "Dashboard", doctor_dashboard_url %></li>				
-				<li class="firstTab"><%= tab_link_to "Drafts" + (!current_user.drafts.blank? ? " (#{current_user.drafts.count})" : ''), doctor_forms_by_status_path(:form_status => 'draft'), :id => 'drafts_count' %></li>
-				<li><%= tab_link_to "Submitted" + (!current_user.submitted.blank? ? " (#{current_user.submitted.count})" : ''), doctor_forms_by_status_path(:form_status => 'submitted') %></li>
-				<li><%= tab_link_to "Reviewed" + (!current_user.reviewed.blank? ? " (#{current_user.reviewed.count})" : ''), doctor_forms_by_status_path(:form_status => 'reviewed') %></li>
-				<li><%= tab_link_to "Accepted" + (!current_user.accepted.blank? ? " (#{current_user.accepted.count})" : ''), doctor_forms_by_status_path(:form_status => 'accepted') %></li>
+				<% if logged_in? -%>
+				<li><%= tab_link_to "Dashboard", doctor_dashboard_path, :tab_equal => true %></li>
+				<li><%= tab_link_to "Drafts" + (!current_user.drafts.blank? ? " (#{current_user.drafts.count})" : ''), doctor_forms_by_status_path(:form_status => 'draft'), :class => 'drafts_count' %></li>
+				<li><%= tab_link_to "Submitted" + (!current_user.submitted.blank? ? " (#{current_user.submitted.count})" : ''), doctor_forms_by_status_path(:form_status => 'submitted'), :class => 'submitted_count' %></li>
+				<li><%= tab_link_to "Reviewed" + (!current_user.reviewed.blank? ? " (#{current_user.reviewed.count})" : ''), doctor_forms_by_status_path(:form_status => 'reviewed'), :class => 'reviewed_count' %></li>
+				<li><%= tab_link_to "Accepted" + (!current_user.accepted.blank? ? " (#{current_user.accepted.count})" : ''), doctor_forms_by_status_path(:form_status => 'accepted'), :class => 'accepted_count' %></li>
+				<% else -%>
+				<li><%= tab_link_to "Login", doctor_login_path %></li>
+				<% end -%>
 			</ul>
 			<div style="background:#C13B00;"><br /></div><br />
 			<div id="messages"><%= flash[:notice] %></div>

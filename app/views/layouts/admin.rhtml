@@ -5,7 +5,7 @@
 		<meta name="description" content="Six Sigma Management: HipForms, a HIPAA compliant form completion tool" />
 		<meta name="keywords" content="" />
 		<meta name="author" content="Six Sigma Management" />
-		<title>Six Sigma Management: <%= @current_domain %></title>
+		<title>Six Sigma Management: <%= current_domain %></title>
 		<%= stylesheet_link_tag 'common' %>
 		<%= stylesheet_link_tag 'doctor' %>
 		<%= stylesheet_link_tag 'tabs' %>		
@@ -58,7 +58,7 @@
 					<% if logged_in? -%>
 						<a href="/logout">Logout</a>
 					<% else -%>
-						Not logged in. <a href="/<%= @accessed_domain %>/login">Login</a>
+						Not logged in. <a href="/<%= accessed_domain %>/login">Login</a>
 					<% end -%>
 				</li>
 			</ul>

@@ -1,12 +1,12 @@
-<h2>User Login for <%= @accessed_doctor.friendly_name %></h2>
-<% form_tag doctor_login_url(@accessed_domain) do -%>
+<h2>User Login for <%= accessed_doctor.friendly_name %></h2>
+<% form_tag doctor_login_url(accessed_domain) do -%>
 <p><label for="username">Username</label><br/>
 <%= text_field_tag 'username' %></p>
 
 <p><label for="password">Password</label><br/>
 <%= password_field_tag 'password' %></p>
 
-<p>Logging into Doctor: <span style='color:green; font-style:italic;'><%= @accessed_domain %></span></p>
+<p>Logging into Doctor: <span style='color:green; font-style:italic;'><%= accessed_domain %></span></p>
 
 <p><%= submit_tag 'Log in' %></p>
 <% end -%>

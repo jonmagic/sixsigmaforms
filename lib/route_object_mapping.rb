@@ -6,17 +6,6 @@ module RouteObjectMapping
     end
   end
 
-    def initiate_global_env
-      accessed_doctor
-      if !(current_domain == 'sixsigma')
-        current_doctor
-        current_form_model
-        current_form_instance
-        current_form
-      end
-      given_activation_code
-    end
-
     def accessed_domain
       @accessed_domain ||= (params[:domain] || 'sixsigma')
     end
@@ -25,7 +14,7 @@ module RouteObjectMapping
     end
     def current_domain
       #Is this always what I want to return here?
-      @current_domain ||= logged_in? ? current_user.domain : (params[:domain] || 'sixsigma')
+      @current_domain ||= logged_in? ? current_user.domain : session[:domain]
     end
     def current_doctor
       @current_doctor ||= logged_in? ? current_user.doctor : nil
@@ -43,6 +32,11 @@ module RouteObjectMapping
     end
     def given_activation_code
       @given_activation_code ||= params[:user] ? (params[:user][:activation_code] || params[:activation_code]) : (params[:admin] ? (params[:admin][:activation_code] || params[:activation_code]) : params[:activation_code])
+    end
+
+    # Inclusion hook to make some methods available as ActionView helper methods.
+    def self.included(base)
+      base.send :helper_method, :accessed_domain, :accessed_doctor, :current_domain, :current_doctor, :current_form_model, :current_form_instance, :current_form, :given_activation_code
     end
 
 # #Validate for ACCESS

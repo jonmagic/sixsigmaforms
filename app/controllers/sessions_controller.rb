@@ -4,6 +4,7 @@ class SessionsController < ApplicationController  # layout 'doctor'
   # render new.rhtml
   def new
 #Could check for a valid doctor (params[:domain]) and show an alternative login form (using email address) if not found.
+    render :layout => 'default'
   end
 
   def create_admin
@@ -20,7 +21,7 @@ logger.error "User: #{self.current_user.friendly_name} #{self.current_user.domai
       end
     else
       flash[:notice] = "Invalid username." if params[:username]
-      render :action => 'new_admin', :layout => 'admin'
+      render :action => 'new_admin', :layout => 'default'
     end
   end
 

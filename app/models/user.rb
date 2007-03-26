@@ -64,10 +64,10 @@ class User < ActiveRecord::Base
     FormInstance.find(:all, :conditions => ['doctor_id=? AND user_id!=?', self.doctor.id, self.id])
   end
   def forms_with_status(status)
-    FormInstance.find_all_by_user_id_and_status_number(self.id, status.status_to_number)
+    FormInstance.find_all_by_user_id_and_status_number(self.id, status.as_status.number)
   end
   def others_forms_with_status(status)
-    FormInstance.find(:all, :conditions => ['doctor_id=? AND user_id!=? AND status_number=?', self.doctor.id, self.id, status.status_to_number])
+    FormInstance.find(:all, :conditions => ['doctor_id=? AND user_id!=? AND status_number=?', self.doctor.id, self.id, status.as_status.number])
   end
 
   # Returns true if the user has just been activated.

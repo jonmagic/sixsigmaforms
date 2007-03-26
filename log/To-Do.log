@@ -1,6 +1,15 @@
-- change cursor focus when you go to a page with a search field or form to fill out
+x when you logout of sixsigma admin it uses the wrong template
+o fix the authentication bug (which will also fix the logout redirect problem)
+  -to test: Delete cookies. Log in as SixSigma admin. Ensure persistent login. Try to access prohibited things (draft edit). Log out. Ensure logged out. Log in as doctor admin. Ensure proper permissions and persistent login. Log out. Log in as doctor user. Ensure proper permissions and persistent login. Log out. Log in as SixSigma admin and create a doctor. Go to register that doctor without logging out. Login should remain the same. Open up another page and log out. Go to register that doctor again with no login. Login should be automatic to that doctor user.
+x find and replace all @current_domain type variables to current_domain functions (in views), and remove initiate_global_vars
+x create the Status class and functions.
+x the discard and edit links on the Admin side need to be removed.
 - if you try and go to a form url without logging in first it errors
-- when you logout of sixsigma admin it uses the wrong template
-- when you login to sixsigma admin it should take you to the forms section immediately
 - the path /sixsigma/forms should work without having the /status/submitted=======
-- fix the authentication bug (which will also fix the logout redirect problem)
+- when you login to sixsigma admin it should take you to the forms section immediately
+- create the VIEW for Doctors for SUBMITTED and ARCHIVED forms
+- Visual Identifier for the current draft - a title of sorts: Daniel Parker - March 14, 2007
+- change cursor focus when you go to a page with a search field or form to fill out
+- 'roll up' link for form sections
+- visual (arrow/triangle) for roll down/up links
+- condense parts of the form(s): dropdown for sex, marital, work, location; datepicker for birthdates

@@ -9,11 +9,11 @@
 
 	<%= hidden_field "form_instance", "status" %>
 	<input id="submit_draft_bttn" name="commit" type="button" value="Submit to SixSigma" onclick="$('form_instance_status').value = 'submitted'; this.form.action='<%= doctor_forms_path(:form_type => @form_type, :action => 'update', :form_id => @form.id) %>'; this.form.submit(); return false;" />
-<%= submit_tag 'Save Draft', :id => 'save_draft_bttn2' %>
+<%= submit_tag 'Save Draft', :id => 'save_draft_bttn' %><span id="draft_save_status"></span>
 <% end -%>
 
 <%= observe_form 'form_'+@form_type.fromCamelCase,
-                :function => "$('save_draft_bttn1').value = 'Save Draft'; $('save_draft_bttn1').disabled = false; $('save_draft_bttn2').value = 'Save Draft'; $('save_draft_bttn2').disabled = false" %>
+                :function => "$('save_draft_bttn').value = 'Save Draft'; $('save_draft_bttn').disabled = false" %>
 <%= observe_form 'form_'+@form_type.fromCamelCase,
                 :frequency => 5,
 								:assigns => 'draft_observe',

@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include RouteObjectMapping
   include AccessControl
-  before_filter :initiate_global_env
   before_filter :add_default_restrictions
   before_filter :go_to_where_you_belong
   layout 'default'
