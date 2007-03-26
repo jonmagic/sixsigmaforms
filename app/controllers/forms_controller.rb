@@ -45,7 +45,7 @@ class FormsController < ApplicationController
         flash[:notice] = flash[:notice]+"<br />\nSaved FormData."
         if @form_instance.save
           flash[:notice] = flash[:notice]+"<br />\nSaved FormInstance."
-          redirect_to forms_url(:form_type => @form_instance.form_data_type, :action => 'draft', :form_id => @form_instance.form_data_id)
+          redirect_to doctor_forms_url(:form_type => @form_instance.form_data_type, :action => 'draft', :form_id => @form_instance.form_data_id)
         else
           flash[:notice] = flash[:notice]+"<br />\nDid NOT save FormInstance."
           render :action => 'draft'
@@ -90,7 +90,7 @@ class FormsController < ApplicationController
           if @form.instance.save
             Log.create(:log_type => 'status:update', :data => {})
           end
-          redirect_to forms_status_url(:action => 'index', :form_status => @form.instance.status)
+          redirect_to doctor_forms_by_status_url(:action => 'index', :form_status => @form.instance.status)
         else
           render :layout => false
         end
