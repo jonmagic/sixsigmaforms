@@ -13,3 +13,4 @@ x the discard and edit links on the Admin side need to be removed.
 - 'roll up' link for form sections
 - visual (arrow/triangle) for roll down/up links
 - condense parts of the form(s): dropdown for sex, marital, work, location; datepicker for birthdates
+- Archived viewing: past 30, paginator, live search

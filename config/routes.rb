@@ -30,7 +30,6 @@ ActionController::Routing::Routes.draw do |map|
     doctor.resources :users, :controller => 'manage/users',   :name_prefix => 'manage_', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any, :set_user_friendly_name => :any, :set_user_email => :any }
   end
   map.resources :pages, :path_prefix => '/sixsigma/manage',   :controller => 'manage/pages', :name_prefix => 'manage_'
-  # map.admin_forms '/sixsigma/forms/:form_status/:action/:form_type/:form_id', :controller => 'manage/forms', :action => 'index', :form_type => nil, :form_id => nil
   map.admin_account   '/sixsigma/manage/myaccount/:action',   :controller => 'manage/admins', :action => 'show'
 
   map.admin_forms_by_status '/sixsigma/forms/status/:form_status',  :controller => 'manage/forms',  :action => 'index', :form_status => 'submitted'

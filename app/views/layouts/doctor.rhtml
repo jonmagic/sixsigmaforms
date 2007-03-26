@@ -36,7 +36,7 @@
 		<div id="main">
 			<ul id="tabmenu">
 				<% if logged_in? -%>
-				<li><%= tab_link_to "Dashboard", doctor_dashboard_path, :tab_equal => true %></li>
+				<li><%= tab_link_to "Dashboard", doctor_dashboard_path, :active_only_if_equal => true %></li>
 				<li><%= tab_link_to "Drafts" + (!current_user.drafts.blank? ? " (#{current_user.drafts.count})" : ''), doctor_forms_by_status_path(:form_status => 'draft'), :class => 'drafts_count' %></li>
 				<li><%= tab_link_to "Submitted" + (!current_user.submitted.blank? ? " (#{current_user.submitted.count})" : ''), doctor_forms_by_status_path(:form_status => 'submitted'), :class => 'submitted_count' %></li>
 				<li><%= tab_link_to "Reviewed" + (!current_user.reviewed.blank? ? " (#{current_user.reviewed.count})" : ''), doctor_forms_by_status_path(:form_status => 'reviewed'), :class => 'reviewed_count' %></li>
