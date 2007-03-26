@@ -1,3 +1,6 @@
 - change cursor focus when you go to a page with a search field or form to fill out
 - if you try and go to a form url without logging in first it errors
+- when you logout of sixsigma admin it uses the wrong template
+- when you login to sixsigma admin it should take you to the forms section immediately
+- the path /sixsigma/forms should work without having the /status/submitted=======
 - fix the authentication bug (which will also fix the logout redirect problem)
