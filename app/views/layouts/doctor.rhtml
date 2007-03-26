@@ -28,19 +28,24 @@
 						Not logged in. <a href="/<%= accessed_domain %>/login">Login</a>
 					<% end -%>
 				</li>
-				<% if current_user.is_doctor? -%>
-								<li><%= link_to "Manage", users_path %></li>
-				<% end -%>
+				<li>
+				<%= link_to 'My Account', user_account_path %><%= " / " + link_to("Manage", users_path) if current_user.is_doctor? %>
+				</li>
 			</ul>		
 		</div>
 		<div id="main">
 			<ul id="tabmenu">
 				<% if logged_in? -%>
 				<li><%= tab_link_to "Dashboard", doctor_dashboard_path, :active_only_if_equal => true %></li>
+				<% if current_user.is_doctor? and request.request_uri =~ /\/manage/ -%>
+				<li><%= tab_link_to "Users", users_path %></li>
+				<li><%= tab_link_to "Doctor Profile", doctor_profile_path %></li>
+				<% else -%>
 				<li><%= tab_link_to "Drafts" + (!current_user.drafts(true).blank? ? " (#{current_user.drafts.count})" : ''), doctor_forms_by_status_path(:form_status => 'draft'), :class => 'drafts_count' %></li>
 				<li><%= tab_link_to "Submitted" + (!current_user.submitted(true).blank? ? " (#{current_user.submitted.count})" : ''), doctor_forms_by_status_path(:form_status => 'submitted'), :class => 'submitted_count' %></li>
 				<li><%= tab_link_to "Reviewed" + (!current_user.reviewed(true).blank? ? " (#{current_user.reviewed.count})" : ''), doctor_forms_by_status_path(:form_status => 'reviewed'), :class => 'reviewed_count' %></li>
 				<li><%= tab_link_to "Archived" + (!current_user.archived(true).blank? ? " (#{current_user.archived.count})" : ''), doctor_forms_by_status_path(:form_status => 'archived'), :class => 'archived_count' %></li>
+				<% end -%>
 				<% else -%>
 				<li><%= tab_link_to "Login", doctor_login_path %></li>
 				<% end -%>

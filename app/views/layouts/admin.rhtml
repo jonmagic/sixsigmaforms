@@ -45,20 +45,21 @@
 	<body>
 		<div id="header">
 			<h1>Six Sigma Management Form Processor</h1>
-			<h2>Welcome <%= current_user.friendly_name %></h2>
+			<h2>Welcome <em><%= current_user.friendly_name %></em></h2>
 			<ul>
 				<li>
+					<li>
+						<% if logged_in? -%>
+							<a href="/logout">Logout</a>
+						<% else -%>
+							Not logged in. <a href="/<%= accessed_domain %>/login">Login</a>
+						<% end -%>
+					</li>
+					<li>
 					<% if params[:action] == 'forms' or params[:controller] == 'manage/forms' -%>
 						<%= link_to 'Manage', doctors_path %>
 					<% elsif params[:action] == 'management' or params[:controller] == 'manage/doctors' or params[:controller] == 'manage/pages' or (params[:controller] == 'manage/admins' and !(params[:action] == 'dashboard')) -%>
 						<%= link_to 'Forms', admin_forms_by_status_path('submitted') %>
-					<% end %>
-				</li>
-				<li>
-					<% if logged_in? -%>
-						<a href="/logout">Logout</a>
-					<% else -%>
-						Not logged in. <a href="/<%= accessed_domain %>/login">Login</a>
 					<% end -%>
 				</li>
 			</ul>

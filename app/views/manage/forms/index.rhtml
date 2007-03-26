@@ -2,3 +2,6 @@
 <% @forms.each do |form| -%>
   <%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %>
 <% end -%>
+<% if @forms.blank? -%>
+	&lt; no <%= params[:form_status].as_status.word('lowercase long plural') %> &gt;
+<% end -%>

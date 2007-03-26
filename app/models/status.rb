@@ -10,7 +10,7 @@ class Status
   end
 
   def number
-    self.status_number
+    self.status_number+1
   end
   def text
     self.word('lowercase short singular')

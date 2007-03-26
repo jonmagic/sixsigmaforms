@@ -4,3 +4,7 @@
 <p>Birth Date: <em><%= @form.birth_date %></em></p>
 <p>Address: <%= @form.address %>, <%= @form.city %>, <%= @form.state %> <%= @form.zipcode %></p>
 <p>Provider: <%= @form.provider_name %></p>
+
+<p><%= link_to 'Accept & Archive', '#' %></p>
+<p><%= link_to 'Return with Note...', '#' %></p>
+<p style="color:red">(auto-expanding note form, which creates the note and returns to draft status)</p>

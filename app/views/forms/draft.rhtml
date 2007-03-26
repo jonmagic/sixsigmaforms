@@ -1,6 +1,5 @@
-<!--<p>This form will be tied to <span class="patient_best_identifier"><%= @patient.find_best_identifier %></span>.</p>
+<h2><span class="patient_best_identifier"><%= @patient.find_best_identifier %>&nbsp;&nbsp;::&nbsp;&nbsp;<%= @form.instance.created_at.strftime("%A, %B %d, %Y") %></span></h2>
 
-<%= submit_tag 'Save Draft', :id => 'save_draft_bttn1' %><span id="draft_save_status"></span>-->
 <%= error_messages_for :basic_form %>
 <% remote_form_for(@form_type, :html => {:id => 'form_'+@form_type.fromCamelCase}, :url => formatted_doctor_forms_path(:form_type => @form_type, :action => 'update', :form_id => @form.id, :format => 'js')) do |f| %>
 

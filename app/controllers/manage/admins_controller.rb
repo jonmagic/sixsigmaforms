@@ -130,9 +130,4 @@ class Manage::AdminsController < ApplicationController
     end
   end
 
-  private
-    def require_admin_except_register_and_activate
-      return if (logged_in? and current_user.is_admin?) or ['register', 'activate'].include?(params[:action])
-      access_denied
-    end
 end
