@@ -9,13 +9,17 @@ x when you login to sixsigma admin it should take you to the forms section immed
 x Visual Identifier for the current draft - a title of sorts: Daniel Parker - March 14, 2007
 x go over ALL controllers/actions and ensure ACL's work
 
-- create the VIEW for Doctors for SUBMITTED and ARCHIVED forms
+- create the VIEW for Doctors for the SUBMITTED and ARCHIVED forms
 - create the VIEW for ADMINS for Reviewing a form (accept&archive, return with note, etc)
 - create the Admins Form workflow (submit -> review -> archived)
 - create the Archived view: past 30, paginator, live search (controls to pull back)
+- add the 'don't save changes to patient' checkbox (next to the expand/collapse link)
 
+- make the Login/Logout link in the upper-right hand corner be right-justified
 - change cursor focus when you go to a page with a search field or form to fill out
-- 'roll up' link for form sections
+- 'roll up' link for form sections, when expanded
 - visual (arrow/triangle) for roll down/up links
 - condense parts of the form(s): dropdown for sex, marital, work, location; datepicker for birthdates
-- make the Login/Logout link in the upper-right hand corner be right-justified
+   -- I'd like to never have to scroll in these forms, if possible, by collapsing and expanding sections.
+   -- Can we have sub-sections expand/collapse?
+- add visuals? icons?
