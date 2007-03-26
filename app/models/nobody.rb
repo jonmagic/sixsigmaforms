@@ -26,7 +26,7 @@ class Nobody
   def reviewed(load=false)
     []
   end
-  def accepted(load=false)
+  def archived(load=false)
     []
   end
 end

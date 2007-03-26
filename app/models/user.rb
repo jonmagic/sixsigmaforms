@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many :drafts,    :class_name => 'FormInstance', :conditions => "status_number=1"
   has_many :submitted, :class_name => 'FormInstance', :conditions => "status_number=2"
   has_many :reviewed,  :class_name => 'FormInstance', :conditions => "status_number=3"
-  has_many :accepted,  :class_name => 'FormInstance', :conditions => "status_number=4"
+  has_many :archived,  :class_name => 'FormInstance', :conditions => "status_number=4"
 
   has_many :notes, :as => :author
 

@@ -2,9 +2,9 @@
 module ApplicationHelper
 
   def tab_link_to(name, options = {}, html_options = nil, *parameters_for_method_reference)
-    if !options.is_a?(String) and !options[:active_only_if_equal].nil?
-      active_only_if_equal = options[:active_only_if_equal]
-      options.delete('active_only_if_equal')
+    if !html_options[:active_only_if_equal].nil?
+      active_only_if_equal = html_options[:active_only_if_equal]
+      html_options.delete(:active_only_if_equal)
     else
       active_only_if_equal = false
     end

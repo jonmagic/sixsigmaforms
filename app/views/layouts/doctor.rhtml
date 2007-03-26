@@ -37,10 +37,10 @@
 			<ul id="tabmenu">
 				<% if logged_in? -%>
 				<li><%= tab_link_to "Dashboard", doctor_dashboard_path, :active_only_if_equal => true %></li>
-				<li><%= tab_link_to "Drafts" + (!current_user.drafts.blank? ? " (#{current_user.drafts.count})" : ''), doctor_forms_by_status_path(:form_status => 'draft'), :class => 'drafts_count' %></li>
-				<li><%= tab_link_to "Submitted" + (!current_user.submitted.blank? ? " (#{current_user.submitted.count})" : ''), doctor_forms_by_status_path(:form_status => 'submitted'), :class => 'submitted_count' %></li>
-				<li><%= tab_link_to "Reviewed" + (!current_user.reviewed.blank? ? " (#{current_user.reviewed.count})" : ''), doctor_forms_by_status_path(:form_status => 'reviewed'), :class => 'reviewed_count' %></li>
-				<li><%= tab_link_to "Accepted" + (!current_user.accepted.blank? ? " (#{current_user.accepted.count})" : ''), doctor_forms_by_status_path(:form_status => 'accepted'), :class => 'accepted_count' %></li>
+				<li><%= tab_link_to "Drafts" + (!current_user.drafts(true).blank? ? " (#{current_user.drafts.count})" : ''), doctor_forms_by_status_path(:form_status => 'draft'), :class => 'drafts_count' %></li>
+				<li><%= tab_link_to "Submitted" + (!current_user.submitted(true).blank? ? " (#{current_user.submitted.count})" : ''), doctor_forms_by_status_path(:form_status => 'submitted'), :class => 'submitted_count' %></li>
+				<li><%= tab_link_to "Reviewed" + (!current_user.reviewed(true).blank? ? " (#{current_user.reviewed.count})" : ''), doctor_forms_by_status_path(:form_status => 'reviewed'), :class => 'reviewed_count' %></li>
+				<li><%= tab_link_to "Archived" + (!current_user.archived(true).blank? ? " (#{current_user.archived.count})" : ''), doctor_forms_by_status_path(:form_status => 'archived'), :class => 'archived_count' %></li>
 				<% else -%>
 				<li><%= tab_link_to "Login", doctor_login_path %></li>
 				<% end -%>
