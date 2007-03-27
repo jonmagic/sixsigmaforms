@@ -10,12 +10,16 @@ class FormsController < ApplicationController
 
   def index
     restrict('allow only doctor users') or begin
-      if params[:form_status] == 'all'
-        @my_forms = current_user.form_instances
-        @others_forms = current_user.others_form_instances
+      if params[:form_status].nil?
+        redirect_to doctor_forms_by_status_path(:form_status => 'submitted')
       else
-        @my_forms = current_user.forms_with_status(params[:form_status])
-        @others_forms = current_user.others_forms_with_status(params[:form_status])
+        if params[:form_status] == 'all'
+          @my_forms = current_user.form_instances
+          @others_forms = current_user.others_form_instances
+        else
+          @my_forms = current_user.forms_with_status(params[:form_status])
+          @others_forms = current_user.others_forms_with_status(params[:form_status])
+        end
       end
     end
   end

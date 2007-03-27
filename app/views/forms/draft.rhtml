@@ -20,4 +20,4 @@
 								:url => formatted_doctor_forms_path(:form_type => @form_type, :action => 'update', :form_id => @form.id, :format => 'js'),
 								:with => "Form.serialize(\"form_#{@form_type.fromCamelCase}\")" %>
 
-<%= render :partial => 'form_notes', :locals => {:form => @form} %>
+<%= render :partial => 'notes/form_notes', :locals => {:form => @form} %>

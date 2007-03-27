@@ -61,7 +61,7 @@ class Manage::AdminsController < ApplicationController
               #Log the user in
               self.current_user = logged_in? ? self.current_user : @admin
               flash[:notice] = "Signup complete! #{@admin.username} is ready for login."
-              format.html { redirect_to self.current_user == @admin ? user_account_url : admin_url(@admin) }
+              format.html { redirect_to @admin == self.current_user ? user_account_url : admin_url(@admin) }
               format.xml  { head :ok }
             else
               format.html { render :action => "register" }

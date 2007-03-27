@@ -1,0 +1,3 @@
+page["note_text_#{params[:id]}"].replace_html(:file => 'manage/notes/edit', :use_full_path => true, :locals => { :note => @note })
+page["edit_link_#{params[:id]}"].replace("<a id=\"edit_link_#{params[:id]}\" href=\"javascript:void(0)\" onclick=\"" + remote_function(:html => {}, :with => "Form.serialize($('#{@note.id}_edit_form'))", :url => formatted_admin_note_path(:form_status => @note.form_instance.status, :form_type => params[:form_type], :form_id => params[:form_id], :id => @note.id, :format => 'js'), :html => { :method => :put }) + "\">Save</a>")
+page['edit_note_text_area'].focus()

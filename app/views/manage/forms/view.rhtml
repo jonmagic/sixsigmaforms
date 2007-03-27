@@ -1,9 +1,11 @@
+<h2><%= @form.instance.visual_identifier %></h2>
+<p>(Form type <em><%= @form.type %></em>)</p>
 
-<p>* Form <em><%= @form_instance.form_data_type %></em>, instance #<em><%= @form.instance.id %>.<%= @form.id %></em> *</p>
-<p>Doctor: <em><%= @form.instance.doctor.friendly_name %></em></p>
-<p>Birth Date: <em><%= @form.birth_date %></em></p>
-<p>Address: <%= @form.address %>, <%= @form.city %>, <%= @form.state %> <%= @form.zipcode %></p>
-<p>Provider: <%= @form.provider_name %></p>
+<div class="form">
+<%= render :partial => @form.instance.form_data_type.fromCamelCase -%>
+</div>
+
+<%= render :partial => 'manage/notes/form_notes', :locals => {:form => @form} %>
 
 <p><%= link_to 'Accept & Archive', '#' %></p>
 <p><%= link_to 'Return with Note...', '#' %></p>

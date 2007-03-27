@@ -1,0 +1,3 @@
+page["note_section_#{params[:id]}"].replace(:partial => 'manage/notes/show_note', :locals => { :note => @note })
+page["edit_link_#{params[:id]}"].replace(link_to_remote('Edit', {:url => formatted_admin_edit_note_path(:format => 'js', :form_type => @note.form_instance.form_data_type, :form_id => @note.form_instance.form_data_id, :id => @note.id), :method => :get}, {:id => "edit_link_#{@note.id}"}))
+page['new_note_text_area'].value = ''

@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     add_restriction('allow only doctor admins', current_user.is_doctor?) {flash[:notice] = "Only Doctor Admins can access this. Please login with Doctor Admin credentials."; store_location; redirect_to doctor_login_path(accessed_domain)}
     add_restriction('allow only admins or doctor admins', current_user.is_doctor_or_admin?) {flash[:notice] = "Only Doctor Admins can access this. Please login with Doctor Admin credentials."; store_location; redirect_to doctor_login_path(accessed_domain)}
     add_restriction('allow only doctor users', current_user.is_doctor_user?) {flash[:notice] = "Only Doctor Users can access this. Please login."; store_location; redirect_to doctor_login_path(accessed_domain)}
-    add_restriction('allow only admins', current_user.is_admin?) {flash[:notice] = "Only SixSigma Admins can access this. Please login with SixSigma Admin credentials."; store_location; redirect_to admin_login_path}
+    add_restriction('allow only admins', current_user.is_admin?) {flash[:notice] = "Only Admins can access this. Please login."; store_location; redirect_to(admin_login_path)}
   end
 
 #Virtually makes this publicly global for the app.

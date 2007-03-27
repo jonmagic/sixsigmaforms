@@ -22,7 +22,7 @@ module RouteObjectMapping
 
 #These are VERY useful!
     def current_form_model
-      @current_form_model ||= current_doctor.nil? ? nil : current_doctor.form_model(params[:form_type])
+      @current_form_model ||= current_user.is_admin? ? Doctor.form_model(params[:form_type]) : current_doctor.form_model(params[:form_type])
     end
     def current_form_instance
       @current_form_instance ||= current_form.nil? ? nil : current_form.instance
