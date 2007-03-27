@@ -24,10 +24,10 @@ ActionController::Routing::Routes.draw do |map|
 # A D M I N S *
 #* * * * * * *
 
-  map.admin_dashboard                     '/sixsigma',        :controller => 'manage/forms', :action => 'index'
-  map.resources :admins,  :path_prefix => '/sixsigma/manage', :controller => 'manage/admins', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any, :set_user_friendly_name => :any, :set_user_email => :any }
-  map.resources :doctors, :path_prefix => '/sixsigma/manage', :controller => 'manage/doctors', :collection => { :live_search => :any, :search => :any } do |doctor|
-    doctor.resources :users, :controller => 'manage/users',   :name_prefix => 'manage_', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any, :set_user_friendly_name => :any, :set_user_email => :any }
+  map.admin_dashboard                        '/sixsigma',        :controller => 'manage/forms',   :action => 'index'
+  map.resources :admins,     :path_prefix => '/sixsigma/manage', :controller => 'manage/admins',  :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any, :set_user_friendly_name => :any, :set_user_email => :any }
+  map.resources :doctors,    :path_prefix => '/sixsigma/manage', :controller => 'manage/doctors', :collection => { :live_search => :any, :search => :any } do |doctor|
+    doctor.resources :users, :name_prefix => 'manage_',          :controller => 'manage/users',   :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any, :set_user_friendly_name => :any, :set_user_email => :any }
   end
   map.resources :pages, :path_prefix => '/sixsigma/manage',   :controller => 'manage/pages', :name_prefix => 'manage_'
   map.admin_account   '/sixsigma/manage/myaccount/:action',   :controller => 'manage/admins', :action => 'show'
@@ -54,7 +54,7 @@ ActionController::Routing::Routes.draw do |map|
   map.doctor_forms_by_status '/doctors/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'all', :action => 'index'
   map.resources :notes, :path_prefix => '/doctors/:domain/forms/:form_type/:form_id', :name_prefix => 'doctor_'
   map.formatted_doctor_forms '/doctors/:domain/forms/:action/:form_type/:form_id.:format', :controller => 'forms', :action => 'new', :format => 'html'
-  map.doctor_forms '/doctors/:domain/forms/:action/:form_type/:form_id', :controller => 'forms', :action => 'new'
+  map.doctor_forms '/doctors/:domain/forms/:form_type/:action/:form_id', :controller => 'forms', :action => 'new'
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 

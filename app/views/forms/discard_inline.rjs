@@ -1,2 +1,7 @@
 page.visual_effect "fade", "form_listing_#{params[:form_id]}", :duration => 0.3
-page["#{@form.status.as_status.word('lowercase short singular')}_count"].replace_html("#{@status_link_text_with_count}")
+page.select('.#{@form.status.as_status.word('lowercase short singular')}_count').each do |ident|
+  ident.id = "delete_me_now"
+  page["delete_me_now"].replace_html(@status_link_text_with_count)
+  page["delete_me_now"].id = ''
+end
+

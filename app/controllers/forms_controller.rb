@@ -76,22 +76,31 @@ class FormsController < ApplicationController
 #This is for submitting edits. This is an ajax-specific function, normally auto-save like gmail but also via a button (like gmail).
   def update
     restrict('allow only doctor users') or begin
+      status_changed = false
       @form = FormType.model_for(params[:form_type]).find_by_id(params[:form_id])
       if @form.patient.update_attributes(params[params[:form_type]]) & @form.update_attributes(params[params[:form_type]]) & @form.instance.update
-        # flash[:notice] = "Draft saved."
         @save_status = "Draft saved at " << Time.now.strftime("%I:%M %p").downcase
         if params[:form_instance] and !params[:form_instance][:status].blank? and !(params[:form_instance][:status] == @form.instance.status)
+logger.error "Saving new status!\n"
           @form.instance.status = params[:form_instance][:status]
           if @form.instance.save
+logger.error "SAVED STATUS!\n"
             Log.create(:log_type => 'status:update', :data => {})
+            status_changed = true
+          else
+logger.error "DID NOT SAVE STATUS!\n"
+            flash[:notice] = "ERROR Submitting draft!"
           end
-          redirect_to doctor_forms_by_status_url(:action => 'index', :form_status => @form.instance.status)
-        else
-          render :layout => false
+          # return redirect_to doctor_forms_by_status_url(:action => 'index', :form_status => @form.instance.status)
+        # else
+          # render :layout => false
         end
       else
         @save_status = "ERROR auto-saving!"
-        # flash[:notice] = flash[:notice]+" Patient NOT updated."
+      end
+      respond_to do |format|
+        format.html {redirect_to status_changed ? doctor_forms_by_status_url(:form_status => @form.instance.status) : doctor_forms_url(:form_type => @form.instance.form_data_type, :form_id => @form.instance.form_data_id)}
+        format.js   {render :layout => false}
       end
     end
   end

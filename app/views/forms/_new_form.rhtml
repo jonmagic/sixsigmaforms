@@ -1,6 +1,6 @@
 <h4>New Patient</h4>
 <ul>
 	<% current_user.doctor.form_types.each do |ft| -%>
-		<li><%= link_to ft.friendly_name, doctor_forms_path(:form_type => ft.name) %></li>
+		<li><%= link_to ft.friendly_name, doctor_forms_path(:action => 'new', :form_type => ft.name) %></li>
 	<% end -%>
 </ul>
