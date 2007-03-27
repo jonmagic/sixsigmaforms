@@ -53,7 +53,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.doctor_forms_by_status '/doctors/:domain/forms/:form_status/:action', :controller => 'forms', :form_status => 'all', :action => 'index'
   map.resources :notes, :path_prefix => '/doctors/:domain/forms/:form_status/:form_type/:form_id', :name_prefix => 'doctor_'
-  map.formatted_doctor_forms '/doctors/:domain/forms/:form_status/:action/:form_type/:form_id.:format', :controller => 'forms', :action => 'new', :format => 'html'
+  map.formatted_doctor_forms '/doctors/:domain/forms/:form_status/:form_type/:form_id/:action.:format', :controller => 'forms', :action => 'new', :format => 'html'
   map.doctor_draft '/doctors/:domain/forms/draft/:form_type/new', :controller => 'forms', :action => 'new', :form_status => 'draft'
   map.doctor_forms '/doctors/:domain/forms/:form_status/:form_type/:form_id/:action', :controller => 'forms', :action => 'draft'
 

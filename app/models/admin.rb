@@ -31,7 +31,6 @@ class Admin < ActiveRecord::Base
   end
 
   def domain
-logger.error "Admin domain: sixsigma\n"
     'sixsigma'
   end
   def doctor
