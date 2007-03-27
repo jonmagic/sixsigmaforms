@@ -34,6 +34,7 @@
 			</ul>		
 		</div>
 		<div id="main">
+			<div id="messages" class="floatright"><%= flash[:notice] %></div>
 			<ul id="tabmenu">
 				<% if logged_in? -%>
 				<li><%= tab_link_to "Dashboard", doctor_dashboard_path, :active_only_if_equal => true %></li>
@@ -51,7 +52,6 @@
 				<% end -%>
 			</ul>
 			<div style="background:#C13B00;"><br /></div><br />
-			<div id="messages"><%= flash[:notice] %></div>
 			<div id="content">
 				<%= yield  %>
 			</div>

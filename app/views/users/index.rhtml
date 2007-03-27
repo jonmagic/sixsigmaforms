@@ -1,8 +1,12 @@
 <h1><%= Doctor.find_by_alias(params[:domain]).friendly_name %>'s users</h1>
 
 <table>
-  <tr>
-  </tr>
+	<thead>
+		<td>Name</td>
+		<td>Username</td>
+		<td></td>
+		<td span="2">Actions</td>
+	</thead>
   
 <% for user in @users %>
   <tr<%= " class='doctor_admin'" if user.is_doctor? %>>

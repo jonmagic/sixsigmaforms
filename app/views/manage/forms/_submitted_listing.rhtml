@@ -1,2 +1,2 @@
 <% pre_text ||= '' -%>
-<p id="form_listing_<%= form.id %>"><%= pre_text %><%= "#{form.patient.first_name} #{form.patient.last_name} -[#{form.created_at.strftime("%a %b %d, %I:%M%p")}]-" %> <%= link_to 'View', admin_forms_path(:action => 'view', :form_type => form.form_data_type, :form_id => form.form_data_id) %></p>
+<li id="form_listing_<%= form.id %>"><%= pre_text %><%= "#{form.patient.first_name} #{form.patient.last_name} -[#{form.created_at.strftime("%a %b %d, %I:%M%p")}]-" %> <%= link_to 'View', admin_forms_path(:action => 'view', :form_type => form.form_data_type, :form_id => form.form_data_id) %></li>

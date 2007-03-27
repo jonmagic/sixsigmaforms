@@ -4,10 +4,11 @@ x find and replace all @current_domain type variables to current_domain function
 x create the Status class and functions.
 x the discard and edit links on the Admin side need to be removed.
 x Status counts are not right in the tabs!
-x the path /sixsigma/forms should work without having the /status/submitted=======
 x when you login to sixsigma admin it should take you to the forms section immediately
 x Visual Identifier for the current draft - a title of sorts: Daniel Parker - March 14, 2007
 x go over ALL controllers/actions and ensure ACL's work
+x make the Login/Logout link in the upper-right hand corner be right-justified
+x the path /sixsigma/forms should work without having the /status/submitted
 
 - !!Submitting to SixSigma creates a new draft instead of submitting!!
 - create the VIEW for Doctors for the SUBMITTED and ARCHIVED forms
@@ -15,8 +16,6 @@ x go over ALL controllers/actions and ensure ACL's work
 - create the Admins Form workflow (submit -> review -> archived)
 - create the Archived view: past 30, paginator, live search (controls to pull back)
 - add the 'don't save changes to patient' checkbox (next to the expand/collapse link)
-
-- make the Login/Logout link in the upper-right hand corner be right-justified
 - change cursor focus when you go to a page with a search field or form to fill out
 - 'roll up' link for form sections, when expanded
 - visual (arrow/triangle) for roll down/up links

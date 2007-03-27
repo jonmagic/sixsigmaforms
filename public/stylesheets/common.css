@@ -44,6 +44,10 @@ p {
 	margin:0;
 }
 
+thead {
+	font-weight:bold;
+}
+
 ul, li {
 	margin:0 1em;
 	padding:0;
@@ -91,17 +95,18 @@ label {
 
 #header ul {
 	position:absolute;
-	right:.75em;
-	top:.75em;
+	right:0;
+	top:0;
 	list-style:none;
 	margin:0;
 	padding:0;
 }
 
 #header li {
-	padding: .2em;
 	list-style:none;
-	text-align:right;	
+	text-align:right;
+	margin-bottom:.2em;
+	vertical-align:middle;
 }
 
 #header a {
@@ -113,7 +118,7 @@ label {
 }
 
 #content {
-	margin:1em;
+	padding:0 1em;
 }
 
 #content ul, #content li {
