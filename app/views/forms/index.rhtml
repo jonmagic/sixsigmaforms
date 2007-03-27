@@ -1,4 +1,4 @@
-<h3>My <%= params[:form_status].as_status.word('uppercase long plural') %></h3>
+<h2>My <%= params[:form_status].as_status.word('uppercase long plural') %></h2>
 <ul>
 	<% @my_forms.each do |form| -%>
 	  	<li id="form_listing_<%= form.id %>"><%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %></li>
@@ -10,7 +10,7 @@
 	<% end -%>
 </ul>
 <br />
-<h3>All <%= params[:form_status].as_status.word('uppercase long plural') %></h3>
+<h2>All <%= params[:form_status].as_status.word('uppercase long plural') %></h2>
 <ul>	
 	<% @others_forms.each do |form| -%>
 		<li id="form_listing_<%= form.id %>"><%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %></li>

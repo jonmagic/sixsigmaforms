@@ -1,5 +1,5 @@
 <ul class="form">
-	<li><a href="javascript:Effect.Combo('general_information');">General Client Information</a></li>
+	<li><h4>General Client Information - <a href="javascript:Effect.Combo('general_information');">Show/Hide Section</a></h4></li>
 	<li><div id="general_information">
 		<table>
 			<tr>
@@ -106,9 +106,14 @@
 			<td class="leftcolumn"><label for="new_patient">New Patient</label></td>
 			<td class="rightcolumn"><%= f.text_field :new_patient, :value => @values.new_record? %></td>
 			</tr>
+			
+			<tr>
+			<td class="leftcolumn"></td>
+			<td class="rightcolumn"><a href="javascript:Effect.Combo('general_information');"><%= image_tag "up_arrow.gif", :border => 0 %> Hide Section</a></td>
+			</tr>
 		</table>
 	</div></li>
-	<li><a href="javascript:Effect.Combo('primary_insurance');">Primary Insurance Information</a></li>
+	<li><h4>Primary Insurance Information - <a href="javascript:Effect.Combo('primary_insurance');">Show/Hide Section</a></h4></li>
 	<li><div id="primary_insurance" style="display:none">
 		<table>
 			<tr>
@@ -185,9 +190,14 @@
 			<td class="leftcolumn"><label for="primary_group_number">Primary Group Number</label></td>
 			<td class="rightcolumn"><%= f.text_field :primary_group_number, :value => @values.primary_group_number %></td>
 			</tr>
+			
+			<tr>
+			<td class="leftcolumn"></td>
+			<td class="rightcolumn"><a href="javascript:Effect.Combo('primary_insurance');"><%= image_tag "up_arrow.gif", :border => 0 %> Hide Section</a></td>
+			</tr>
 		</table>
 	</div></li>
-	<li><a href="javascript:Effect.Combo('secondary_insurance');">Secondary Insurance Information</a></li>
+	<li><h4>Secondary Insurance Information - <a href="javascript:Effect.Combo('secondary_insurance');">Show/Hide Section</a></h4></li>
 	<li><div id="secondary_insurance" style="display:none">
 		<table>	
 			<tr>
@@ -264,9 +274,14 @@
 			<td class="leftcolumn"><label for="secondary_group_number">Secondary Group Number</label></td>
 			<td class="rightcolumn"><%= f.text_field :secondary_group_number, :value => @values.secondary_group_number %></td>
 			</tr>
+			
+			<tr>
+			<td class="leftcolumn"></td>
+			<td class="rightcolumn"><a href="javascript:Effect.Combo('secondary_insurance');"><%= image_tag "up_arrow.gif", :border => 0 %> Hide Section</a></td>
+			</tr>			
 		</table>
 	</div></li>
-	<li><a href="javascript:Effect.Combo('tertiary_insurance');">Tertiary Insurance Information</a></li>
+	<li><h4>Tertiary Insurance Information - <a href="javascript:Effect.Combo('tertiary_insurance');">Show/Hide Section</a></h4></li>
 	<li><div id="tertiary_insurance" style="display:none">
 		<table>	
 			<tr>
@@ -342,6 +357,11 @@
 			<tr>
 			<td class="leftcolumn"><label for="tertiary_group_number">Tertiary Group Number</label></td>
 			<td class="rightcolumn"><%= f.text_field :tertiary_group_number, :value => @values.tertiary_group_number %></td>
+			</tr>
+
+			<tr>
+			<td class="leftcolumn"></td>
+			<td class="rightcolumn"><a href="javascript:Effect.Combo('tertiary_insurance');"><%= image_tag "up_arrow.gif", :border => 0 %> Hide Section</a></td>
 			</tr>
 		</table>
 	</div></li>

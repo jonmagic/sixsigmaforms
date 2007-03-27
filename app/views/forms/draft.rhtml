@@ -5,7 +5,7 @@
 
 	<%= hidden_field_tag :patient_id, @patient.id %>
 	<%= render :partial => @form_type.fromCamelCase, :locals => {:f => f} %>
-
+	<br />
 	<%= hidden_field "form_instance", "status", :value => @form.instance.status %>
 	<input id="submit_draft_bttn" name="commit" type="button" value="Submit to SixSigma" onclick="$('form_instance_status').value = 'submitted'; this.form.onsubmit=''; this.form.action='<%= doctor_forms_path(:form_type => @form_type, :action => 'update', :form_id => @form.id) %>'; this.form.submit();" />
 <%= submit_tag 'Save Draft', :id => 'save_draft_bttn' %><span id="draft_save_status"></span>
@@ -21,7 +21,8 @@
 								:with => "Form.serialize(\"form_#{@form_type.fromCamelCase}\")" %>
 
 <% if !@form.new_record? -%>
-<h4>Notes</h4>
+<hr />
+<h3>Notes</h3>
   <div id="notes_container">
 	<% @form.instance.notes.each do |note| -%>
 	  <%= render :partial => 'notes/show_note', :locals => {:note => note} %>

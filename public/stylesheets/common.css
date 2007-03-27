@@ -118,13 +118,34 @@ label {
 }
 
 #content {
-	padding:0 1em;
+	padding:0 2em;
 }
 
 #content ul, #content li {
 }
 
+#content h2 {
+	color:#222;
+}
+
+#content h4 {
+	color:#333;
+	padding:.1em 0;
+}
+
 #content li {
 	margin-left:1em;
-	padding-top: .2em;
+}
+
+.note_section {
+	background-color: #eee;
+	padding:.2em .5em;
+	margin:.4em 2em;
+}
+
+.note_text {
+	background-color: #ddd;
+	padding:.2em .5em;
+	margin:.3em;
+	color:#333;
 }
