@@ -137,6 +137,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
+# THIS NEEDS TO USE THE ACTS_AS_DELETED PLUGIN!!
     restrict('allow only doctor admins') or begin
       @user = User.find_by_id(params[:id])
       @user.destroy

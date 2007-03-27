@@ -16,6 +16,11 @@ x the path /sixsigma/forms should work without having the /status/submitted
 - create the Admins Form workflow (submit -> review -> archived)
 - create the Archived view: past 30, paginator, live search (controls to pull back)
 - add the 'don't save changes to patient' checkbox (next to the expand/collapse link)
+- Acts_as_deleted
+- create Log viewer (per form): condense log entries to logical form progression benchmarck notations
+- LOGGER: log which fields are updated on each update
+
+- make the Login/Logout link in the upper-right hand corner be right-justified
 - change cursor focus when you go to a page with a search field or form to fill out
 - 'roll up' link for form sections, when expanded
 - visual (arrow/triangle) for roll down/up links
@@ -23,3 +28,4 @@ x the path /sixsigma/forms should work without having the /status/submitted
    -- I'd like to never have to scroll in these forms, if possible, by collapsing and expanding sections.
    -- Can we have sub-sections expand/collapse?
 - add visuals? icons?
+- add "show all" link to live_search partial? (populates search box with 'all' and performs the search)

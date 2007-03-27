@@ -1,6 +1,8 @@
 <h4>New Patient</h4>
 <ul>
 	<% current_user.doctor.form_types.each do |ft| -%>
-		<li><%= link_to ft.friendly_name, doctor_forms_path(:action => 'new', :form_type => ft.name) %></li>
+
+  <!-- map.doctor_forms '/doctors/:domain/forms/:form_type/:action/:form_id', :controller => 'forms', :action => 'new' -->
+		<li><%= link_to ft.friendly_name, doctor_draft_path(:form_status => 'draft', :action => 'new', :form_type => ft.name) %></li>
 	<% end -%>
 </ul>

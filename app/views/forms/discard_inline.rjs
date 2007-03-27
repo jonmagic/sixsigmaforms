@@ -4,4 +4,3 @@ page.select('.#{@form.status.as_status.word('lowercase short singular')}_count')
   page["delete_me_now"].replace_html(@status_link_text_with_count)
   page["delete_me_now"].id = ''
 end
-

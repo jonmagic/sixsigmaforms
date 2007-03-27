@@ -32,9 +32,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pages, :path_prefix => '/sixsigma/manage',   :controller => 'manage/pages', :name_prefix => 'manage_'
   map.admin_account   '/sixsigma/manage/myaccount/:action',   :controller => 'manage/admins', :action => 'show'
 
-  map.admin_forms_by_status '/sixsigma/forms/status/:form_status',  :controller => 'manage/forms',  :action => 'index'
-  map.formatted_admin_forms '/sixsigma/forms/:action/:form_type/:form_id.:format', :controller => 'manage/forms', :action => 'new', :format => 'html'
-  map.admin_forms           '/sixsigma/forms/:action/:form_type/:form_id',         :controller => 'manage/forms', :action => 'new'
+  map.admin_forms_by_status '/sixsigma/forms/:form_status',                                     :controller => 'manage/forms', :action => 'index', :form_status => nil
+  map.formatted_admin_forms '/sixsigma/forms/:form_status/:action/:form_type/:form_id.:format', :controller => 'manage/forms', :action => 'new',   :format => 'html'
+  map.admin_forms           '/sixsigma/forms/:form_status/:action/:form_type/:form_id',         :controller => 'manage/forms', :action => 'new'
   map.resources :notes, :path_prefix => '/sixsigma/forms/:form_type/:form_id', :name_prefix => 'admin_'
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
@@ -51,10 +51,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :path_prefix => '/doctors/:domain/manage', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }
   map.user_account '/doctors/:domain/myaccount/:action', :controller => 'users', :action => 'show'
 
-  map.doctor_forms_by_status '/doctors/:domain/forms/status/:form_status/:action', :controller => 'forms', :form_status => 'all', :action => 'index'
-  map.resources :notes, :path_prefix => '/doctors/:domain/forms/:form_type/:form_id', :name_prefix => 'doctor_'
-  map.formatted_doctor_forms '/doctors/:domain/forms/:action/:form_type/:form_id.:format', :controller => 'forms', :action => 'new', :format => 'html'
-  map.doctor_forms '/doctors/:domain/forms/:form_type/:action/:form_id', :controller => 'forms', :action => 'new'
+  map.doctor_forms_by_status '/doctors/:domain/forms/:form_status/:action', :controller => 'forms', :form_status => 'all', :action => 'index'
+  map.resources :notes, :path_prefix => '/doctors/:domain/forms/:form_status/:form_type/:form_id', :name_prefix => 'doctor_'
+  map.formatted_doctor_forms '/doctors/:domain/forms/:form_status/:action/:form_type/:form_id.:format', :controller => 'forms', :action => 'new', :format => 'html'
+  map.doctor_draft '/doctors/:domain/forms/draft/:form_type/new', :controller => 'forms', :action => 'new', :form_status => 'draft'
+  map.doctor_forms '/doctors/:domain/forms/:form_status/:form_type/:form_id/:action', :controller => 'forms', :action => 'draft'
 
 # * * * * * * * * * * * * * * * * * * * * * * * *
 

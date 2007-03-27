@@ -23,7 +23,7 @@ class FormsController < ApplicationController
 #This is hit first, with an existing OR new patient. The form instance is created and then redirects to the editing ('draft') of the created form.
   def new
     restrict('allow only doctor users') or begin
-      return redirect_to doctor_dashboard_url if params[:form_type] == 'chooser'
+      return redirect_to(doctor_dashboard_url) if params[:form_type] == 'chooser'
       @patient = Patient.find_by_id(params[:patient_id]) || Patient.create(:doctor => current_doctor)
       @form_instance = FormInstance.new(
         :user => current_user,
@@ -80,7 +80,7 @@ class FormsController < ApplicationController
       @form = FormType.model_for(params[:form_type]).find_by_id(params[:form_id])
       if @form.patient.update_attributes(params[params[:form_type]]) & @form.update_attributes(params[params[:form_type]]) & @form.instance.update
         @save_status = "Draft saved at " << Time.now.strftime("%I:%M %p").downcase
-        if params[:form_instance] and !params[:form_instance][:status].blank? and !(params[:form_instance][:status] == @form.instance.status)
+        if !params[:form_instance].nil? and !params[:form_instance][:status].blank? and !(params[:form_instance][:status] == @form.instance.status)
 logger.error "Saving new status!\n"
           @form.instance.status = params[:form_instance][:status]
           if @form.instance.save
@@ -92,7 +92,8 @@ logger.error "DID NOT SAVE STATUS!\n"
             flash[:notice] = "ERROR Submitting draft!"
           end
           # return redirect_to doctor_forms_by_status_url(:action => 'index', :form_status => @form.instance.status)
-        # else
+        else
+logger.error "DIDN'T SEE the form_instance[status] parameter!\n"
           # render :layout => false
         end
       else
@@ -117,7 +118,7 @@ logger.error "DID NOT SAVE STATUS!\n"
       #Also destroy patient if this is the only existing form for that patient.
       @form = FormInstance.find_by_id(params[:form_id])
       @form.destroy
-      @status_link_text_with_count = current_user.forms_with_status(@form.status).blank? ? shortStatus(@form.status) : "Drafts (#{current_user.drafts.count})"
+      @status_link_text_with_count = @form.status.as_status.word('uppercase short singular') + (current_user.forms_with_status(@form.status).blank? ? '' : " (#{current_user.drafts.count})")
       @status_count = current_user.forms_with_status(@form.status).count
       render :layout => false
     end
