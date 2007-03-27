@@ -59,7 +59,7 @@ class FormsController < ApplicationController
 # restrict('')
 # * * * *
       @form_type = params[:form_type]
-      return redirect_to doctor_dashboard_url if @form_type == 'chooser'
+      return redirect_to(doctor_dashboard_url) if @form_type == 'chooser'
       @form = FormType.model_for(@form_type).find_by_id(params[:form_id])
       # Drop the status down to draft!
       if !(@form.instance.status == 'draft')
@@ -78,22 +78,18 @@ class FormsController < ApplicationController
     restrict('allow only doctor users') or begin
       status_changed = false
       @form = FormType.model_for(params[:form_type]).find_by_id(params[:form_id])
-      if @form.patient.update_attributes(params[params[:form_type]]) & @form.update_attributes(params[params[:form_type]]) & @form.instance.update
+      if @form.patient.update_attributes(params[params[:form_type]]) & @form.update_attributes(params[params[:form_type]]) # & @form.instance.update
         @save_status = "Draft saved at " << Time.now.strftime("%I:%M %p").downcase
-        if !params[:form_instance].nil? and !params[:form_instance][:status].blank? and !(params[:form_instance][:status] == @form.instance.status)
-logger.error "Saving new status!\n"
+        if !params[:form_instance].nil? && !params[:form_instance][:status].blank? && !(params[:form_instance][:status] == @form.instance.status)
           @form.instance.status = params[:form_instance][:status]
           if @form.instance.save
-logger.error "SAVED STATUS!\n"
             Log.create(:log_type => 'status:update', :data => {})
             status_changed = true
           else
-logger.error "DID NOT SAVE STATUS!\n"
             flash[:notice] = "ERROR Submitting draft!"
           end
           # return redirect_to doctor_forms_by_status_url(:action => 'index', :form_status => @form.instance.status)
         else
-logger.error "DIDN'T SEE the form_instance[status] parameter!\n"
           # render :layout => false
         end
       else

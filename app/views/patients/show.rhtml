@@ -2,12 +2,12 @@
 <h4>History</h4>
 <ul>
 	<% @patient.form_instances.each do |f| -%>
-		<li><%= link_to "#{f.form_data_type} #{f.created_at}", doctor_forms_path(:action => 'show', :form_type => f.form_data_type, :form_id => f.form_data_id) %></li>
+		<li><%= link_to "#{f.form_data_type} #{f.created_at}", doctor_forms_path(:form_status => f.status, :action => 'view', :form_type => f.form_data_type, :form_id => f.form_data_id) %></li>
 	<% end -%>
 </ul>
 <h4>Record New Claim</h4>
 <ul>
 	<% current_user.doctor.form_types.each do |ft| -%>
-		<li><a href="<%= doctor_forms_path(:form_type => ft.name, :patient_id => @patient.id) %>"><%= ft.friendly_name %></a></li>
+		<li><a href="<%= doctor_draft_path(:form_status => 'draft', :form_type => ft.name, :patient_id => @patient.id) %>"><%= ft.friendly_name %></a></li>
 	<% end -%>
 </ul>

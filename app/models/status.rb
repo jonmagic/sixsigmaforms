@@ -3,9 +3,9 @@ class Status
 
   def initialize(status)
     if status.kind_of? Fixnum
-      self.status_number = status
+      self.status_number = status-1
     elsif status.kind_of? String
-      self.status_number = text_to_number(status)
+      self.status_number = text_to_number(status)-1
     end
   end
 
@@ -39,6 +39,6 @@ class Status
 
   private
     def text_to_number(text)
-      ['draft', 'submitted', 'reviewed', 'archived', 'all'].index(text)
+      ['draft', 'submitted', 'reviewed', 'archived', 'all'].index(text)+1
     end
 end

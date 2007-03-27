@@ -9,10 +9,12 @@ x Visual Identifier for the current draft - a title of sorts: Daniel Parker - Ma
 x go over ALL controllers/actions and ensure ACL's work
 x make the Login/Logout link in the upper-right hand corner be right-justified
 x the path /sixsigma/forms should work without having the /status/submitted
+x !!Submitting to SixSigma creates a new draft instead of submitting!!
 
-- !!Submitting to SixSigma creates a new draft instead of submitting!!
+- discard_inline isn't working correctly - needs to work without errors on ANY page AND update all the appropriate pieces of the page!
 - create the VIEW for Doctors for the SUBMITTED and ARCHIVED forms
 - create the VIEW for ADMINS for Reviewing a form (accept&archive, return with note, etc)
+- changes by doctor get flagged after submitted once
 - create the Admins Form workflow (submit -> review -> archived)
 - create the Archived view: past 30, paginator, live search (controls to pull back)
 - add the 'don't save changes to patient' checkbox (next to the expand/collapse link)
