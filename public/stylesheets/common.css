@@ -100,7 +100,8 @@ label {
 
 #header li {
 	padding: .2em;
-	list-style:none;	
+	list-style:none;
+	text-align:right;	
 }
 
 #header a {
