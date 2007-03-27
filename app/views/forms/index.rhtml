@@ -1,10 +1,8 @@
 <h2>My <%= params[:form_status].as_status.word('uppercase long plural') %></h2>
 <ul>
 	<% @my_forms.each do |form| -%>
-	  	<li id="form_listing_<%= form.id %>"><%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %></li>
+	<li id="form_listing_<%= form.id %>"><%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %></li>
 	<% end -%>
-</ul>
-<ul>
 	<% if @my_forms.blank? -%>
 		<li>&lt;no current <%= params[:form_status].as_status.word('lowercase short plural') %>&gt;</li>
 	<% end -%>
@@ -13,7 +11,7 @@
 <h2>All <%= params[:form_status].as_status.word('uppercase long plural') %></h2>
 <ul>	
 	<% @others_forms.each do |form| -%>
-		<li id="form_listing_<%= form.id %>"><%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %></li>
+		<li id="form_listing_<%= form.id %>"><%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form, :update => 'no'} %></li>
 	<% end -%>
 </ul>
 <ul>

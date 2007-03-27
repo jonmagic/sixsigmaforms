@@ -19,6 +19,10 @@ class Patient < ActiveRecord::Base
     (!self.first_name.nil? && self.first_name.length > 1) ? ((!self.last_name.nil? && self.last_name.length > 1) ? "#{self.last_name}, #{self.first_name}" : ((!self.account_number.nil? && self.account_number.length > 1) ? "#{self.first_name}, ##{self.account_number}" : self.first_name)) : ((!self.last_name.nil? && self.last_name.length > 1) ? ((!self.account_number.nil? && self.account_number.length > 1) ? "#{self.last_name}, ##{self.account_number}" : "#{self.last_name}") : ((!self.account_number.nil? && self.account_number.length > 1) ? "patient ##{self.account_number}" : "(new patient)"))
   end
 
+  def has_essentials?
+    ((!self.first_name.nil? && self.first_name.length > 1) && (!self.last_name.nil? && self.last_name.length > 1) && (!self.account_number.nil? && self.account_number.length > 1) && (!self.address.nil? && self.address.length > 1) && (!self.primary_insurance_company.nil? && self.primary_insurance_company.length > 1))
+  end
+
   private
     def log_create
       Log.create(:log_type => 'create:Patient', :data => {})

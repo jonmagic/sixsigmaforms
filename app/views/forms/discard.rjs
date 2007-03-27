@@ -1,0 +1,17 @@
+if !@status_container_fill.nil? and params[:update] == 'yes'
+  page.<<("$('form_listing_#{params[:form_id]}').parentNode.id = '#{params[:form_status]}_list_tmp';")
+  page.visual_effect "fade", "form_listing_#{params[:form_id]}", :duration => 0.3
+  page.delay(0.4) do
+    page["#{params[:form_status]}_list_tmp"].replace_html(@status_container_fill)
+    page["#{params[:form_status]}_list_tmp"].id = ''
+  end
+else
+  page.visual_effect "fade", "form_listing_#{params[:form_id]}", :duration => 0.3
+end
+if params[:update] == 'yes'
+  page.select(".#{@form.status.as_status.word('lowercase short plural')}_count").each do |ident|
+    ident.id = "delete_me_now"
+    page["delete_me_now"].replace_html(@status_link_text_with_count)
+    page["delete_me_now"].id = ''
+  end
+end

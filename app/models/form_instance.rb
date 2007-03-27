@@ -8,6 +8,7 @@ class FormInstance < ActiveRecord::Base
   after_create   :log_create
   after_update   :log_update
   before_destroy :log_destroy
+  has_many :logs, :as => 'object'
 
 #Creating a new FormInstance:
 #  FormInstance.new(:doctor => Doctor, :user => current_user, :patient => Patient, :form_type => FormType, [[:form_data => AUTO-CREATES NEW]])
@@ -25,6 +26,10 @@ class FormInstance < ActiveRecord::Base
   def status=(value)
     return nil if value.as_status.number == 6
     self.status_number = value.as_status.number || self.status_number
+  end
+
+  def visual_identifier
+    "#{self.patient.find_best_identifier} :: #{self.created_at.strftime('%A, %B %d, %Y')}"
   end
 
   # alias_method :vanilla_destroy, :destroy

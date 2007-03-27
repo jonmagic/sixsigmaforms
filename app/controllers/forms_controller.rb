@@ -42,7 +42,7 @@ class FormsController < ApplicationController
         #                         :form_type_id => FormType.find_by_form_type(params[:form_type]).id,
         #                         :status => 'draft')
         if @form_instance.save
-          redirect_to doctor_forms_url(:form_type => @form_instance.form_data_type, :action => 'draft', :form_id => @form_instance.form_data_id)
+          redirect_to doctor_forms_url(:form_status => 'draft', :form_type => @form_instance.form_data_type, :action => 'draft', :form_id => @form_instance.form_data_id)
         else
           render :action => 'draft'
         end
@@ -88,9 +88,6 @@ class FormsController < ApplicationController
           else
             flash[:notice] = "ERROR Submitting draft!"
           end
-          # return redirect_to doctor_forms_by_status_url(:action => 'index', :form_status => @form.instance.status)
-        else
-          # render :layout => false
         end
       else
         @save_status = "ERROR auto-saving!"
@@ -101,7 +98,7 @@ class FormsController < ApplicationController
       end
     end
   end
-  
+
   def view
     restrict('allow only doctor users') or begin
       @form_type = params[:form_type]
@@ -109,14 +106,21 @@ class FormsController < ApplicationController
     end
   end
 
-  def discard_inline
+  def discard
     restrict('allow only doctor users') or begin
-      #Also destroy patient if this is the only existing form for that patient.
       @form = FormInstance.find_by_id(params[:form_id])
+      @status_count = current_user.forms_with_status(@form.status).count - 1
+      @status_link_text_with_count = @form.status.as_status.word('uppercase short plural') + (@status_count == 0 ? '' : " (#{@status_count})")
+      @status_container_fill = @status_count == 0 ? "<li>&lt;no current #{params[:form_status].as_status.word('lowercase short plural')}&gt;</li>" : nil
+      patient = @form.patient
       @form.destroy
-      @status_link_text_with_count = @form.status.as_status.word('uppercase short singular') + (current_user.forms_with_status(@form.status).blank? ? '' : " (#{current_user.drafts.count})")
-      @status_count = current_user.forms_with_status(@form.status).count
-      render :layout => false
+      #Also destroy patient if this is the only existing form for that patient and the patient has only a few values recorded and patient was created in the past 18 hours.
+      patient.destroy if patient.form_instances(true).count == 0 and !patient.has_essentials? and patient.created_at > 18.hours.ago
+      #****
+      respond_to do |format|
+        format.html {}
+        format.js   {render :layout => false}
+      end
     end
   end
 

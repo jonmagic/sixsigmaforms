@@ -20,7 +20,7 @@ class PatientsController < ApplicationController
       @patient = Patient.find_by_id(params[:id])
     end
   end
-  
+
   # DELETE /patients/1
   # DELETE /patients/1.xml
   def destroy

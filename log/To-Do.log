@@ -22,7 +22,6 @@ x !!Submitting to SixSigma creates a new draft instead of submitting!!
 - create Log viewer (per form): condense log entries to logical form progression benchmarck notations
 - LOGGER: log which fields are updated on each update
 
-- make the Login/Logout link in the upper-right hand corner be right-justified
 - change cursor focus when you go to a page with a search field or form to fill out
 - 'roll up' link for form sections, when expanded
 - visual (arrow/triangle) for roll down/up links

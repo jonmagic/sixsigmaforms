@@ -1,8 +1,7 @@
+<h2><%= @form.instance.visual_identifier %></h2>
+<p>(Form type <em><%= @form.type %></em>) <%= link_to 'Edit', doctor_forms_path(:action => 'draft', :form_status => 'draft', :form_type => @form_type, :form_id => params[:form_id]), :confirm => "Editing this form will un-submit the form and move it back to the Draft status. Do you want to continue?" %>
+</p>
 
-<p>* Form <em><%= @form_type %></em>, instance #<em><%= @form.instance.id %>.<%= @form.id %></em> *</p>
-<p>Doctor: <em><%= link_to @form.instance.doctor.friendly_name, doctor_dashboard_path %></em></p>
-<p>Patient: <em><%= link_to "#{@form.first_name} #{@form.last_name}", patient_path(:id => @form.instance.patient_id) %></em></p>
-<p>Birth Date: <em><%= @form.birth_date %></em></p>
-<p>Address: <%= @form.address %>, <%= @form.city %>, <%= @form.state %> <%= @form.zipcode %></p>
-<p>Provider: <%= @form.provider_name %></p>
-<%= link_to 'Edit', doctor_forms_path(:action => 'draft', :form_status => 'draft', :form_type => @form_type, :form_id => params[:form_id]), :confirm => "Editing this form will un-submit the form and move it back to the Draft status. Do you want to continue?" %>
+<div class="form">
+<%= render :partial => @form.instance.form_data_type.fromCamelCase -%>
+</div>

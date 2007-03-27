@@ -24,7 +24,7 @@ module AuthenticatedSystem
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
       @current_user = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user
-      session[:domain] = @current_user.domain
+      session[:domain] = @current_user.domain unless @current_user.nil?
     end
 
     # Filter method to enforce a login requirement.
