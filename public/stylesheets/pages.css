@@ -62,7 +62,7 @@ a:hover {
 #container {
 	position:relative;
 	width: 800px;
-	margin:0 auto;
+	margin:0 auto 20px;
 	z-index:2;
 }
 
@@ -70,7 +70,6 @@ a:hover {
 	position:relative;
 	height: 100px;
 	background: #fbfbfb url("../images/header.gif") no-repeat;
-	border-bottom:1px solid #cc0000;
 	text-align:center;
 }
 
@@ -96,6 +95,7 @@ a:hover {
 	padding:1em;
 	border-left: 1px solid #7b7b7b;
 	border-right: 1px solid #7b7b7b;
+	border-top:1px solid #cc0000;
 }
 
 #navbar ul, #navbar li {
@@ -128,7 +128,7 @@ a:hover {
 .extras_box {
 	width:200px;
 	background-color:#f0f0f0;
-	border:1px solid #444444;
+	border:1px solid #c0c0c0;
 	padding:.5em 1em;
 	margin:.7em .4em 1em 1em;
 }

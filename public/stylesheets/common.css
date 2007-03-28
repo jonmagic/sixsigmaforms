@@ -49,8 +49,9 @@ thead {
 }
 
 ul, li {
-	margin:0 1em;
+	margin:0;
 	padding:0;
+	list-style:none;
 }
 
 .form {
@@ -58,9 +59,11 @@ ul, li {
 }
 
 .form ul, .form li {
-	list-style:none;
 	margin:0;
-	padding:0;
+}
+
+.form ul {
+	padding: .7em 0;
 }
 
 .form_listing {
@@ -68,13 +71,12 @@ ul, li {
 }
 
 .form_listing span {
-	padding:0.2em 0 0.2em 0;
+	padding:0.2em .5em;
 }
 
 .form_listing span:hover {
 	display:inline;
-	border-top:2px solid #444444;
-	border-bottom:2px solid #444444;
+	background-color:#eee;
 }
 
 .form_listing a:hover {
@@ -171,4 +173,11 @@ label {
 	padding:.2em .5em;
 	margin:.3em;
 	color:#333;
+}
+
+.leftcolumn {
+}
+
+.form td {
+	border-bottom:1px solid #eee;
 }

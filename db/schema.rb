@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(:version => 16) do
     t.column "user_id",        :integer
     t.column "status_number",  :integer,  :default => 1
     t.column "created_at",     :datetime
+    t.column "submitted",      :boolean
   end
 
   create_table "form_types", :force => true do |t|
