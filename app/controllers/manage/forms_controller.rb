@@ -17,12 +17,26 @@ class Manage::FormsController < ApplicationController
     restrict('allow only admins') or begin
       @form_instance = FormInstance.find_by_form_data_type_and_form_data_id(params[:form_type], params[:form_id])
       @form = @form_instance.form_data
-      if @form_instance.status == 2.as_status.text
-        @form_instance.status = 3.as_status.text
+logger.error "Status: #{@form_instance.status} // #{2.as_status}, #{3.as_status}\n"
+      if @form_instance.status == 2.as_status
+        @form_instance.status = 3.as_status
         @form_instance.save
       end
     end
   end
 
-end
+#Input: as admin, just call this action on a form
+#Returns: redirect to the listing page for the status the form came from.
+  def archive
+    restrict('allow only admins') or begin
+      
+    end
+  end
 
+  def unarchive
+    restrict('allow only admins') or begin
+      
+    end
+  end
+
+end
