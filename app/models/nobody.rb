@@ -23,7 +23,7 @@ class Nobody
   def submitted(load=false)
     []
   end
-  def reviewed(load=false)
+  def reviewing(load=false)
     []
   end
   def archived(load=false)

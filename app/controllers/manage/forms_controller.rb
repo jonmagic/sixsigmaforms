@@ -17,6 +17,10 @@ class Manage::FormsController < ApplicationController
     restrict('allow only admins') or begin
       @form_instance = FormInstance.find_by_form_data_type_and_form_data_id(params[:form_type], params[:form_id])
       @form = @form_instance.form_data
+      if @form_instance.status == 2.as_status.text
+        @form_instance.status = 3.as_status.text
+        @form_instance.save
+      end
     end
   end
 

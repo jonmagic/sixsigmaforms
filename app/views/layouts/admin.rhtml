@@ -70,9 +70,9 @@
 			<ul id="tabmenu">
 		<% if logged_in? -%>
 				<% if params[:action] == 'forms' or params[:controller] == 'manage/forms' -%>
-				<li><%= tab_link_to 'Submitted', admin_forms_by_status_path('submitted') %></li>
-				<li><%= tab_link_to 'Reviewed', admin_forms_by_status_path('reviewed') %></li>
-				<li><%= tab_link_to 'Archived', admin_forms_by_status_path('archived') %></li>
+				<li><%= tab_link_to 2.as_status.word('uppercase short singular') + (!FormInstance.find_all_by_status_number(2).blank? ? " (#{FormInstance.find_all_by_status_number(2).count})" : ''), admin_forms_by_status_path(2.as_status.text), :class => "#{2.as_status.text}_count" %></li>
+				<li><%= tab_link_to 3.as_status.word('uppercase short singular') + (!FormInstance.find_all_by_status_number(3).blank? ? " (#{FormInstance.find_all_by_status_number(3).count})" : ''), admin_forms_by_status_path(3.as_status.text), :class => "#{3.as_status.text}_count" %></li>
+				<li><%= tab_link_to 4.as_status.word('uppercase short singular') + (!FormInstance.find_all_by_status_number(4).blank? ? " (#{FormInstance.find_all_by_status_number(4).count})" : ''), admin_forms_by_status_path(4.as_status.text), :class => "#{4.as_status.text}_count" %></li>
 				<% else -%>
 				<li><%= tab_link_to "My Account", admin_account_path %></li>
 				<li><%= tab_link_to 'Doctors', doctors_path %></li>

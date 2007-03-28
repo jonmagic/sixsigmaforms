@@ -1,3 +1,0 @@
-<% pre_text ||= '' -%>
-<% update ||= 'yes' -%>
-<p><%= pre_text %><%= form.visual_identifier %> <%= link_to 'View', doctor_forms_path(:action => 'view', :form_type => form.form_data_type, :form_id => form.form_data_id) %> / <%= link_to 'Edit', doctor_forms_path(:action => 'draft', :form_type => form.form_data_type, :form_id => form.form_data_id), :confirm => "Editing this form will un-submit the form and move it back to the Draft status. Do you want to continue?" %> (<%= link_to_remote 'Discard', :confirm => "Discard this form?", :url => formatted_doctor_forms_path(:form_type => form.form_type.name, :action => 'discard', :form_id => form.id, :format => 'js', :update => update) %>)</p>

@@ -29,7 +29,11 @@ class FormInstance < ActiveRecord::Base
   end
 
   def visual_identifier
-    "#{self.patient.find_best_identifier} :: #{self.created_at.strftime('%A, %B %d, %Y')}"
+    "<span title='#{self.form_identifier}'>#{self.patient.find_best_identifier} :: #{self.created_at.strftime('%A, %B %d, %Y')}</span>"
+  end
+
+  def form_identifier
+    "Form #{self.form_data_type}, ##{self.id}"
   end
 
   # alias_method :vanilla_destroy, :destroy

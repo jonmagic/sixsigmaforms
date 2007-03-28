@@ -1,5 +1,5 @@
 <h2><%= @form.instance.visual_identifier %></h2>
-<p>(Form type <em><%= @form.type %></em>)</p>
+<p>(<%= @form.instance.form_identifier %>)</p>
 
 <div class="form">
 <%= render :partial => @form.instance.form_data_type.fromCamelCase -%>

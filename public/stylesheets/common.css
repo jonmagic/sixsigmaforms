@@ -54,13 +54,31 @@ ul, li {
 }
 
 .form {
-	border:1px solid black;
+	border:1px solid #eeeeee;
 }
 
 .form ul, .form li {
 	list-style:none;
 	margin:0;
 	padding:0;
+}
+
+.form_listing {
+	padding:0 0 1em 0;
+}
+
+.form_listing span {
+	padding:0.2em 0 0.2em 0;
+}
+
+.form_listing span:hover {
+	display:inline;
+	border-top:2px solid #444444;
+	border-bottom:2px solid #444444;
+}
+
+.form_listing a:hover {
+	text-decoration:none;
 }
 
 blockquote p {
@@ -141,7 +159,8 @@ label {
 	margin-left:1em;
 }
 
-.note_section {
+.note {
+	width:34em;
 	background-color: #eee;
 	padding:.2em .5em;
 	margin:.4em 2em;

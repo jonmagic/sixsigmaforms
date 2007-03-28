@@ -42,10 +42,10 @@
 				<li><%= tab_link_to "Users", users_path %></li>
 				<li><%= tab_link_to "Doctor Profile", doctor_profile_path %></li>
 				<% else -%>
-				<li><%= tab_link_to "Drafts" + (!current_user.drafts(true).blank? ? " (#{current_user.drafts.count})" : ''), doctor_forms_by_status_path(:form_status => 'draft'), :class => 'drafts_count' %></li>
-				<li><%= tab_link_to "Submitted" + (!current_user.submitted(true).blank? ? " (#{current_user.submitted.count})" : ''), doctor_forms_by_status_path(:form_status => 'submitted'), :class => 'submitted_count' %></li>
-				<li><%= tab_link_to "Reviewed" + (!current_user.reviewed(true).blank? ? " (#{current_user.reviewed.count})" : ''), doctor_forms_by_status_path(:form_status => 'reviewed'), :class => 'reviewed_count' %></li>
-				<li><%= tab_link_to "Archived" + (!current_user.archived(true).blank? ? " (#{current_user.archived.count})" : ''), doctor_forms_by_status_path(:form_status => 'archived'), :class => 'archived_count' %></li>
+				<li><%= tab_link_to 1.as_status.word('uppercase short singular') + (!current_user.forms_with_status(1).blank? ? " (#{current_user.forms_with_status(1).count})" : ''), doctor_forms_by_status_path(:form_status => 1.as_status.text), :class => "#{1.as_status.text}_count" %></li>
+				<li><%= tab_link_to 2.as_status.word('uppercase short singular') + (!current_user.forms_with_status(2).blank? ? " (#{current_user.forms_with_status(2).count})" : ''), doctor_forms_by_status_path(:form_status => 2.as_status.text), :class => "#{2.as_status.text}_count" %></li>
+				<li><%= tab_link_to 3.as_status.word('uppercase short singular') + (!current_user.forms_with_status(3).blank? ? " (#{current_user.forms_with_status(3).count})" : ''), doctor_forms_by_status_path(:form_status => 3.as_status.text), :class => "#{3.as_status.text}_count" %></li>
+				<li><%= tab_link_to 4.as_status.word('uppercase short singular') + (!current_user.forms_with_status(4).blank? ? " (#{current_user.forms_with_status(4).count})" : ''), doctor_forms_by_status_path(:form_status => 4.as_status.text), :class => "#{4.as_status.text}_count" %></li>
 				<% end -%>
 				<% else -%>
 				<li><%= tab_link_to "Login", doctor_login_path %></li>

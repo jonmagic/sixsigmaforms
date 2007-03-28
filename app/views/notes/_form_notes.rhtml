@@ -1,5 +1,5 @@
 <% if !form.new_record? -%>
-<hr />
+<div id="note_section">
 <h3>Notes</h3>
   <div id="notes_container">
 	<% form.instance.notes.each do |note| -%>
@@ -7,4 +7,5 @@
 	<% end -%>
 	</div>
   <%= render :partial => 'notes/form' %>
+</div>
 <% end -%>
