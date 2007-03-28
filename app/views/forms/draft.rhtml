@@ -1,4 +1,4 @@
-<h2><span class="patient_best_identifier"><%= @form.instance.visual_identifier %></span></h2>
+e<h2><span class="patient_best_identifier"><%= @form.instance.visual_identifier %></span></h2>
 
 <%= error_messages_for :basic_form %>
 <% remote_form_for(@form_type, :html => {:id => 'form_'+@form_type.fromCamelCase}, :url => formatted_doctor_forms_path(:form_type => @form_type, :action => 'update', :form_id => @form.id, :format => 'js')) do |f| %>

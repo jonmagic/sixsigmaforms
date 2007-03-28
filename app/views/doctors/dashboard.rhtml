@@ -1,9 +1,7 @@
 <% if current_user.is_doctor? -%>
 <h3>Doctor Admin Dashboard</h3>
-
 <% else -%>
 <h3>Doctor Assistant Dashboard</h3>
-
 <% end -%>
 
 <%= render :partial => 'shared/live_search_form', :locals => { :label => 'Find Patient', :post_url => search_patients_url, :live_url => live_search_patients_url, :results_div => 'result_or_new' } %>
@@ -11,6 +9,7 @@
 
 <% if current_user.drafts(true).count > 0 -%>
 <div class="if_any_drafts">
+<br />
 <h4>My Outstanding Drafts</h4>
 <ul>
 	<% current_user.drafts.each do |draft| -%>
