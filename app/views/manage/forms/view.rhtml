@@ -7,6 +7,8 @@
 
 <%= render :partial => 'manage/notes/form_notes', :locals => {:form => @form} %>
 
-<p><%= link_to 'Accept & Archive', '#' %></p>
+<% if @form.instance.status == 'reviewing' -%>
+<p><%= link_to 'Accept & Archive', admin_forms_path(:form_status => 4.as_status.text, :form_type => @form.instance.form_data_type, :form_id => @form.instance.form_data_id) %></p>
 <p><%= link_to 'Return with Note...', '#' %></p>
 <p style="color:red">(auto-expanding note form, which creates the note and returns to draft status)</p>
+<% end -%>

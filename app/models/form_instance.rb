@@ -21,13 +21,16 @@ class FormInstance < ActiveRecord::Base
   end
 
   def status
-    self.status_number.as_status
+    self.status_number.as_status.text
   end
   def status=(value)
     return nil if value.as_status.number == 0 #0 is a valid status text (all), but not valid for forms
     self.status_number = value.as_status.number || self.status_number
   end
 
+  def admin_visual_identifier
+    "<span title='#{self.form_identifier}'>#{self.doctor.friendly_name} &gt; #{self.patient.find_best_identifier} :: #{self.created_at.strftime('%A, %B %d, %Y')}</span>"
+  end
   def visual_identifier
     "<span title='#{self.form_identifier}'>#{self.patient.find_best_identifier} :: #{self.created_at.strftime('%A, %B %d, %Y')}</span>"
   end
@@ -35,6 +38,7 @@ class FormInstance < ActiveRecord::Base
   def form_identifier
     "Form #{self.form_data_type}, ##{self.id}"
   end
+
 
   # alias_method :vanilla_destroy, :destroy
   # def destroy

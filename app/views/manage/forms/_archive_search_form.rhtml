@@ -10,12 +10,11 @@
 <%= end_form_tag %>
 
 <%= observe_field('searchtext'+@live_search_count.to_s,
-                :frequency => 0.5,
-                :update => results_div,
-								:start_nil => true,
-                :loading => "Element.show('search_loading#{@live_search_count.to_s}')",
-                :complete => "Element.hide('search_loading#{@live_search_count.to_s}')",
-                :url => live_url) %>
+                 :frequency => 0.5,
+                 :update => results_div,
+                 :loading => "Element.show('search_loading#{@live_search_count.to_s}')",
+                 :complete => "Element.hide('search_loading#{@live_search_count.to_s}')",
+                 :url => live_url) %>
 
 <div style="height:19px"><img alt="loading..." id="search_loading<%= @live_search_count.to_s %>" src="/images/ajax/barloader.gif" style="display:none;" /></div>
 <% if results_div == ('search_hits'+@live_search_count.to_s) -%>

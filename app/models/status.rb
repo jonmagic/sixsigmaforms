@@ -6,11 +6,31 @@ class Status
       self.number = status
     elsif status.kind_of? String
       self.number = text_to_number(status)
+    elsif status.kind_of? Status
+      self.number = status.number
     end
   end
 
   def inspect
+    self.text
+  end
+  def text
     self.word('lowercase short singular')
+  end
+
+  def next
+    Status.new(self.number + 1)
+  end
+  def prev
+    Status.new(self.number - 1)
+  end
+  def next!
+    self.number += 1
+    self
+  end
+  def prev!
+    self.number -= 1
+    self
   end
 
   def word(options)

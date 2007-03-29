@@ -29,6 +29,21 @@ class ApplicationController < ActionController::Base
     @ACL.restrict(name, block)
   end
 
+  def paginate_by_sql(model, sql, per_page, options={})
+    if options[:count]
+      if options[:count].is_a? Integer
+        total = options[:count]
+      else
+        total = model.count_by_sql(options[:count])
+      end
+    else
+      total = model.count_by_sql_wrapping_select_query(sql)
+    end
+    object_pages = Paginator.new self, total, per_page, params[:page]
+    objects = model.find_by_sql_with_limit(sql, object_pages.current.to_sql[1], per_page)
+    return [object_pages, objects]
+  end
+
   private
     # If logged in, teleport to own doctor, If not logged in, teleport to accessed_doctor's login page
     def go_to_where_you_belong

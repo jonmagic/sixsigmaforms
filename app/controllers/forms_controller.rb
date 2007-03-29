@@ -110,6 +110,13 @@ class FormsController < ApplicationController
     end
   end
 
+  def search
+    
+  end
+  def live_search
+    
+  end
+
   def discard
     restrict('allow only doctor users') or begin
       @form = FormInstance.find_by_id(params[:form_id])

@@ -24,12 +24,12 @@
 				<li>
 					<% if logged_in? -%>
 						<a href="/logout">Logout</a>
+					</li>
+					<li>
+					<%= link_to 'My Account', user_account_path %><%= " / " + link_to("Manage", users_path) if current_user.is_doctor? %>
 					<% else -%>
 						Not logged in. <a href="/<%= accessed_domain %>/login">Login</a>
 					<% end -%>
-				</li>
-				<li>
-				<%= link_to 'My Account', user_account_path %><%= " / " + link_to("Manage", users_path) if current_user.is_doctor? %>
 				</li>
 			</ul>		
 		</div>

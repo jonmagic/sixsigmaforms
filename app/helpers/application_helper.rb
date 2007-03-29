@@ -16,6 +16,34 @@ module ApplicationHelper
 
 end
 
+module ActiveRecord
+  class Base
+    def self.find_by_sql_with_limit(sql, offset, limit)
+      sql = sanitize_sql(sql)
+      add_limit!(sql, {:limit => limit, :offset => offset})
+      find_by_sql(sql)
+    end
+    def self.count_by_sql_wrapping_select_query(sql)
+      sql = sanitize_sql(sql)
+      count_by_sql("select count(*) from (#{sql}) as my_table")
+    end
+  end
+end
+
+module ActionView
+  module Helpers
+    module PaginationHelper
+      def remote_pagination_links(paginator, options={}, html_options={})
+        pagination_links_each(paginator, options) do |n|
+          ins_options = (options || DEFAULT_OPTIONS).clone
+          ins_options[:url] = ins_options[:url]+"&page=#{n}"
+          link_to_remote(n.to_s, ins_options, html_options)
+        end
+      end
+    end
+  end
+end
+
 class String < Object
   def as_status
     Status.new(self)

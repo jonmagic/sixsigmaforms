@@ -1,2 +1,2 @@
 <% pre_text ||= '' -%>
-<li class="form_listing" id="form_listing_<%= form.id %>"><span><%= pre_text %><%= link_to form.visual_identifier, admin_forms_path(:form_status => (params[:form_status].as_status.number+1).as_status, :action => 'view', :form_type => form.form_data_type, :form_id => form.form_data_id) %></span></li>
+<li class="form_listing" id="form_listing_<%= form.id %>"><span><%= pre_text %><%= link_to form.admin_visual_identifier, admin_forms_path(:form_status => (params[:form_status].as_status.number+1).as_status.text, :action => 'view', :form_type => form.form_data_type, :form_id => form.form_data_id) %></span></li>
