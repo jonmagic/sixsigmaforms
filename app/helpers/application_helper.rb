@@ -1,5 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  include DatePickerHelper
 
   def tab_link_to(name, options = {}, html_options = nil, *parameters_for_method_reference)
     if html_options.kind_of?(Hash) and !html_options[:active_only_if_equal].nil?

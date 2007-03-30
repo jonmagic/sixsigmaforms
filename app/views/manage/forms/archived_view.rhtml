@@ -1,0 +1,6 @@
+<h2><%= @form.instance.visual_identifier %></h2>
+<p>(<%= @form.instance.form_identifier %> - <%= @form.instance.status.as_status.word('uppercase short singular') %>)</p>
+
+<div class="form">
+<%= render :partial => @form.instance.form_data_type.fromCamelCase -%>
+</div>

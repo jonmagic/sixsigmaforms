@@ -1,6 +1,6 @@
 module DatePickerHelper
   def date_picker_field(object, method)
-    obj = instance_eval("@#{object}")
+    obj = instance_eval("@#{object}") || object
     value = obj.send(method)
     display_value = value.respond_to?(:strftime) ? value.strftime('%d %b %Y') : value.to_s
     display_value = '[ choose date ]' if display_value.blank?

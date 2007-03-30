@@ -20,10 +20,15 @@ class Manage::FormsController < ApplicationController
       @form_instance = FormInstance.find_by_form_data_type_and_form_data_id(params[:form_type], params[:form_id])
       @form = @form_instance.form_data
 logger.error "Status: #{@form_instance.status} // #{params[:form_status]}=#{params[:form_status].as_status.number}\n"
-      if @form_instance.status.as_status.number < params[:form_status].as_status.number and (params[:form_status].as_status.number == 3 or params[:form_status].as_status.number == 4)
+      if @form_instance.status.as_status.number != params[:form_status].as_status.number and (params[:form_status].as_status.number == 3 or params[:form_status].as_status.number == 4)
         @form_instance.status = params[:form_status]
         @form_instance.save
+        if @form_instance.status.as_status.number == 4
+          flash[:notice] = "Form &lt; #{@form_instance.admin_visual_identifier} &gt; was archived."
+          redirect_to admin_forms_by_status_path(:form_status => 3.as_status.text)
+        end
       end
+      render :file => "manage/forms/#{params[:form_status]}_view", :use_full_path => true, :layout => true
     end
   end
 
@@ -76,20 +81,6 @@ logger.error "D: #{doctor}/#{params[:doctor_field]}; U: #{user}/#{params[:user_f
   end
   def live_search
     search(true)
-  end
-
-#Input: as admin, just call this action on a form
-#Returns: redirect to the listing page for the status the form came from.
-  def archive
-    restrict('allow only admins') or begin
-      
-    end
-  end
-
-  def unarchive
-    restrict('allow only admins') or begin
-      
-    end
   end
 
 end

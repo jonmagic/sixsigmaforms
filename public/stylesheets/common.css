@@ -84,6 +84,14 @@ ul, li {
 	text-decoration:none;
 }
 
+.form_listing .action_links a:hover {
+	text-decoration:underline;
+}
+
+span.action_links {
+	padding:0;
+}
+
 blockquote p {
 	margin:.2em;
 }

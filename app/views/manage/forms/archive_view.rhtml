@@ -4,9 +4,8 @@
 Doctor: <%= text_field_tag 'doctor_field' %>&nbsp;&nbsp;&nbsp;&nbsp;
 User: <%= text_field_tag 'user_field' %>&nbsp;&nbsp;&nbsp;&nbsp;
 Patient: <%= text_field_tag 'patient_field' %>&nbsp;&nbsp;&nbsp;&nbsp;
-Before Date:
+Before Date: <%= date_picker_field(Time, :now) %>
 <%= end_form_tag %>
-
 <%= observe_form 'forms_live_search_form',
                 :frequency => 1,
 								:assigns => 'form_search_observer',
@@ -15,10 +14,5 @@ Before Date:
                 :loading => "Element.show('search_loading')",
                 :complete => "Element.hide('search_loading')",
 								:url => admin_live_search_forms_path %>
-
 <div style="height:19px"><img alt="loading..." id="search_loading" src="/images/ajax/barloader.gif" style="display:none;" /></div>
-
-<div id="result_or_latest">
-<p>paginated results: blank search - latest 30</p>
-<p>(controls to pull back)</p>
-</div>
+<div id="result_or_latest"><em>Loading archive...</em></div>
