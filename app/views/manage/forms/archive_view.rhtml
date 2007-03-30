@@ -1,10 +1,12 @@
 <%= form_tag(admin_search_forms_path, { :onSubmit => "Element.show('search_loading');", :id => 'forms_live_search_form' }) %>
 <!-- I want to include some tickler text (gray, dissappearing text) in the search box, indicated by a local :tickler_text -->
-<b>Live Search:</b>
-Doctor: <%= text_field_tag 'doctor_field' %>&nbsp;&nbsp;&nbsp;&nbsp;
-User: <%= text_field_tag 'user_field' %>&nbsp;&nbsp;&nbsp;&nbsp;
-Patient: <%= text_field_tag 'patient_field' %>&nbsp;&nbsp;&nbsp;&nbsp;
-Before Date: <%= date_picker_field(Time, :now) %>
+<p><b>Live Search:</b></p>
+<div>
+Find Forms... Before <span style="border-top:2px solid #848484; border-left:2px solid #848484; border-bottom:2px solid #FAFAFA; border-right:2px solid #FAFAFA; padding:2px 3px 2px 0"><%= date_picker_field(Time, :tomorrow) %></span>
+with Doctor: <%= text_field_tag   'doctor_field', '', :size => 13 %>&nbsp;&nbsp;&nbsp;&nbsp;
+created by User: <%= text_field_tag 'user_field', '', :size => 13 %>&nbsp;&nbsp;&nbsp;&nbsp;
+for Patient: <%= text_field_tag  'patient_field', '', :size => 13 %>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
 <%= end_form_tag %>
 <%= observe_form 'forms_live_search_form',
                 :frequency => 1,

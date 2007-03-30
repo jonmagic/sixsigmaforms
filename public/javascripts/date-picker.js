@@ -118,7 +118,7 @@ var DatePicker = {
     var d_mon  = this.getMonthName(Number(ansiDate.split('-')[1])-1);
     if (this.abbreviateMonthInLink) { d_mon = d_mon.substring(0, 3); }
     document.getElementById(id).value = ansiDate;
-    this.findLinkElement(id).innerHTML = d_day + ' ' + d_mon + ' ' +  d_year;
+    this.findLinkElement(id).innerHTML = d_mon + ' ' + d_day + ', ' +  d_year;
   },
 
   pickDate: function (id, ansi_date) {
@@ -282,3 +282,9 @@ var DatePicker = {
     return document.getElementById('_' + id + '_link');
   }
 };
+
+// function parse_date(str) {
+// 	var reg = new RegExp("^$");
+// 	var results = str.match(reg);
+// 	results[0]
+// }

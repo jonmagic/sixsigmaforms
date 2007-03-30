@@ -66,3 +66,9 @@ class Array < Object
     self.length
   end
 end
+
+class Time
+  def self.tomorrow
+    1.day.from_now
+  end
+end

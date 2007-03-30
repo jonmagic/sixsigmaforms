@@ -45,18 +45,18 @@ logger.error "Status: #{@form_instance.status} // #{params[:form_status]}=#{para
     doctor  = "%" + params[:doctor_field]  + "%" if !params[:doctor_field].nil? and params[:doctor_field].length > 0
     user    = "%" + params[:user_field]    + "%" if !params[:user_field].nil? and params[:user_field].length > 0
     patient = "%" + params[:patient_field] + "%" if !params[:patient_field].nil? and params[:patient_field].length > 0
+    date = (!params[:Time][:tomorrow].nil? and params[:Time][:tomorrow].length > 0) ? params[:Time][:tomorrow] : Time.tomorrow
 #Learn how to handle Dates in rails' forms
     # date    = params[:date_field].nil? ? Date.new. : params[:date_field]
 
-logger.error "D: #{doctor}/#{params[:doctor_field]}; U: #{user}/#{params[:user_field]}; P: #{patient}/#{params[:patient_field]}\n"
+# logger.error "D: #{doctor}/#{params[:doctor_field]}; U: #{user}/#{params[:user_field]}; P: #{patient}/#{params[:patient_field]}; T: #{date}/#{params[:Time][:now]}\n"
 
     tables = ['form_instances']
     tables.push('doctors') unless doctor.nil?
     tables.push('users') unless user.nil?
     tables.push('patients') unless patient.nil?
 
-    #Put the date field in first by default - there will always be a date to search for.
-    matches = ['form_instances.status_number=4'] #Make sure there's always at least one requirement here for the WHERE clause!
+    matches = ['form_instances.status_number=4 AND form_instances.created_at < :date'] #Put the date field in first by default - there will always be a date to search for.
     matches.push('form_instances.doctor_id=doctors.id') unless doctor.nil?
     matches.push('form_instances.user_id=users.id') unless user.nil?
     matches.push('form_instances.patient_id=patients.id') unless patient.nil?
@@ -64,8 +64,8 @@ logger.error "D: #{doctor}/#{params[:doctor_field]}; U: #{user}/#{params[:user_f
     matches.push('users.friendly_name LIKE :user') unless user.nil?
     matches.push('(patients.first_name LIKE :patient OR patients.last_name LIKE :patient OR patients.account_number LIKE :patient OR patients.address LIKE :patient)') unless patient.nil?
 
-    @form_values = {:dummy => 1} #put the date field in first by default - there will always be a date to search for.
-    @values = {}
+    @form_values = {:Time => {:tomorrow => date}} #put the date field in first by default - there will always be a date to search for.
+    @values = {:date => date}
     @form_values.merge!({:doctor_field => params[:doctor_field]}) unless doctor.nil?
     @values.merge!({:doctor => doctor}) unless doctor.nil?
     @form_values.merge!({:user_field => params[:user_field]}) unless user.nil?
