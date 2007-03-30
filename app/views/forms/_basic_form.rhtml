@@ -40,9 +40,8 @@
 			<td class="leftcolumn"><label for="birth_date">Birth Date</label></td>
 			<td class="rightcolumn">
 				<input id="BasicForm_birth_date" name="BasicForm[birth_date]" size="30" type="text" value="" />
-				<%= date_picker_field %>
-				<a id="_name_link" href="#" onclick="DatePicker.toggleDatePicker('BasicForm[birth_date]')" class="demo_link">[ choose date ]</a>
-				<div id="_name_calendar" class="date_picker" style="display:none"></div>
+				<%= date_picker_field :form, :birth_date %>
+				<input id="form_birth_date" name="form[birth_date]" type="hidden" /><a class="_demo_link" href="#" id="_form_birth_date_link" onclick="DatePicker.toggleDatePicker('form_birth_date'); return false;">[ choose date ]</a><div class="date_picker" id="_form_birth_date_calendar" style="display: none" />
 			</td>
 			</tr>
 			</td>
