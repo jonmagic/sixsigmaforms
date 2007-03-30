@@ -38,11 +38,7 @@
 	
 			<tr>
 			<td class="leftcolumn"><label for="birth_date">Birth Date</label></td>
-			<td class="rightcolumn">
-				<input id="BasicForm_birth_date" name="BasicForm[birth_date]" size="30" type="text" value="" />
-				<%= date_picker_field :form, :birth_date %>
-				<input id="form_birth_date" name="form[birth_date]" type="hidden" /><a class="_demo_link" href="#" id="_form_birth_date_link" onclick="DatePicker.toggleDatePicker('form_birth_date'); return false;">[ choose date ]</a><div class="date_picker" id="_form_birth_date_calendar" style="display: none" />
-			</td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:birth_date, :value => @values.birth_date) : @form.birth_date %></td>
 			</tr>
 			</td>
 			<tr>
