@@ -12,9 +12,11 @@
 <br />
 <h4>My Outstanding Drafts</h4>
 <ul>
-	<% current_user.drafts.each do |draft| -%>
-	<!-- Need to convert this to a partial -->
-	<li id="draft_listing_<%= draft.id %>"><%= link_to "#{draft.patient.first_name} #{draft.patient.last_name} -[#{draft.created_at.strftime("%a %b %d, %I:%M%p")}]-", doctor_forms_path(:form_status => 'draft', :action => 'draft', :form_type => draft.form_data_type, :form_id => draft.form_data_id) %> (<%= link_to_remote 'Discard', :confirm => "Discard this draft?", :url => formatted_doctor_forms_path(:form_status => 'draft', :form_type => draft.form_type.name, :action => 'discard', :form_id => draft.id, :format => 'js') %>)</li>
+	<% current_user.drafts.each do |form| -%>
+		<%= render :partial => "forms/draft_listing", :locals => {:form => form} %>
+	<% end -%>
+	<% if current_user.drafts.blank? -%>
+		<li>&lt;no current <%= params[:form_status].as_status.word('lowercase short plural') %>&gt;</li>
 	<% end -%>
 </ul>
 </div>

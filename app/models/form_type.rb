@@ -3,10 +3,6 @@ class FormType < ActiveRecord::Base
   has_many :form_instances
   has_and_belongs_to_many :doctors
 
-  after_create   :log_create
-  after_update   :log_update
-  before_destroy :log_destroy
-
   validates_presence_of :friendly_name, :name
 
   def self.model_for(name)
@@ -16,16 +12,5 @@ class FormType < ActiveRecord::Base
   def the_model
     self.name.constantize
   end
-
-  private
-    def log_create
-      Log.create(:log_type => 'create:FormType', :data => {})
-    end
-    def log_update
-      Log.create(:log_type => 'update:FormType', :data => {})
-    end
-    def log_destroy
-      Log.create(:log_type => 'destroy:FormType', :data => {})
-    end
 
 end

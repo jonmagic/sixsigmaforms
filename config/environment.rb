@@ -59,3 +59,7 @@ end
 # Mime::Type.register "application/x-mobile", :mobile
 
 # Include your application configuration below
+require 'autologger'
+class ActiveRecord::Base
+  include Autologger
+end

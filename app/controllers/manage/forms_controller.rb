@@ -17,6 +17,7 @@ class Manage::FormsController < ApplicationController
 
   def view
     restrict('allow only admins') or begin
+      do_render = true
       @form_instance = FormInstance.find_by_form_data_type_and_form_data_id(params[:form_type], params[:form_id])
       @form = @form_instance.form_data
 logger.error "Status: #{@form_instance.status} // #{params[:form_status]}=#{params[:form_status].as_status.number}\n"
@@ -26,9 +27,10 @@ logger.error "Status: #{@form_instance.status} // #{params[:form_status]}=#{para
         if @form_instance.status.as_status.number == 4
           flash[:notice] = "Form &lt; #{@form_instance.admin_visual_identifier} &gt; was archived."
           redirect_to admin_forms_by_status_path(:form_status => 3.as_status.text)
+          do_render = false
         end
       end
-      render :file => "manage/forms/#{params[:form_status]}_view", :use_full_path => true, :layout => true
+      render :file => "manage/forms/#{params[:form_status]}_view", :use_full_path => true, :layout => true if do_render
     end
   end
 
@@ -75,7 +77,7 @@ logger.error "Status: #{@form_instance.status} // #{params[:form_status]}=#{para
 
 # SELECT form_instances.* FROM form_instances,doctors,users,patients WHERE form_instances.doctor_id=doctors.id AND form_instances.user_id=users.id AND form_instances.patient_id=patients.id AND doctors.friendly_name LIKE :doctor AND users.friendly_name LIKE :user AND (patients.first_name LIKE :patient OR patients.last_name LIKE :patient OR patients.account_number LIKE :patient OR patients.address LIKE :patient)
 
-    @result_pages, @results = paginate_by_sql(FormInstance, ["SELECT form_instances.* FROM " + tables.join(',') + " WHERE " + matches.join(' AND '), @values], 30, options={})
+    @result_pages, @results = paginate_by_sql(FormInstance, ["SELECT form_instances.* FROM " + tables.join(',') + " WHERE " + matches.join(' AND ') + " ORDER BY form_instances.created_at DESC", @values], 30, options={})
     @search_entity = @results.length == 1 ? "Archived Form" : "Archived Forms"
     render :layout => false
   end
@@ -83,4 +85,22 @@ logger.error "Status: #{@form_instance.status} // #{params[:form_status]}=#{para
     search(true)
   end
 
+  def return
+    restrict('allow only admins') or begin
+      status_changed = false
+      @form = FormInstance.find_by_form_data_type_and_form_data_id(params[:form_type], params[:form_id])
+      if !params[:form].nil? && params[:form][:status] == 'draft'
+        @form.status = 'draft'
+        if @form.save
+          flash[:notice] = "#{@form.form_identifier} was returned to doctor #{@form.doctor.friendly_name}."
+          status_changed = true
+        else
+          flash[:notice] = "ERROR Submitting draft!"
+        end
+      end
+      respond_to do |format|
+        format.html {redirect_to status_changed ? admin_forms_by_status_url(:form_status => 2.as_status.text) : admin_forms_url(:form_type => @form.form_data_type, :form_id => @form.form_data_id)}
+      end
+    end
+  end
 end

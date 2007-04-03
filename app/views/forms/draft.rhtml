@@ -1,4 +1,5 @@
-<h2><span class="patient_best_identifier"><%= @form.instance.visual_identifier %></span></h2>
+<h2 class="visual_identifier"><%= @form.instance.visual_identifier %></h2>
+<p>(<%= @form.instance.form_identifier %> - <%= @form.instance.status.as_status.word('uppercase short singular') %>) <%= link_to 'View Log', doctor_form_log_path(:form_type => @form_type, :form_id => @form.id), :popup => true %></p>
 
 <%= error_messages_for :basic_form %>
 <% remote_form_for(@form_type, :html => {:id => 'form_'+@form_type.fromCamelCase}, :url => formatted_doctor_forms_path(:form_type => @form_type, :action => 'update', :form_id => @form.id, :format => 'js')) do |f| %>

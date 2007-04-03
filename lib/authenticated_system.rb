@@ -10,10 +10,10 @@ module AuthenticatedSystem
     def current_user
       #How is this supposed to work?
       # There is a current_user ONLY IF there is a valid session[:user] or a valid given_activation_code.
-      if session[:user]
-        @current_user ||= session[:domain] == 'sixsigma' ? Admin.find_by_id(session[:user]) : User.find_by_id(session[:user])
-      elsif(!given_activation_code.nil?)
+      if(!given_activation_code.nil?)
         @current_user ||= User.find_by_activation_code(given_activation_code) || Admin.find_by_activation_code(given_activation_code)
+      elsif session[:user]
+        @current_user ||= session[:domain] == 'sixsigma' ? Admin.find_by_id(session[:user]) : User.find_by_id(session[:user])
       else
         Nobody.new
       end

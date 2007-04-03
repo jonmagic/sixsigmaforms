@@ -1,4 +1,4 @@
-class LogsController < ApplicationController
+class Manage::LogsController < ApplicationController
   layout 'logs'
 
   def form_logs

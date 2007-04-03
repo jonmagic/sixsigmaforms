@@ -5,9 +5,6 @@ class FormInstance < ActiveRecord::Base
   belongs_to :form_type  #Uses column form_type_id
   belongs_to :form_data, :polymorphic => true, :dependent => :destroy #(, :extend => ...)  #Uses columns form_data_type, form_data_id
   has_many :notes, :dependent => :destroy
-  after_create   :log_create
-  after_update   :log_update
-  before_destroy :log_destroy
   has_many :logs, :as => 'object'
 
 #Creating a new FormInstance:
@@ -26,6 +23,11 @@ class FormInstance < ActiveRecord::Base
   def status=(value)
     return nil if value.as_status.number == 0 #0 is a valid status text (all), but not valid for forms
     self.status_number = value.as_status.number || self.status_number
+    self.has_been_submitted = 1 if self.status_number > 1
+    self.status_number
+  end
+  def has_been_submitted?
+    self.has_been_submitted
   end
 
   def admin_visual_identifier
@@ -38,28 +40,5 @@ class FormInstance < ActiveRecord::Base
   def form_identifier
     "Form #{self.form_data_type}, ##{self.id}"
   end
-
-
-  # alias_method :vanilla_destroy, :destroy
-  # def destroy
-  # # Destroy the corresponding form data record
-  #   # frm = self.form_type.form_type.constantize.find(self.form_id)
-  #   # frm.destroy unless frm.blank?
-  # # Destroy the tied patient record if this is the only form attached to the patient
-  #   self.patient.destroy if self.patient.form_instances.count == 1
-  # # Finally, destroy the FormInstance
-  #   return self.vanilla_destroy(*args)
-  # end
-
-  private
-    def log_create
-      Log.create(:log_type => 'create:FormInstance', :data => {})
-    end
-    def log_update
-      Log.create(:log_type => 'update:FormInstance', :data => {})
-    end
-    def log_destroy
-      Log.create(:log_type => 'destroy:FormInstance', :data => {})
-    end
 
 end

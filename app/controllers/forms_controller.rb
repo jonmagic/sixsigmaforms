@@ -68,9 +68,7 @@ class FormsController < ApplicationController
       # Drop the status down to draft!
       if !(@form.instance.status == 'draft')
         @form.instance.status = 'draft'
-        if @form.instance.save
-          Log.create(:log_type => 'status:update', :data => {})
-        end
+        @form.instance.save
       end
       @patient = Patient.find_by_id(@form.instance.patient_id)
       @values = @form
@@ -87,7 +85,7 @@ class FormsController < ApplicationController
         if !params[:form_instance].nil? && !params[:form_instance][:status].blank? && !(params[:form_instance][:status] == @form.instance.status)
           @form.instance.status = params[:form_instance][:status]
           if @form.instance.save
-            Log.create(:log_type => 'status:update', :data => {})
+            # Log.create(:log_type => 'status:update', :data => {})
             status_changed = true
           else
             flash[:notice] = "ERROR Submitting draft!"
@@ -110,16 +108,9 @@ class FormsController < ApplicationController
     end
   end
 
-  def search
-    
-  end
-  def live_search
-    
-  end
-
   def discard
     restrict('allow only doctor users') or begin
-      @form = FormInstance.find_by_id(params[:form_id])
+      @form = FormInstance.find_by_form_data_type_and_form_data_id(params[:form_type], params[:form_id])
       @status_count = current_user.forms_with_status(@form.status).count - 1
       @status_link_text_with_count = @form.status.as_status.word('uppercase short plural') + (@status_count == 0 ? '' : " (#{@status_count})")
       @status_container_fill = @status_count == 0 ? "<li>&lt;no current #{params[:form_status].as_status.word('lowercase short plural')}&gt;</li>" : nil

@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 16) do
+ActiveRecord::Schema.define(:version => 18) do
 
   create_table "admins", :force => true do |t|
     t.column "username",         :string
@@ -126,15 +126,15 @@ ActiveRecord::Schema.define(:version => 16) do
   end
 
   create_table "form_instances", :force => true do |t|
-    t.column "form_type_id",   :integer
-    t.column "form_data_id",   :integer
-    t.column "form_data_type", :string
-    t.column "doctor_id",      :integer
-    t.column "patient_id",     :integer
-    t.column "user_id",        :integer
-    t.column "status_number",  :integer,  :default => 1
-    t.column "created_at",     :datetime
-    t.column "submitted",      :boolean
+    t.column "form_type_id",       :integer
+    t.column "form_data_id",       :integer
+    t.column "form_data_type",     :string
+    t.column "doctor_id",          :integer
+    t.column "patient_id",         :integer
+    t.column "user_id",            :integer
+    t.column "status_number",      :integer,  :default => 1
+    t.column "created_at",         :datetime
+    t.column "has_been_submitted", :boolean,  :default => false
   end
 
   create_table "form_types", :force => true do |t|
@@ -148,7 +148,9 @@ ActiveRecord::Schema.define(:version => 16) do
     t.column "log_type",    :string
     t.column "data",        :string
     t.column "object_id",   :integer
-    t.column "object_type", :integer
+    t.column "object_type", :string
+    t.column "agent_id",    :integer
+    t.column "agent_type",  :string
   end
 
   create_table "notes", :force => true do |t|

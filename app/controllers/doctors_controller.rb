@@ -1,4 +1,5 @@
 class DoctorsController < ApplicationController
+  before_filter :current_user
 
   in_place_edit_for :doctor, 'friendly_name'
   in_place_edit_for :doctor, 'address'
@@ -28,10 +29,14 @@ class DoctorsController < ApplicationController
   def update
     restrict('allow only doctor admins') or begin
       @doctor = Doctor.find(params[:id])
-      @user   = @doctor.admin
+      log = Log.new(:log_type => 'update:Doctor', :data => {:old_attributes => @doctor.attributes.changed_values(params[:doctor])}, :object => @doctor, :agent => current_user)
+logger.error "Created log: #{log}\n"
       respond_to do |format|
   #This doesn't update the FormTypes association if all of them are unchecked...?
-        if (@doctor.valid? & @user.valid?) &&  @doctor.update_attributes(params[:doctor]) && @user.update_attributes(params[:user])
+  logger.error "Current user #{@current_user}...\n"
+        if (@doctor.valid?) &&  @doctor.update_attributes(params[:doctor])
+          logger.error "Current user #{@current_user}...\n"
+          log.save
           flash[:notice] = "Doctor was successfully updated."
           format.html { redirect_to doctor_url(@doctor) }
           format.xml  { head :ok }

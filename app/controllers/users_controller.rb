@@ -134,6 +134,23 @@ class UsersController < ApplicationController
     end
   end
 
+  def unactivate
+    restrict('allow only doctor admins') or begin
+      @user = User.find_by_id(params[:id])
+      @user.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+      @user.crypted_password = nil
+      @user.salt = nil
+      respond_to do |format|
+        if @user.save
+          format.html { redirect_to users_url }
+        else
+          flash[:notice] = "Could not unactivate #{@user.friendly_name}!"
+          format.html { redirect_to users_url }
+        end
+      end
+    end
+  end
+
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy

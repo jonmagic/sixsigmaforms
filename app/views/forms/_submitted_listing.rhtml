@@ -5,4 +5,4 @@
  / 
 <%= link_to 'Edit', doctor_forms_path(:form_status => 'draft', :action => 'draft', :form_type => form.form_data_type, :form_id => form.form_data_id), :confirm => "Editing this form will un-submit the form and move it back to the Draft status. Do you want to continue?" %>
  / 
-<%= link_to_remote 'Discard', :confirm => "Discard this form?", :url => formatted_doctor_forms_path(:form_type => form.form_type.name, :action => 'discard', :form_id => form.id, :format => 'js', :update => update) %></span></span></li>
+<%= link_to_remote 'Discard', :confirm => "Discard this form?", :url => formatted_doctor_forms_path(:form_type => form.form_data_type, :action => 'discard', :form_id => form.form_data_id, :format => 'js', :update => update) %></span></span></li>

@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :archived,  :class_name => 'FormInstance', :conditions => "status_number=4"
 
   has_many :notes, :as => :author
+  has_many :logs,  :as => :agent
 
   # Virtual attribute for the unencrypted password
   attr_accessor :password
@@ -26,10 +27,6 @@ class User < ActiveRecord::Base
   after_update              :activate
   before_create             :make_activation_code 
 
-  after_create   :log_create
-  after_update   :log_update
-  before_destroy :log_destroy
-  
   def activated?
     adm = Admin.find_by_activation_code(activation_code)
     adm && !adm.username.blank? && !adm.password.blank? && adm.activation_code.blank?
@@ -117,9 +114,9 @@ class User < ActiveRecord::Base
           errors.add(:activation_code, "is not valid.") unless @just_activated
         end
       else
-        if operation == 'password_change' #Password Change
+        if operation == 'unactivate' #Password Change
 #Need to add in validations here
-          
+          @just_activated = true
         else #Other Update function: restrain from changing username, password, activation_code (save(false) to inject activation_code)
 #Need to add in validations here
           
@@ -150,6 +147,7 @@ class User < ActiveRecord::Base
     def encrypt_password
       return if password.blank?
       self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{username}--") if new_record?
+      self.password_change_date = Time.now.utc
       self.crypted_password = encrypt(password)
     end
     
@@ -168,16 +166,5 @@ class User < ActiveRecord::Base
     def password_present?
       !password.blank?
     end
-
-    private
-      def log_create
-        Log.create(:log_type => 'create:User', :data => {})
-      end
-      def log_update
-        Log.create(:log_type => 'update:User', :data => {})
-      end
-      def log_destroy
-        Log.create(:log_type => 'destroy:User', :data => {})
-      end
 
 end

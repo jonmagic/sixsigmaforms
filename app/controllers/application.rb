@@ -7,9 +7,15 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include RouteObjectMapping
   include AccessControl
+  # include FormHelper
   before_filter :add_default_restrictions
   before_filter :go_to_where_you_belong
+  before_filter :set_current_user
   layout 'default'
+
+  def set_current_user
+    Thread.current['user'] = current_user
+  end
 
   def add_default_restrictions
     add_restriction('allow only doctor admins', current_user.is_doctor?) {flash[:notice] = "Only Doctor Admins can access this. Please login with Doctor Admin credentials."; store_location; redirect_to doctor_login_path(accessed_domain)}

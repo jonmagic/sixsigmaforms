@@ -35,11 +35,12 @@ module ActionView
   module Helpers
     module PaginationHelper
       def remote_pagination_links(paginator, options={}, html_options={})
-        pagination_links_each(paginator, options) do |n|
+        links = pagination_links_each(paginator, options) do |n|
           ins_options = (options || DEFAULT_OPTIONS).clone
           ins_options[:url] = ins_options[:url]+"&page=#{n}"
           link_to_remote(n.to_s, ins_options, html_options)
         end
+        links.nil? ? nil : "Page: #{links}"
       end
     end
   end
@@ -64,6 +65,15 @@ end
 class Array < Object
   def count
     self.length
+  end
+end
+
+class Hash < Object
+# Given self and a hash, return the duplicate keys with different values
+  def changed_values(hash)
+    new_attribs = {}
+    self.merge(hash.reject {|k,v| k=='updated_at'}) {|key,old,nw| new_attribs[key] = old unless old == nw}
+    new_attribs
   end
 end
 

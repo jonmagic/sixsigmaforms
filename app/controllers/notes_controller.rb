@@ -37,7 +37,7 @@ class NotesController < ApplicationController
   def edit
     restrict('allow only doctor users') or begin
       @note = Note.find_by_id(params[:id])
-      return render(:ok) unless @note.author == current_user #Only allow the user who created the note to edit it.
+      return render(:status => :ok) unless @note.author == current_user #Only allow the user who created the note to edit it.
       respond_to do |format|
         format.html
         format.js

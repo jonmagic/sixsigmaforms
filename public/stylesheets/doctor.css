@@ -1,0 +1,6 @@
+.form_listings .submitted {
+	font-weight:bold;
+}
+.form_listings li.submitted:before {
+	content: url(/images/icons/services_orange_sm.gif)
+}

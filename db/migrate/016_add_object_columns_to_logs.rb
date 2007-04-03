@@ -1,7 +1,7 @@
 class AddObjectColumnsToLogs < ActiveRecord::Migration
   def self.up
     add_column :logs, :object_id,    :integer
-    add_column :logs, :object_type,  :integer
+    add_column :logs, :object_type,  :string
     add_column :form_instances, :submitted, :boolean
   end
 

@@ -1,6 +1,7 @@
 require 'digest/sha1'
 class Admin < ActiveRecord::Base
   has_many :notes, :as => :author
+  has_many :logs,  :as => :agent
 # These won't work because they would need an 'admin_id' in form_instances. Do we want that?
   # has_many :reviewing, :class_name => 'FormInstance', :conditions => "status_number=3"
   # has_many :archived, :class_name => 'FormInstance', :conditions => "status_number=4"
@@ -22,9 +23,6 @@ class Admin < ActiveRecord::Base
   after_update              :auto_activate
   before_create             :make_activation_code 
 
-  after_create   :log_create
-  after_update   :log_update
-  
   def activated?
     adm = Admin.find_by_activation_code(self.activation_code)
     adm && !adm.username.blank? && !adm.password.blank? && adm.activation_code.blank?
@@ -129,7 +127,7 @@ class Admin < ActiveRecord::Base
 # In the first validate_on_update, it has an activation_code present, but after passing through this, it doesn't, so
 # validate_on_update has to find by id instead. This should be reliable, but maybe just touchy if someone changes anything.
         if self.save
-          Log.create(:log_type => 'activate:Admin', :data => {})
+          # Log.create(:log_type => 'activate:Admin', :data => {})
         end
       end
     end
@@ -154,19 +152,6 @@ class Admin < ActiveRecord::Base
 
     def password_present?
       !self.password.blank?
-    end
-
-  private
-    def log_create
-      #Creating admin. Log the creator and the created.
-      Log.create(:log_type => 'create:Admin', :data => {})
-    end
-    def log_update
-      #Updating admin. Log the changed fields.
-      Log.create(:log_type => 'update:Admin', :data => {})
-    end
-    def log_destroy
-      Log.create(:log_type => 'destroy:Admin', :data => {})
     end
 
 end

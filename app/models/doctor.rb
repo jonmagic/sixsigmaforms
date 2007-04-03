@@ -9,15 +9,13 @@ class Doctor < ActiveRecord::Base
     has_many :submitted, :class_name => 'FormInstance', :conditions => "status_number=2"
     has_many :reviewing,  :class_name => 'FormInstance', :conditions => "status_number=3"
     has_many :archived,  :class_name => 'FormInstance', :conditions => "status_number=4"
+  has_many :logs, :as => :object
 
   validates_presence_of     :alias, :friendly_name, :address, :telephone
   validates_length_of       :alias, :within => 5..25
   validates_uniqueness_of   :alias, :case_sensitive => false
 
   before_create  :make_encryption_key
-  after_create   :log_create
-  after_update   :log_update
-  before_destroy :log_destroy
 
   def self.form_model(form_type_name)
     type = FormType.find_by_name(form_type_name)
@@ -77,16 +75,5 @@ class Doctor < ActiveRecord::Base
     def make_encryption_key
       self.encryption_key = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
     end 
-
-    private
-      def log_create
-        Log.create(:log_type => 'create:Doctor', :data => {})
-      end
-      def log_update
-        Log.create(:log_type => 'update:Doctor', :data => {})
-      end
-      def log_destroy
-        Log.create(:log_type => 'destroy:Doctor', :data => {})
-      end
 
 end

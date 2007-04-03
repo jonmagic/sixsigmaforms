@@ -1,0 +1,5 @@
+<h2>Logs for <%= @form.visual_identifier %></h2>
+<% i = 0 -%>
+<% @logs.each do |log| -%>
+	<p><span>[<%= i = i+1 %>] </span><%= log.created_at %>: LogType: <%= log.log_type %>, Data: <%= log.data.to_yaml %></p>
+<% end -%>

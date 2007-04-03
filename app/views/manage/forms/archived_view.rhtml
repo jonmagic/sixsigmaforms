@@ -1,6 +1,10 @@
 <h2><%= @form.instance.visual_identifier %></h2>
-<p>(<%= @form.instance.form_identifier %> - <%= @form.instance.status.as_status.word('uppercase short singular') %>)</p>
+<p>(<%= @form.instance.form_identifier %> - <%= @form.instance.status.as_status.word('uppercase short singular') %>) <%= link_to 'View Log', admin_form_log_path(:form_type => @form.instance.form_data_type, :form_id => @form.instance.form_data_id), :popup => true %></p>
 
 <div class="form">
 <%= render :partial => @form.instance.form_data_type.fromCamelCase -%>
 </div>
+
+<%= render :partial => 'manage/notes/form_notes', :locals => {:form => @form, :new_note => false} %>
+
+<p><%= link_to "Pull back to Review", admin_forms_path(:form_status => 3.as_status.text, :form_type => @form.instance.form_data_type, :form_id => @form.instance.form_data_id) %></p>

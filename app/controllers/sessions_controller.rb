@@ -18,7 +18,7 @@ logger.error "User: #{self.current_user.friendly_name} #{self.current_user.domai
         redirect_back_or_default admin_dashboard_url
       else
         flash[:notice] = "Failed to log in."
-        render :action => 'new_admin'
+        render :action => 'new_admin', :layout => 'admin'
       end
     else
       flash[:notice] = "Invalid username." if params[:username]
@@ -36,7 +36,7 @@ logger.error "User: #{self.current_user.friendly_name} #{self.current_user.domai
         redirect_back_or_default doctor_dashboard_url(self.current_user.doctor.alias)
       else
         flash[:notice] = "Failed to log in."
-        render :action => 'new_user'
+        render :action => 'new_user', :layout => 'doctor'
       end
     else
       flash[:notice] = "Invalid username." if params[:username]
