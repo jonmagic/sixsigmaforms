@@ -63,28 +63,29 @@ ul, li {
 }
 
 .form ul {
-	padding: .7em 0;
+	padding:.7em 0;
 }
 
-.form_listing {
+.form_listing, .patient_listing {
 	padding:0 0 1em 0;
+	clear:both;
 }
 
-.form_listing span {
+.form_listing span, .patient_listing span {
 	width:100%;
-	padding:0.2em .5em;
+	padding:.2em .5em;
 }
 
-.form_listing span:hover {
+.form_listing span:hover, .patient_listing span:hover {
 	display:inline;
 	background-color:#eee;
 }
 
-.form_listing a:hover {
+.form_listing a:hover, .patient_listing a:hover {
 	text-decoration:none;
 }
 
-.form_listing .action_links a:hover {
+.form_listing .action_links a:hover, .patient_listing .action_links a:hover {
 	text-decoration:underline;
 }
 

@@ -3,16 +3,19 @@ module ApplicationHelper
   include DatePickerHelper
 
   def tab_link_to(name, options = {}, html_options = nil, *parameters_for_method_reference)
-    if html_options.kind_of?(Hash) and !html_options[:active_only_if_equal].nil?
-      active_only_if_equal = html_options[:active_only_if_equal]
-      html_options.delete(:active_only_if_equal)
+    if html_options.kind_of?(Hash)
+      active_only_if_equal = html_options.delete(:active_only_if_equal) || false
+      normally_hide = html_options.delete(:normally_hide) || false
     else
       active_only_if_equal = false
+      normally_hide = false
     end
     url = options.is_a?(String) ? options : self.url_for(options, *parameters_for_method_reference)
     html_options ||= {}
-    html_options[:class] = html_options[:class].blank? ? 'active' : html_options[:class] + ' active' if (active_only_if_equal ? request.request_uri == url : request.request_uri =~ /^#{url}/)
-    link_to(name, options, html_options, *parameters_for_method_reference)
+    active = (active_only_if_equal ? request.request_uri == url : request.request_uri =~ /^#{url}/) ? true : false
+    html_options[:class] = html_options[:class].blank? ? 'active' : html_options[:class] + ' active' if active
+logger.error "Opts: #{normally_hide}, #{active}\n"
+    (!normally_hide || active) ? link_to(name, options, html_options, *parameters_for_method_reference) : '&nbsp;'
   end
 
 end

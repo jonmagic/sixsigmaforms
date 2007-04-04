@@ -1,0 +1,115 @@
+<% view = view.nil? ? true : view -%>
+<% f = nil if view -%>
+<% @form = form if !form.nil? -%>
+<% @patient ||= @form if !@form.nil? -%>
+<li><h4>Patient Information - <a href="javascript:Effect.Combo('general_information');">Show/Hide Section</a></h4></li>
+<li><div id="general_information">
+	<table>
+		<tr>
+		<td class="leftcolumn"><label for="account_number">Account Number</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:account_number, :value => @values.account_number
+		) : @form.account_number %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="last_name">Last Name</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:last_name, :value => @values.last_name) : @form.last_name %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="first_name">First Name</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:first_name, :value => @values.first_name) : @form.first_name %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="middle_initial">Middle Initial</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:middle_initial, :value => @values.middle_initial) : @form.middle_initial %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="sex">Sex</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:sex, :value => @values.sex) : @form.sex %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="marital_status">Marital Status</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:marital_status, :value => @values.marital_status) : @form.marital_status %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="birth_date">Birth Date</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:birth_date, :value => @values.birth_date) : @form.birth_date %></td>
+		</tr>
+		</td>
+		<tr>
+		<td class="leftcolumn"><label for="social_security_number">Social Security Number</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:social_security_number, :value => @values.social_security_number) : @form.social_security_number %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="address">Address</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:address, :value => @values.address) : @form.address %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="city">City</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:city, :value => @values.city) : @form.city %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="state">State</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:state, :value => @values.state) : @form.state %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="zipcode">Zipcode</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:zipcode, :value => @values.zipcode) : @form.zipcode %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="telephone">Telephone</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:telephone, :value => @values.telephone) : @form.telephone %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="work_telephone">Work Telephone</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:work_telephone, :value => @values.work_telephone) : @form.work_telephone %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="work_status">Work Status</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:work_status, :value => @values.work_status) : @form.work_status %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="employment_school">Employment School</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:employment_school, :value => @values.employment_school) : @form.employment_school %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="provider_name">Provider Name</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:provider_name, :value => @values.provider_name) : @form.provider_name %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="referring_provider_name">Referring Provider Name</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:referring_provider_name, :value => @values.referring_provider_name) : @form.referring_provider_name %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="location">Location</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:location, :value => @values.location) : @form.location %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="authorization_number">Authorization Number</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:authorization_number, :value => @values.authorization_number) : @form.authorization_number %></td>
+		</tr>
+
+		<tr>
+		<td class="leftcolumn"><label for="new_patient">New Patient</label></td>
+		<td class="rightcolumn"><%= !view ? f.text_field(:new_patient, :value => @values.new_record?) : @form.new_record? %></td>
+		</tr>
+	</table>
+	<p><a href="javascript:Effect.Combo('general_information');"><%= image_tag "up_arrow.gif", :border => 0 %> Hide Section</a></p>
+</div></li>

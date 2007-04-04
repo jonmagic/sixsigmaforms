@@ -1,17 +1,6 @@
-<table>
-  <thead>
-    <th>Account Number</th>
-    <th>Last Name</th>
-    <th>First Name</th>
-  </thead>
-<% for patient in @results %>
-  <tr class='hilight_result hover'>
-    <td><%= patient.account_number %></td>
-    <td><%= patient.last_name %></td>
-    <td><%= patient.first_name %></td>
-		<td><%= link_to("drafts (#{patient.drafts(true).count})", doctor_forms_path(:form_status => patient.drafts[0].status, :action => 'draft', :form_type => patient.drafts[0].form_data_type, :form_id => patient.drafts[0].form_data_id)) + " | " if patient.drafts.count > 0 %><%= link_to 'History', patient_path(:id => patient.id) %> |</td>
-		<td><%= (current_user.doctor.form_types.collect {|ft| link_to ft.friendly_name, doctor_draft_path(:form_type => ft.name, :patient_id => patient.id)}).join(" / ") %></td>
-    <td>| <%= link_to 'Destroy', patient_path(:id => patient.id), :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<ul>
+	<li><strong><span style="display:block; float:left; width:20em">Account Number :: Last, First</span> Controls</strong></li>
+	<% for patient in @results %>
+	<%= render :partial => 'patient_listing', :locals => {:patient => patient} %>
+	<% end %>
+</ul>

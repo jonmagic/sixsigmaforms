@@ -3,9 +3,7 @@
 	<% @forms.each do |form| -%>
 		<%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %>
 	<% end -%>
-</ul>
-<ul class="form_listings">
 	<% if @forms.blank? -%>
-		<li>no <%= params[:form_status].as_status.word('lowercase long plural') %></li>
+		<li>&lt;no <%= params[:form_status].as_status.word('lowercase long plural') %>&gt;</li>
 	<% end -%>
 </ul>

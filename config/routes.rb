@@ -50,8 +50,8 @@ ActionController::Routing::Routes.draw do |map|
   map.doctor_login '/doctors/:domain/login', :controller => 'sessions', :action => 'create_user'
   map.doctor_profile '/doctors/:domain/manage/profile/:action', :controller => 'doctors', :action => 'profile'
 
-  map.resources :patients, :path_prefix => '/doctors/:domain/manage', :collection => { :live_search => :any, :search => :any }
   map.resources :users, :path_prefix => '/doctors/:domain/manage', :collection => { :register => :any, :activate => :any, :live_search => :any, :search => :any }, :member => { :unactivate => :any }
+  map.resources :patients, :path_prefix => '/doctors/:domain', :collection => { :live_search => :any, :search => :any }
   map.user_account '/doctors/:domain/myaccount/:action', :controller => 'users', :action => 'show'
 
   map.doctor_search_forms      '/doctors/:domain/forms/search',      :controller => 'forms', :action => 'search'

@@ -36,6 +36,9 @@ class FormInstance < ActiveRecord::Base
   def visual_identifier
     "<span title='#{self.form_identifier}'>#{self.patient.find_best_identifier} :: #{self.created_at.strftime('%A, %B %d, %Y')}</span>"
   end
+  def visual_identifier_with_status
+    "<span title='#{self.form_identifier}'>(#{self.status}) #{self.patient.find_best_identifier} :: #{self.created_at.strftime('%A, %B %d, %Y')}</span>"
+  end
 
   def form_identifier
     "Form #{self.form_data_type}, ##{self.id}"
