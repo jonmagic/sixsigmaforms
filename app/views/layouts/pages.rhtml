@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>Six Sigma Management, LLC - <%= @page.title %></title>
+		<%= stylesheet_link_tag 'pages' %>		
+	</head>
+	<body>
+		<div id="strip"></div>
+		<div id="container">
+			<div id="header">
+				<h1 id="sixsigma">Six Sigma<img src="/images/key.gif"></h1>
+				<h1 id="management">Management, LLC</h1>		
+			</div>
+			<div id="navbar">
+				<ul>
+					<li><a href="/"><img src="/images/icons/home_gray.gif">Home</a></li>
+					<li><a href="/pages/services"><img src="/images/icons/services_gray.gif">Services</a></li>
+					<li><a href="/pages/about"><img src="/images/icons/about_gray.gif">About Us</a></li>
+					<li><a href="/pages/contact"><img src="/images/icons/contact_gray.gif">Contact</a></li>															
+				</ul>
+			</div>	
+			<div id="main">
+				<%= yield %>
+			</div>
+			<div id="footer">
+				<p>Copyright Six Sigma Management LLC 2007</p>
+			</div>
+		</div>
+	</body>
+</html>

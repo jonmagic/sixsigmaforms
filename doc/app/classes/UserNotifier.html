@@ -86,9 +86,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000051">activation</a>&nbsp;&nbsp;
-      <a href="#M000052">setup_email</a>&nbsp;&nbsp;
-      <a href="#M000050">signup_notification</a>&nbsp;&nbsp;
+      <a href="#M000056">activation</a>&nbsp;&nbsp;
+      <a href="#M000057">setup_email</a>&nbsp;&nbsp;
+      <a href="#M000055">signup_notification</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -110,51 +110,53 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000051" class="method-detail">
-        <a name="M000051"></a>
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
 
         <div class="method-heading">
-          <a href="#M000051" class="method-signature">
+          <a href="#M000056" class="method-signature">
           <span class="method-name">activation</span><span class="method-args">(user)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000051-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000051-source">
+            onclick="toggleCode('M000056-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000056-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/user_notifier.rb, line 8</span>
- 8:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">activation</span>(<span class="ruby-identifier">user</span>)
- 9:     <span class="ruby-identifier">setup_email</span>(<span class="ruby-identifier">user</span>)
-10:     <span class="ruby-ivar">@subject</span>    <span class="ruby-operator">+=</span> <span class="ruby-value str">'Your account has been activated!'</span>
-11:     <span class="ruby-ivar">@body</span>[<span class="ruby-identifier">:url</span>]  = <span class="ruby-value str">&quot;http://localhost:3000/&quot;</span>
-12:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/user_notifier.rb, line 10</span>
+10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">activation</span>(<span class="ruby-identifier">user</span>)
+11:     <span class="ruby-identifier">setup_email</span>(<span class="ruby-identifier">user</span>)
+12:     <span class="ruby-ivar">@subject</span>    <span class="ruby-operator">+=</span> <span class="ruby-value str">'Your account has been activated!'</span>
+13:     <span class="ruby-ivar">@body</span>[<span class="ruby-identifier">:url</span>]  = <span class="ruby-value str">&quot;http://YOURSITE/&quot;</span>
+14:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000050" class="method-detail">
-        <a name="M000050"></a>
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
 
         <div class="method-heading">
-          <a href="#M000050" class="method-signature">
+          <a href="#M000055" class="method-signature">
           <span class="method-name">signup_notification</span><span class="method-args">(user)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000050-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000050-source">
+            onclick="toggleCode('M000055-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000055-source">
 <pre>
    <span class="ruby-comment cmt"># File app/models/user_notifier.rb, line 2</span>
 2:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">signup_notification</span>(<span class="ruby-identifier">user</span>)
 3:     <span class="ruby-identifier">setup_email</span>(<span class="ruby-identifier">user</span>)
 4:     <span class="ruby-ivar">@subject</span>    <span class="ruby-operator">+=</span> <span class="ruby-value str">'Please activate your new account'</span>
-5:     <span class="ruby-ivar">@body</span>[<span class="ruby-identifier">:url</span>]  = <span class="ruby-node">&quot;http://localhost:3000/activate/#{user.activation_code}&quot;</span>
-6:   <span class="ruby-keyword kw">end</span>
+5:   
+6:     <span class="ruby-ivar">@body</span>[<span class="ruby-identifier">:url</span>]  = <span class="ruby-node">&quot;http://YOURSITE/activate/#{user.activation_code}&quot;</span>
+7:   
+8:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -162,28 +164,28 @@
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000052" class="method-detail">
-        <a name="M000052"></a>
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
 
         <div class="method-heading">
-          <a href="#M000052" class="method-signature">
+          <a href="#M000057" class="method-signature">
           <span class="method-name">setup_email</span><span class="method-args">(user)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000052-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000052-source">
+            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000057-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/user_notifier.rb, line 15</span>
-15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_email</span>(<span class="ruby-identifier">user</span>)
-16:       <span class="ruby-ivar">@recipients</span>  = <span class="ruby-node">&quot;#{user.email}&quot;</span>
-17:       <span class="ruby-ivar">@from</span>        = <span class="ruby-value str">&quot;dcparker@gmail.com&quot;</span>
-18:       <span class="ruby-ivar">@subject</span>     = <span class="ruby-value str">&quot;SixSigma Welcomes You - Continue Registration&quot;</span>
-19:       <span class="ruby-ivar">@sent_on</span>     = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
-20:       <span class="ruby-ivar">@body</span>[<span class="ruby-identifier">:user</span>] = <span class="ruby-identifier">user</span>
-21:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/user_notifier.rb, line 17</span>
+17:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_email</span>(<span class="ruby-identifier">user</span>)
+18:       <span class="ruby-ivar">@recipients</span>  = <span class="ruby-node">&quot;#{user.email}&quot;</span>
+19:       <span class="ruby-ivar">@from</span>        = <span class="ruby-value str">&quot;ADMINEMAIL&quot;</span>
+20:       <span class="ruby-ivar">@subject</span>     = <span class="ruby-value str">&quot;[YOURSITE] &quot;</span>
+21:       <span class="ruby-ivar">@sent_on</span>     = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+22:       <span class="ruby-ivar">@body</span>[<span class="ruby-identifier">:user</span>] = <span class="ruby-identifier">user</span>
+23:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -1,0 +1,7 @@
+<h1>New page</h1>
+
+<%= error_messages_for :page %>
+
+<%= render :partial => "form", :locals => { :submit => "Create", :submit_url => manage_pages_path } %>
+
+<%= link_to 'Back', manage_pages_path %>

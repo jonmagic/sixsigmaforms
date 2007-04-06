@@ -1,0 +1,8 @@
+<h2><%= @user.friendly_name %>'s Account</h2>
+<p>Doctor: <em><%= @user.doctor.friendly_name %></em></p>
+<p>Username: <em><%= @user.username %></em></p>
+<p>Full Name<a href="javascript:void(0)" id="edit_friendly_name_<%= @user.id %>">(edit)</a>:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= in_place_editor_field :user, 'friendly_name', {}, :rows => 1, :external_control => "edit_friendly_name_#{@user.id}" %></p>
+<p>Email<a href="javascript:void(0)" id="edit_email_<%= @user.id %>">(edit)</a>:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= in_place_editor_field :user, 'email', {}, :rows => 1, :external_control => "edit_email_#{@user.id}" %></p>
+<p><%= link_to 'Register!', register_users_path(@user.doctor.alias)+"?activation_code="+@user.activation_code if !@user.activation_code.blank? %>&nbsp;</p>

@@ -1,0 +1,6 @@
+<ul>
+<% for form in @results -%>
+<%= render :partial => 'archived_listing', :locals => {:form => form} %>
+<% end -%>
+</ul>
+<%= remote_pagination_links @result_pages, :url => doctor_live_search_forms_path(@form_values), :update => 'result_or_latest' %>

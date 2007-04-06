@@ -1,0 +1,3 @@
+<% remote_form_for(:note, :url => formatted_admin_note_path(:form_status => @note.form_instance.status, :form_type => params[:form_type], :form_id => params[:form_id], :id => @note.id, :format => 'js'), :html => { :method => :put, :id => "#{@note.id}_edit_form" }) do |f| %>
+	<p><%= f.text_area :text, :rows => 4, :cols => 35, :id => 'edit_note_text_area', :value => "#{@note.text}", :tabindex => 1 %>
+<% end %>

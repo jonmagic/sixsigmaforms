@@ -1,0 +1,193 @@
+body {
+	margin:0;
+	padding:0;
+	background-color:#fff;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color: #555;
+	font-size:80%;
+}
+
+.floatright {
+	float:right;
+}
+
+a {
+	text-decoration:none;
+	color: #C13B00;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+blockquote {
+	margin:1em;
+	padding:.5em;
+	font-size:.9em;
+	background-color:#cccccc;
+	border-top:1px solid #999999;
+	border-bottom:1px solid #999999;
+}
+
+h3 {
+	padding:0 0 .5em;
+	margin:0;
+}
+
+h4 {
+	padding:1em 0 .5em;
+	margin:0;
+}
+
+p {
+	padding:.5em 0 0;
+	margin:0;
+}
+
+thead {
+	font-weight:bold;
+}
+
+ul, li {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+.form {
+	border:1px solid #eeeeee;
+}
+
+.form ul, .form li {
+	margin:0;
+}
+
+.form ul {
+	padding:.7em 0;
+}
+
+.form_listing, .patient_listing {
+	padding:0 0 1em 0;
+	clear:both;
+}
+
+.form_listing span, .patient_listing span {
+	width:100%;
+	padding:.2em .5em;
+}
+
+.form_listing span:hover, .patient_listing span:hover {
+	display:inline;
+	background-color:#eee;
+}
+
+.form_listing a:hover, .patient_listing a:hover {
+	text-decoration:none;
+}
+
+.form_listing .action_links a:hover, .patient_listing .action_links a:hover {
+	text-decoration:underline;
+}
+
+span.action_links {
+	padding:0;
+}
+
+blockquote p {
+	margin:.2em;
+}
+
+
+#draft_save_status {
+	font-size: 10pt;
+	font-style: italic;
+}
+
+label {
+	font-weight:bold;
+}
+
+#header {
+	background-color:#AAA;
+	color:#FFF;
+	height:3.2em;
+	padding:.75em 1em;
+}
+
+#header h1 {
+	font-size:1.5em;
+	color: #666;
+	margin:0;
+	padding:0;
+}
+
+#header h2 {
+	font-size:1.1em;
+	margin:2px 0 0;
+	padding:0;
+}
+
+#header ul {
+	position:absolute;
+	right:1em;
+	top:1em;
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+#header li {
+	list-style:none;
+	text-align:right;
+	margin-bottom:.2em;
+	vertical-align:middle;
+}
+
+#header a {
+	color:#FFF;
+}
+
+#main {
+	margin-top:1em;
+}
+
+#content {
+	padding:0 2em;
+}
+
+#content ul, #content li {
+}
+
+#content h2 {
+	color:#222;
+}
+
+#content h4 {
+	color:#333;
+	padding:.1em 0;
+}
+
+#content li {
+	margin-left:1em;
+}
+
+.note {
+	width:37em;
+	background-color: #eee;
+	padding:.2em .5em;
+	margin:.4em 2em;
+}
+
+.note_text {
+	background-color: #ddd;
+	padding:.2em .5em;
+	margin:.3em;
+	color:#333;
+}
+
+.leftcolumn {
+}
+
+.form td {
+	border-bottom:1px solid #eee;
+}

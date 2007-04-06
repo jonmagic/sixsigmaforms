@@ -6,12 +6,21 @@ class DoctorsController; def rescue_action(e) raise e end; end
 
 class DoctorsControllerTest < Test::Unit::TestCase
   fixtures :doctors
+  fixtures :users
 
   def setup
     @controller = DoctorsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
+
+#Create
+# requires alias
+# requires friendly_name
+# requires address
+# requires telephone
+# requires user[friendly_name]
+# requires user[email]
 
   def test_should_get_index
     get :index
@@ -24,17 +33,19 @@ class DoctorsControllerTest < Test::Unit::TestCase
     assert_response :success
   end
   
-#  def test_should_create_doctor
-#    old_count = Doctor.count
-#    post :create, :doctor => { :email => 'dcparker1@gmail.com' }
-#    assert_equal old_count+1, Doctor.count
-#    assert_redirected_to doctor_path(assigns(:doctor))
-#  end
+  def test_should_create_doctor
+    old_count = Doctor.count
+    post :create, :doctor => { :alias => 'gramit', :friendly_name => "Gramit", :address => "278 Art Buelevard", :telephone => "7681234567" }, :user => { :email => "test@exampl.com", :friendly_name => "Thomas Aquinas" }
 
-#  def test_should_show_doctor
-#    get :show, :id => 1
-#    assert_response :success
-#  end
+    assert_equal old_count+1, Doctor.count
+    
+    assert_redirected_to doctor_path(assigns(:doctor))
+  end
+
+  def test_should_show_doctor
+    get :show, :id => 1
+    assert_response :success
+  end
 
   def test_should_get_edit
     get :edit, :id => 1
@@ -42,7 +53,7 @@ class DoctorsControllerTest < Test::Unit::TestCase
   end
   
   def test_should_update_doctor
-    put :update, :id => 1, :doctor => { :email => 'test@ex.com' }
+    put :update, :id => 1, :doctor => { }
     assert_redirected_to doctor_path(assigns(:doctor))
   end
   
@@ -53,5 +64,4 @@ class DoctorsControllerTest < Test::Unit::TestCase
     
     assert_redirected_to doctors_path
   end
-
 end

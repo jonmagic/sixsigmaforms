@@ -1,10 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
   id: 1
-  email: email0@example.com
+  alias: alphago
+  friendly_name: Alpha Go
+  address: 98765 Togo Road St
+  telephone: 1234567890
 two:
   id: 2
-  email: email1@example.com
-three:
-  id: 3
-  email: email2@example.com
+  alias: yomagrat
+  friendly_name: Yomagrat Phd
+  address: 123 on The Road
+  telephone: 0987654321

@@ -1,0 +1,41 @@
+<% form_for(:doctor, :url => submit_url, :html => { :method => form_method || :post }) do |f| %>
+<%= error_messages_for :doctor %>
+<%= "Your doctor alias is <em>#{@doctor.alias}</em>." if !@user.username.blank? and error_message_on(:user, :username).blank? -%>
+<% if @doctor.alias.blank? or !error_message_on(:doctor, :alias).blank? -%>
+	<p><label for="alias">Doctor Alias</label><br/>
+		 <%= f.text_field :alias %></p>
+<% else -%>
+	<%= f.hidden_field :alias, :value => @doctor.alias %>
+<% end -%>
+
+  <p><label for="friendly_name">Business Friendly Name</label><br/>
+  	<%= f.text_field :friendly_name %></p>
+  <p><label for="address">Address</label><br/>
+  	<%= f.text_field :address %></p>
+  <p><label for="contact_person">Contact Person</label><br/>
+  	<%= f.text_field :contact_person %></p>
+  <p><label for="telephone">Telephone</label><br/>
+  	<%= f.text_field :telephone %></p>
+  <p><label for="tax_id">Tax ID</label><br/>
+  	<%= f.text_field :tax_id %></p>
+
+<% fields_for :user, @user do |g| %>
+    <%= error_messages_for :user %>
+    <p><label for="friendly_name">Doctor's Full Name</label><br/>
+    	<%= g.text_field :friendly_name %>
+    <p><%= g.error_message_on :email %><label for="email">Doctor Email</label><br/>
+    	<%= g.text_field :email %>
+<% end -%>
+
+  <% if current_user.is_admin? -%>
+  <p><label for="form_types">Assigned Form Types</label><br/>
+		<ul>
+		<% FormType.find(:all).each do |t| -%>
+		  <li><input type="checkbox" name="doctor[form_type_ids][]" value="<%= t.id %>" <%= 'checked="checked"' if @doctor.form_type_ids.include?(t.id) %> /><%= t.friendly_name %></li>
+		<% end -%>
+		</ul>
+  <% end -%>
+  <p><%= submit_tag submit %></p>
+</div>
+<% end %>
+

@@ -1,36 +1,30 @@
 module AuthenticatedSystem
   protected
     # Returns true or false if the user is logged in.
-    # Preloads @current_user with the user model if they're logged in.
+    # Preloads @current_user with the User (or Admin or Nobody) model if they're logged in.
     def logged_in?
-      current_user != :false
+      !current_user.kind_of?(Nobody)
     end
     
     # Accesses the current user from the session.
     def current_user
-      @current_user ||= (session[:user] && User.find_by_id(session[:user])) || :false
+      #How is this supposed to work?
+      # There is a current_user ONLY IF there is a valid session[:user] or a valid given_activation_code.
+      if(!given_activation_code.nil?)
+        @current_user ||= User.find_by_activation_code(given_activation_code) || Admin.find_by_activation_code(given_activation_code)
+      elsif session[:user]
+        @current_user ||= session[:domain] == 'sixsigma' ? Admin.find_by_id(session[:user]) : User.find_by_id(session[:user])
+      else
+        Nobody.new
+      end
+      # @current_user ||= ((session[:user] || given_activation_code) && (current_domain == 'sixsigma' ? (Admin.find_by_id(session[:user]) || Admin.find_by_activation_code(given_activation_code)) : (User.find_by_id(session[:user]) || User.find_by_activation_code(given_activation_code)))) || Nobody.new
     end
     
     # Store the given user in the session.
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
-      @current_user = new_user
-    end
-    
-    # Check if the user is authorized.
-    #
-    # Override this method in your controllers if you want to restrict access
-    # to only a few actions or if you want to check if the user
-    # has the correct rights.
-    #
-    # Example:
-    #
-    #  # only allow nonbobs
-    #  def authorize?
-    #    current_user.login != "bob"
-    #  end
-    def authorized?
-      true
+      @current_user = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user
+      session[:domain] = @current_user.domain unless @current_user.nil?
     end
 
     # Filter method to enforce a login requirement.
@@ -49,7 +43,7 @@ module AuthenticatedSystem
     #
     def login_required
       username, passwd = get_auth_data
-      self.current_user ||= User.authenticate(username, passwd) || :false if username && passwd
+      self.current_user ||= (session[:domain] != 'sixsigma' ? User.authenticate(username, passwd) : Admin.authenticate(username, passwd)) || :false if username && passwd
       logged_in? && authorized? ? true : access_denied
     end
     
@@ -65,7 +59,8 @@ module AuthenticatedSystem
       respond_to do |accepts|
         accepts.html do
           store_location
-          redirect_to :controller => 'sessions', :action => 'new'
+#          redirect_to :controller => 'sessions', :action => 'new'
+          redirect_to login_url(current_domain)
         end
         accepts.xml do
           headers["Status"]           = "Unauthorized"
@@ -94,19 +89,6 @@ module AuthenticatedSystem
     # available as ActionView helper methods.
     def self.included(base)
       base.send :helper_method, :current_user, :logged_in?
-    end
-
-    # When called with before_filter :login_from_cookie will check for an :auth_token
-    # cookie and log the user back in if apropriate
-    def login_from_cookie
-      return unless cookies[:auth_token] && !logged_in?
-      user = User.find_by_remember_token(cookies[:auth_token])
-      if user && user.remember_token?
-        user.remember_me
-        self.current_user = user
-        cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
-        flash[:notice] = "Logged in successfully"
-      end
     end
 
   private

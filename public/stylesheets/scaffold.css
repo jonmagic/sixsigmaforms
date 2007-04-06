@@ -72,3 +72,11 @@ div.progressBar div.background {
   width: 0%;
 }
 
+.doctor_admin {
+  font-weight: bold;
+}
+
+.note_section {
+	width: 450px;
+	border-bottom: 1px solid black;
+}

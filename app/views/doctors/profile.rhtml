@@ -1,0 +1,9 @@
+<h1>Doctor Profile</h1>
+<p><label for="edit_friendly_name_<%= @doctor.id %>">Business Name</label><a href="javascript:void(0)" id="edit_friendly_name_<%= @doctor.id %>">(edit)</a>:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= in_place_editor_field :doctor, 'friendly_name', {}, :rows => 1, :external_control => "edit_friendly_name_#{@doctor.id}" %></p>
+<p><label for="edit_address_<%= @doctor.id %>">Address</label><a href="javascript:void(0)" id="edit_address_<%= @doctor.id %>">(edit)</a>:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= in_place_editor_field :doctor, 'address', {}, :rows => 1, :external_control => "edit_address_#{@doctor.id}" %></p>
+<p><label for="edit_telephone_<%= @doctor.id %>">Telephone</label><a href="javascript:void(0)" id="edit_telephone_<%= @doctor.id %>">(edit)</a>:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= in_place_editor_field :doctor, 'telephone', {}, :rows => 1, :external_control => "edit_telephone_#{@doctor.id}" %></p>
+<p><label for="edit_contact_person_<%= @doctor.id %>">Contact Person</label><a href="javascript:void(0)" id="edit_contact_person_<%= @doctor.id %>">(edit)</a>:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= in_place_editor_field :doctor, 'contact_person', {}, :rows => 1, :external_control => "edit_contact_person_#{@doctor.id}" %></p>

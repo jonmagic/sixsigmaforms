@@ -1,20 +1,20 @@
 development:
   adapter: mysql
   database: sixsigma_development
-  username: root
-  password:
+  username: sixsigma
+  password: coffee@9
   host: localhost
 
 test:
   adapter: mysql
   database: sixsigma_test
-  username: root
-  password:
+  username: sixsigma
+  password: coffee@9
   host: localhost
 
 production:
   adapter: mysql
   database: sixsigma_production
-  username: root
-  password: 
+  username: sixsigma
+  password: coffee@9
   host: localhost

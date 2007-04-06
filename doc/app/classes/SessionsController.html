@@ -94,9 +94,9 @@ This controller handles the login/logout function of the site.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000019">create</a>&nbsp;&nbsp;
-      <a href="#M000020">destroy</a>&nbsp;&nbsp;
-      <a href="#M000018">new</a>&nbsp;&nbsp;
+      <a href="#M000013">create</a>&nbsp;&nbsp;
+      <a href="#M000014">destroy</a>&nbsp;&nbsp;
+      <a href="#M000012">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -118,66 +118,73 @@ This controller handles the login/logout function of the site.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000019" class="method-detail">
-        <a name="M000019"></a>
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
 
         <div class="method-heading">
-          <a href="#M000019" class="method-signature">
+          <a href="#M000013" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000019-source">
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/sessions_controller.rb, line 7</span>
- 7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
- 8:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:username</span>], <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:password</span>])
- 9:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">logged_in?</span>
-10:       <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-value str">'/'</span>)
-11:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;Logged in successfully&quot;</span>
-12:     <span class="ruby-keyword kw">else</span>
-13:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'new'</span>
-14:     <span class="ruby-keyword kw">end</span>
-15:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/sessions_controller.rb, line 8</span>
+ 8:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
+ 9:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:doctor</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'ssadmin'</span>
+10:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_user</span> = <span class="ruby-constant">Admin</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:username</span>], <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:password</span>])
+11:     <span class="ruby-keyword kw">else</span>
+12:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:username</span>], <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:password</span>], <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:doctor</span>])
+13:     <span class="ruby-keyword kw">end</span>
+14:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">logged_in?</span>
+15:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;Logged in successfully. Welcome, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">username</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.&quot;</span>
+16:       <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-identifier">admins_path</span>)
+17:     <span class="ruby-keyword kw">else</span>
+18:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:username</span>]
+19:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;Invalid username or password.&quot;</span>
+20:       <span class="ruby-keyword kw">end</span>
+21:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'new'</span>
+22:     <span class="ruby-keyword kw">end</span>
+23:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000020" class="method-detail">
-        <a name="M000020"></a>
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
 
         <div class="method-heading">
-          <a href="#M000020" class="method-signature">
+          <a href="#M000014" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000020-source">
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/sessions_controller.rb, line 17</span>
-17:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
-18:     <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">:auth_token</span>
-19:     <span class="ruby-identifier">reset_session</span>
-20:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;You have been logged out.&quot;</span>
-21:     <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-value str">'/'</span>)
-22:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/sessions_controller.rb, line 25</span>
+25:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
+26:     <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">:auth_token</span>
+27:     <span class="ruby-identifier">reset_session</span>
+28:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;You have been logged out.&quot;</span>
+29:     <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-value str">'/login'</span>)
+30:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000018" class="method-detail">
-        <a name="M000018"></a>
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
 
         <div class="method-heading">
-          <a href="#M000018" class="method-signature">
+          <a href="#M000012" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
@@ -187,12 +194,12 @@ This controller handles the login/logout function of the site.
 render new.rhtml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000018-source">
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/controllers/sessions_controller.rb, line 4</span>
-4:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
-5:   <span class="ruby-keyword kw">end</span>
+   <span class="ruby-comment cmt"># File app/controllers/sessions_controller.rb, line 5</span>
+5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
+6:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

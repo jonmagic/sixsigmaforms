@@ -1,0 +1,6 @@
+<ul>
+	<li><strong><span style="display:block; float:left; width:20em">Account Number :: Last, First</span> Controls</strong></li>
+	<% for patient in @results %>
+	<%= render :partial => 'patient_listing', :locals => {:patient => patient} %>
+	<% end %>
+</ul>

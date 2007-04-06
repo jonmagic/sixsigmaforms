@@ -1,0 +1,35 @@
+<h1><%= @doctor.friendly_name %>'s users</h1>
+
+<table>
+  <thead>
+		<th>Name</th>
+		<th>Username</th>
+		<th>Email</th>
+		<th>Controls</th>
+  </thead>
+<% @users.each do |@user| -%>
+  <tr<%= " class='doctor_admin'" if @user.is_doctor? %> id="user_listing_<%= @user.id %>">
+    <td><%= in_place_editor_field :user,
+ 'friendly_name', {}, :rows => 1,
+ :external_control => "edit_friendly_name_#{@user.id}",
+ :url => {:doctor_id => @doctor.id, :action => 'set_user_friendly_name', :id => @user.id} %></td>
+    <td><%= @user.username %></td>
+	    <td><%= in_place_editor_field :user,
+	 'email', {}, :rows => 1,
+	 :external_control => "edit_email_#{@user.id}",
+	 :url => {:doctor_id => @doctor.id, :action => 'set_user_email', :id => @user.id} %></td>
+    <td>&nbsp;
+<% if !@user.activation_code.blank? -%>
+    <%= link_to 'Register!', register_users_path(:domain => @user.doctor.alias)+"?activation_code="+@user.activation_code %>
+		/
+<% end -%>
+<%= link_to 'Reset Password', manage_unactivate_user_path(:doctor_id => @user.doctor.id, :id => @user.id), :confirm => "Reset #{@user.friendly_name}'s password? #{@user.username} will not be able to log in until the password is reset!" %>
+/
+<%= link_to 'Destroy', manage_user_path(@user.doctor.id, @user.id), :confirm => 'Are you sure? The user will be archived and disabled.', :method => :delete %></td>
+  </tr>
+<% end -%>
+</table>
+
+<br />
+
+<%= link_to 'New user', manage_new_user_path(:doctor_alias => @doctor.alias) %>

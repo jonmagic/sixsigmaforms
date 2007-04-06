@@ -1,0 +1,32 @@
+x when you logout of sixsigma admin it uses the wrong template
+x fix the authentication bug (which will also fix the logout redirect problem)
+x find and replace all @current_domain type variables to current_domain functions (in views), and remove initiate_global_vars
+x create the Status class and functions.
+x the discard and edit links on the Admin side need to be removed.
+x Status counts are not right in the tabs!
+x when you login to sixsigma admin it should take you to the forms section immediately
+x Visual Identifier for the current draft - a title of sorts: Daniel Parker - March 14, 2007
+x go over ALL controllers/actions and ensure ACL's work
+x make the Login/Logout link in the upper-right hand corner be right-justified
+x the path /sixsigma/forms should work without having the /status/submitted
+x !!Submitting to SixSigma creates a new draft instead of submitting!!
+
+- discard_inline isn't working correctly - needs to work without errors on ANY page AND update all the appropriate pieces of the page!
+- create the VIEW for Doctors for the SUBMITTED and ARCHIVED forms
+- create the VIEW for ADMINS for Reviewing a form (accept&archive, return with note, etc)
+- changes by doctor get flagged after submitted once
+- create the Admins Form workflow (submit -> review -> archived)
+- create the Archived view: past 30, paginator, live search (controls to pull back)
+- add the 'don't save changes to patient' checkbox (next to the expand/collapse link)
+- Acts_as_deleted
+- create Log viewer (per form): condense log entries to logical form progression benchmarck notations
+- LOGGER: log which fields are updated on each update
+
+- change cursor focus when you go to a page with a search field or form to fill out
+- 'roll up' link for form sections, when expanded
+- visual (arrow/triangle) for roll down/up links
+- condense parts of the form(s): dropdown for sex, marital, work, location; datepicker for birthdates
+   -- I'd like to never have to scroll in these forms, if possible, by collapsing and expanding sections.
+   -- Can we have sub-sections expand/collapse?
+- add visuals? icons?
+- add "show all" link to live_search partial? (populates search box with 'all' and performs the search)

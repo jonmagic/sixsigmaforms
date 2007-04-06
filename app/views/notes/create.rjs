@@ -1,0 +1,2 @@
+page.insert_html :bottom, 'notes_container', :partial => 'notes/show_note', :locals => { :note => @note }
+page['new_note_text_area'].value = ''

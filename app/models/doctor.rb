@@ -1,69 +1,79 @@
 require 'digest/sha1'
 class Doctor < ActiveRecord::Base
-  # Virtual attribute for the unencrypted password
-  attr_accessor :password
+  has_many :users, :dependent => :destroy, :conditions => 'username<>"#{self.alias}"'
+  has_one  :admin, :class_name => 'User', :conditions => 'username="#{self.alias}"', :dependent => :destroy
+  has_many :patients, :dependent => :destroy
+  has_and_belongs_to_many :form_types
+  has_many :form_instances, :dependent => :destroy
+    has_many :drafts,    :class_name => 'FormInstance', :conditions => "status_number=1"
+    has_many :submitted, :class_name => 'FormInstance', :conditions => "status_number=2"
+    has_many :reviewing,  :class_name => 'FormInstance', :conditions => "status_number=3"
+    has_many :archived,  :class_name => 'FormInstance', :conditions => "status_number=4"
+  has_many :logs, :as => :object
 
-  validates_presence_of     :email
-  validates_length_of       :email,    :within => 3..100
+  validates_presence_of     :alias, :friendly_name, :address, :telephone
+  validates_length_of       :alias, :within => 5..25
+  validates_uniqueness_of   :alias, :case_sensitive => false
 
-#Thus, [username, password] are required when registration key is not present, and [password_confirmation] is required on user create or password change.
-  validates_presence_of     :username,              :if => :login_change?
-  validates_presence_of     :password,              :if => :login_change?
-  validates_presence_of     :password_confirmation, :if => :login_change?
+  before_create  :make_encryption_key
 
-#  validates_presence_of     :username, :password,        :if => :password_required?
-#  validates_presence_of     :password_confirmation,      :if => :password_required?
-#  validates_length_of       :password, :within => 4..40, :if => :password_required?
-#  validates_confirmation_of :password,                   :if => :password_required?
-#  validates_length_of       :username, :within => 3..40, :if => :password_required?
-#  validates_uniqueness_of   :username, :email, :case_sensitive => false
+  def self.form_model(form_type_name)
+    type = FormType.find_by_name(form_type_name)
+    type.nil? ? nil : type.name.constantize
+  end
+  #This is the proxy method to the form data records
+  def form_model(form_type_name)
+    type = FormType.find_by_name(form_type_name)
+    # logger.error "Attempted unpermitted FormType access: Doctor includes " + (self.form_type_ids.join(', ')) + ", but NOT #{type}?" unless self.form_types.include?(type)
+    return nil unless self.form_types.include?(type)
+    type.nil? ? nil : type.name.constantize
+  end
 
-  before_save               :encrypt_password
-  before_create             :make_activation_code 
+  def self.exists?(doc_alias)
+    !Doctor.find_by_alias(doc_alias).blank?
+  end
 
-  # Activates the user in the database.
-  def activate_me
-    @activated = true
-    self.attributes = {:activated_at => Time.now.utc, :activation_code => nil}
-    save(false)
+  def self.id_of_alias(doc_alias)
+    doc = Doctor.find_by_alias(doc_alias)
+    doc.nil? ? nil : doc.id
   end
-  def activated?
-    !! activation_code.nil?
-  end
-  # Returns true if the user has just been activated.
-  def recently_activated?
-    @activated
-  end 
-  # Authenticates a user by their username and unencrypted password.  Returns the user or nil.
-  def self.authenticate(username, password)
-    u = find :first, :conditions => ['username = ? and activated_at IS NOT NULL', username] # need to get the salt
-    u && u.authenticated?(password) ? u : nil
-  end
-  # Encrypts some data with the salt.
-  def self.encrypt(password, salt)
-    Digest::SHA1.hexdigest("--#{salt}--#{password}--")
-  end
-  # Encrypts the password with the user salt
-  def encrypt(password)
-    self.class.encrypt(password, salt)
-  end
-  def authenticated?(password)
-    crypted_password == encrypt(password)
+
+  def forms_with_status(status)
+# logger.error "Finding by #{self.alias} (#{self.id}) and #{status} (#{status.as_status.number})."
+    FormInstance.find_all_by_doctor_id_and_status_number(self.id, status.as_status.number)
   end
 
   protected
-    # before filter 
-    def encrypt_password
-      return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
-      self.crypted_password = encrypt(password)
-    end
-    
-    def password_required?
-      (crypted_password.blank? || !password.blank?) && !self.activation_code.blank?
+    def validate_on_create
+      errors.add(:alias, "cannot be set to <em>\"#{self.alias}\"</em>. Please choose another alias.") if ['pages', 'login', 'logout', 'manage', 'sixsigma'].include?(self.alias)
     end
 
-    def make_activation_code
-      self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+    def validate_on_update
+      old_doctor = Doctor.find_by_id(id)
+#      if operation == 'activate' #Activate
+#        if activation_code_valid
+#          errors.add(:username, "can't be blank") if username.blank? && old_user.username.blank?
+#          errors.add(:password, "can't be blank") if password.blank? && old_user.crypted_password.blank?
+#        else
+#          errors.add(:activation_code, "is not valid.") unless @just_activated
+#        end
+#      else
+#        if operation == 'password_change' #Password Change
+##Need to add in validations here
+#          
+#        else #Other Update function: restrain from changing username, password, activation_code (save(false) to inject activation_code)
+##Need to add in validations here
+#          
+#        end
+#      end
+      if !old_doctor.blank?
+        errors.add_to_base("Only SixSigma Admin users can modify your assigned forms.") if !form_type_ids.blank? && !old_doctor.form_type_ids.blank? && !(form_type_ids == old_doctor.form_type_ids)
+        errors.add(:alias, "cannot be changed once created!") if !self.alias.blank? && !old_doctor.alias.blank? && !(self.alias == old_doctor.alias)
+      end
     end
+
+    def make_encryption_key
+      self.encryption_key = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+    end 
+
 end

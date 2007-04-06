@@ -1,0 +1,41 @@
+#tabmenu {
+	color: #fff;
+	border-bottom: 2px solid #333;
+	margin: 12px 0px 0px 0px;
+	padding: 0px;
+	z-index: 1;
+	padding-left: 10px
+}
+
+#tabmenu li {
+	display: inline;
+	overflow: hidden;
+	list-style-type: none;
+	margin:0;
+}
+
+#tabmenu a, a.active {
+	color: #FFF;
+	background: #AAA;
+	font: bold 1em "Trebuchet MS", Arial, sans-serif;
+	border: 2px solid black;
+	padding: 2px 5px 0px 5px;
+	margin: 0;
+	text-decoration: none; }
+
+#tabmenu a.active {
+	background-color: #C13B00;
+	color:#FFF;
+	border-bottom: 3px solid #C13B00;
+	}
+
+#tabmenu a:hover {
+	color: #fff;
+	background: #666;
+}
+
+#tabmenu a.active:hover {
+	background: #C13B00;
+	color: #FFF;
+	border-bottom: 3px solid #C13B00;	
+}

@@ -1,0 +1,12 @@
+<% new_note = new_note.nil? ? true : new_note -%>
+<% if !form.new_record? -%>
+<div id="note_section">
+<h3>Notes</h3>
+  <div id="notes_container">
+	<% form.instance.notes.each do |note| -%>
+	  <%= render :partial => 'notes/show_note', :locals => {:note => note} %>
+	<% end -%>
+	</div>
+  <%= render :partial => 'notes/form' if new_note %>
+</div>
+<% end -%>

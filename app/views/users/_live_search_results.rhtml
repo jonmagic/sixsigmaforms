@@ -1,0 +1,13 @@
+<% for user in @results %>
+  <tr<%= " class='doctor_admin'" if user.is_doctor? %>>
+    <td><%= user.friendly_name %></td>
+    <td><%= user.username %></td>
+    <td>&nbsp;
+<% if !user.activation_code.blank? %>
+    <%= link_to 'Register!', register_users_path(params[:domain])+"?activation_code="+user.activation_code %>
+<% end %>
+    </td>
+    <td><%= link_to 'Show', user_path(:action=> 'show', :id => user.id) %></td>
+    <td><%= link_to 'Destroy', user_path(:id => user.id), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>

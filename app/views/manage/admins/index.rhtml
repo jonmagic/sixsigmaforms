@@ -1,0 +1,24 @@
+<h2>Listing admins</h2>
+
+<table>
+  <tr>
+  </tr>
+<% for @admin in @admins -%>
+  <tr>
+    <td><%= in_place_editor_field :admin, 'friendly_name', {}, :rows => 1, :external_control => "edit_friendly_name_#{@admin.id}", :url => {:action => 'set_admin_friendly_name', :id => @admin.id} %></td>
+    <td><%= @admin.username %></td>
+    <td><%= in_place_editor_field :admin, 'email', {}, :rows => 1, :external_control => "edit_email_#{@admin.id}", :url => {:action => 'set_admin_email', :id => @admin.id} %></td>
+    <td>&nbsp;
+<% if !@admin.activation_code.blank? -%>
+    <%= link_to('Register!', register_admins_path(:activation_code => @admin.activation_code)) %>
+<% end -%>
+    </td>
+    <td><%= link_to 'Show', admin_path(@admin) %></td>
+    <td><%= link_to 'Destroy', admin_path(@admin), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end -%>
+</table>
+
+<br />
+
+<%= link_to 'Create new admin', new_admin_path %>

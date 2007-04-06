@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="Six Sigma Management: HipForms, a HIPAA compliant form completion tool" />
+		<meta name="keywords" content="" />
+		<meta name="author" content="Six Sigma Management" />
+		<title>Six Sigma Management: <%= accessed_doctor.friendly_name %></title>
+		<%= stylesheet_link_tag 'common' %>
+		<%= stylesheet_link_tag 'doctor' %>
+		<%= stylesheet_link_tag 'tabs' %>
+		<%= stylesheet_link_tag 'date-picker' %>		
+		<%= javascript_include_tag 'prototype' %>
+		<%= javascript_include_tag 'effects' %>
+		<%= javascript_include_tag 'form_effects' %>
+		<%= javascript_include_tag 'controls' %>
+		<%= javascript_include_tag 'dragdrop' %>
+		<%= javascript_include_tag 'date-picker' %>
+		<%= javascript_include_tag 'rounded' %>
+	</head>
+	<body>
+		<div id="header">
+			<h1>Six Sigma Management Form Processor</h1>
+			<h2>@ <%= accessed_doctor.friendly_name %>. <em><%= current_user.friendly_name %></em></h2>
+			<ul>
+				<li>
+					<% if logged_in? -%>
+						<a href="/logout">Logout</a>
+					</li>
+					<li>
+					<%= link_to 'My Account', user_account_path %><%= " / " + link_to("Manage", users_path) if current_user.is_doctor? %>
+					<% else -%>
+						Not logged in. <a href="/<%= accessed_domain %>/login">Login</a>
+					<% end -%>
+				</li>
+			</ul>		
+		</div>
+		<div id="main">
+			<div id="messages" class="floatright"><%= flash[:notice] %></div>
+			<ul id="tabmenu">
+				<% if logged_in? -%>
+				<li><%= tab_link_to "Dashboard", doctor_dashboard_path, :active_only_if_equal => true %></li>
+				<% if current_user.is_doctor? and request.request_uri =~ /\/manage/ -%>
+				<li><%= tab_link_to "Users", users_path %></li>
+				<li><%= tab_link_to "Doctor Profile", doctor_profile_path %></li>
+				<% else -%>
+				<li><%= tab_link_to 1.as_status.word('uppercase short plural') + (!current_user.forms_with_status(1).blank? ? " (#{current_user.forms_with_status(1).count})" : ''), doctor_forms_by_status_path(:form_status => 1.as_status.text), :class => "#{1.as_status.text}_count" %></li>
+				<li><%= tab_link_to 2.as_status.word('uppercase short plural') + (!current_user.forms_with_status(2).blank? ? " (#{current_user.forms_with_status(2).count})" : ''), doctor_forms_by_status_path(:form_status => 2.as_status.text), :class => "#{2.as_status.text}_count" %></li>
+				<li><%= tab_link_to 3.as_status.word('uppercase short plural') + (!current_user.forms_with_status(3).blank? ? " (#{current_user.forms_with_status(3).count})" : ''), doctor_forms_by_status_path(:form_status => 3.as_status.text), :class => "#{3.as_status.text}_count" %></li>
+				<li><%= tab_link_to 4.as_status.word('uppercase short plural'), doctor_forms_by_status_path(:form_status => 4.as_status.text) %></li>
+				<li><%= tab_link_to 'Patients', patients_path, :normally_hide => true %></li>
+				<% end -%>
+				<% else -%>
+				<li><%= tab_link_to "Login", doctor_login_path %></li>
+				<% end -%>
+			</ul>
+			<div style="background:#C13B00;"><br /></div><br />
+			<div id="content">
+				<%= yield  %>
+				<br />
+			</div>
+		</div>
+	</body>
+</html>

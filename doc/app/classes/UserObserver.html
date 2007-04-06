@@ -86,8 +86,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000001">after_create</a>&nbsp;&nbsp;
-      <a href="#M000002">after_save</a>&nbsp;&nbsp;
+      <a href="#M000008">after_create</a>&nbsp;&nbsp;
+      <a href="#M000009">after_save</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -109,19 +109,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000001" class="method-detail">
-        <a name="M000001"></a>
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
 
         <div class="method-heading">
-          <a href="#M000001" class="method-signature">
+          <a href="#M000008" class="method-signature">
           <span class="method-name">after_create</span><span class="method-args">(user)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000001-source">
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
 <pre>
    <span class="ruby-comment cmt"># File app/models/user_observer.rb, line 2</span>
 2:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_create</span>(<span class="ruby-identifier">user</span>)
@@ -132,24 +132,26 @@
         </div>
       </div>
 
-      <div id="method-M000002" class="method-detail">
-        <a name="M000002"></a>
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
 
         <div class="method-heading">
-          <a href="#M000002" class="method-signature">
+          <a href="#M000009" class="method-signature">
           <span class="method-name">after_save</span><span class="method-args">(user)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000002-source">
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/models/user_observer.rb, line 6</span>
-6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_save</span>(<span class="ruby-identifier">user</span>)
-7:     <span class="ruby-constant">UserNotifier</span>.<span class="ruby-identifier">deliver_activation</span>(<span class="ruby-identifier">user</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">recently_activated?</span>
-8:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/user_observer.rb, line 6</span>
+ 6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_save</span>(<span class="ruby-identifier">user</span>)
+ 7:   
+ 8:     <span class="ruby-constant">UserNotifier</span>.<span class="ruby-identifier">deliver_activation</span>(<span class="ruby-identifier">user</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">recently_activated?</span>
+ 9:   
+10:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

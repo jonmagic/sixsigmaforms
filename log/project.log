@@ -1,0 +1,49 @@
+                 - -   <COMMIT REVISION 41>
+[Thu 22 Feb 11:00am]	 Created Form and Page models, Forms controller, and migrations
+[Thu 22 Feb 11:11am]	 Created Dashboard actions and view files.
+[Thu 22 Feb 11:36am]	 Rearranged Routes, login/logout redirects, and dashboard urls
+[Thu 22 Feb 11:59am]	*Suspecting that we might not need the Admins controller at all, just the model, and operate everything from the users and doctors controller?
+                 - -   <COMMIT REVISION 42>
+[Thu 22 Feb 12:25pm]	*Admins -- we might rather have a type field in the users table, specifying a 1 for Admin and 0 for DoctorUser,
+-                   	 having each a sub-model, both inhereting from the Users model.
+[Thu 22 Feb 14:17pm]	 Struggling with how to associate Notes with the different types of forms, which have different models.
+[Thu 22 Feb 14:33pm]	 Created a POLYMORPHIC relationship between Notes and all the different form types!
+-                      Notes has two association fields: form_id and form_type; and Forms has a type field
+[Thu 22 Feb 15:29pm]	 Creating a HABTM relationship between Doctors and Forms
+[Thu 22 Feb 16:49pm]	 Created Patients - controller, model with hefty migration
+                 - -   <COMMIT REVISION 43>
+[Thu 22 Feb 16:55pm]	 Ready to work on: patients/search, Notes create/read/update/destroy, Associating Doctors with Forms in the Doctor updating action,
+-                      FormOperations module (managing notes, patient and logging information)
+[Fri 23 Feb 09:09am]	*INDEXing is something we probably want to do for the Archived forms databases.
+[Fri 23 Feb 10:01am]	 Recreated Notes via scaffold_resource, routes.db point to /:doctor_alias/forms/:form_type/notes/:action/:id
+[Fri 23 Feb 14:06pm]	 Reworked relationships a bit: Notes belongs_to :form_instance, :polymorphic => true, :as => :form; BasicForm has_many :notes, :as => :form_instance
+-                      Changed migrations (sorry I do this against convention so I don't pile up migrations...:S). The FormType model connects with the form_types table,
+-                      which will have to be populated by migrations as we add each form_type.
+[Fri 23 Feb 16:52pm]	*When patient information is changed, the system must ask the User on submitting the form whether to save the changes to the patient data or not.
+[Fri 23 Feb 16:53pm]	 Working on Admins tying a Doctor to FormTypes.
+                 - -   <COMMIT REVISION 44>
+                 - -   <COMMIT REVISION 45>
+[Mon 26 Feb 13:25pm]	 Having trouble with the type field in the FormType model - found out I don't really need it to be named 'type' -
+-                      I thought it was necessary for an association, but that must have been a while ago.
+[Mon 26 Feb 14:24pm]	 Finished the correct associations, etc to associate Doctors with FormTypes, as well as implementing the drop-down input in the Edit form.
+                 - -   <COMMIT REVISION 46>
+[Mon 26 Feb 15:15pm]	 Remade the database from scratch (migrated down & back up), plus, injected an admin user in the initial creation of the admins table.
+[Mon 26 Feb 23:04pm]	 Picked layout for pages, the front facing part of the site. Moved resources to public folder, started pages layout, put some content in db. I'm having trouble with routes though, they don't use the stub correctly, so I need Dan to fix it. Also, I need Dan to make a migration and change the body field from varchar to text so I can fit more than 255 characters in. Next I need to decide where to put my Admin section for the pages stuff, and then build in the dojo editor for ease of use... Also, should I have the menu's be easily editable from admin, or hardcoded into the template? cost/convenience?
+                 - -   <COMMIT REVISION 48>
+[Tue 27 Feb 13:42pm]	 Created an index page and services page, for examples for Jon to work off of, redid some routing to make it work (I think) as desired.
+[Tue 27 Feb 13:43pm]	*ADMIN section for pages: Located at ssadmin/pages - typical map.resources has been placed there. A slight problem is it will use the pages layout, which we may or may not want for pages admin.
+[Tue 27 Feb 13:45pm]	 Pages can be accessed via stub OR id (easiest way to manage using the same controller for both admin and public)
+[Tue 27 Feb 13:54pm]	*EDITING THE MENUS -- we'd need to either create a new database table for them too, unless they're dynamic based on pages and you have a checkbox with the page that specifies whether to include it on the menu or not.
+[Tue 27 Feb 13:57pm]	 Created an "admins_doctors_controller" to which I connected the map.resources of doctors for the ssadmin dashboard. This makes it possible for me to have different functionality and not worry about accessibility issues and distinguishing between ssadmins and doctor admins. ssadmins can create doctors, Doctor Admins don't even have such a function available that would have to bar them out.
+                 - -   <COMMIT REVISION 49>
+[Tue 27 Feb 14:34pm]	 Secured the Pages admin to ssadmin-only access. If not logged in, redirects to ssadmin login; if logged in as a non-ssadmin user, redirects to your dashboard; After ssadmin login, redirects back to the previous attempted-access page. Added "Manage Pages" to ssadmin dashboard.
+                 - -   <COMMIT REVISION 50>
+[Tue 27 Feb 18:07pm]	 Created a reusable LIVE SEARCH functionality! Put one line in your view to include a live search of any controller or model... Take a look at Manage Doctors in the ssadmin dashboard, or look at the Doctor Admin dashboard (log in as a doctor admin user) to see two totally different live searches on the same page!
+                 - -   <COMMIT REVISION 51>
+[Fri 9 Mar 12:32pm]		 (See rev 74 log)
+                 - -   <COMMIT REVISION 74>
+
+
+::TO DO::
+Add a live-search type catcher for NEW patient forms, to find already existing ones if present.
+Add a 

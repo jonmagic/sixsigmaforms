@@ -1,0 +1,11 @@
+<%= error_messages_for :user %>
+<% form_for :user, :url => manage_users_url(:doctor_alias => @doctor.alias) do |f| -%>
+
+<p><label for="friendly_name">Friendly Name</label><br/>
+<%= f.text_field :friendly_name %></p>
+
+<p><label for="email">Email</label><br/>
+<%= f.text_field :email %></p>
+
+<p><%= submit_tag 'Create User' %></p>
+<% end -%>

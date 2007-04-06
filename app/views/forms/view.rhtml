@@ -1,0 +1,8 @@
+<h2><%= @form.instance.visual_identifier %></h2>
+<p>(<%= @form.instance.form_identifier %> - <%= @form.instance.status.as_status.word('uppercase short singular') %>) <%= link_to 'View Log', doctor_form_log_path(:form_type => @form_type, :form_id => params[:form_id]), :popup => true %><% unless @form.instance.status == 'archived'  %> / <%= link_to 'Edit', doctor_forms_path(:action => 'draft', :form_status => 'draft', :form_type => @form_type, :form_id => params[:form_id]), :confirm => "Editing this form will un-submit the form and move it back to the Draft status. Do you want to continue?" %><% end %></p>
+
+<div class="form">
+<%= render :partial => @form.instance.form_data_type.fromCamelCase -%>
+</div>
+
+<%= render :partial => 'notes/form_notes', :locals => {:form => @form} %>

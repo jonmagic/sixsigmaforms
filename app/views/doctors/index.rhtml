@@ -1,26 +1,14 @@
 <h1>Listing doctors</h1>
 
 <table>
-  <thead>
-    <th>Username</th>
-    <th>Business Name</th>
-    <th>Address</th>
-    <th>Telephone</th>
-    <th>Activation</th>
-    <th colspan=3>Controls...</th>
-  </thead>
+  <tr>
+  </tr>
   
 <% for doctor in @doctors %>
   <tr>
-    <td><%= doctor.username %></td>
-    <td><%= doctor.business_name %></td>
-    <td><%= doctor.address %></td>
+    <td><%= doctor.friendly_name %></td>
+    <td><em><%= doctor.alias %></em></td>
     <td><%= doctor.telephone %></td>
-    <td>&nbsp;
-<% if !doctor.activation_code.blank? %>
-    <%= link_to 'Activate!', doctor_path+";activate?activation_code="+doctor.activation_code %>
-<% end %>
-    </td>
     <td><%= link_to 'Show', doctor_path(doctor) %></td>
     <td><%= link_to 'Edit', edit_doctor_path(doctor) %></td>
     <td><%= link_to 'Destroy', doctor_path(doctor), :confirm => 'Are you sure?', :method => :delete %></td>

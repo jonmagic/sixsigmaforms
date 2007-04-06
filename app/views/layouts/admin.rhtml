@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="Six Sigma Management: HipForms, a HIPAA compliant form completion tool" />
+		<meta name="keywords" content="" />
+		<meta name="author" content="Six Sigma Management" />
+		<title>Six Sigma Management: <%= current_domain %></title>
+		<%= stylesheet_link_tag 'common' %>
+		<%= stylesheet_link_tag 'doctor' %>
+		<%= stylesheet_link_tag 'tabs' %>		
+		<%= stylesheet_link_tag 'date-picker' %>
+		<%= javascript_include_tag 'prototype' %>
+		<%= javascript_include_tag 'effects' %>
+		<%= javascript_include_tag 'form_effects' %>
+		<%= javascript_include_tag 'controls' %>
+		<%= javascript_include_tag 'dragdrop' %>
+		<%= javascript_include_tag 'rounded' %>
+		<%= javascript_include_tag 'date-picker' %>
+		<%= javascript_include_tag 'dojo' %>
+		<script type="text/javascript">
+			dojo.require("dojo.widget.Editor2");
+		/*	dojo.require("dojo.widget.Editor2Plugin.DialogCommands");*/
+			dojo.require("dojo.widget.Editor2Plugin.AlwaysShowToolbar");
+		</script>
+		<script type="text/javascript">
+			var AddEditor = {
+				init: function() {
+					var helptext = document.getElementsByTagName('p');
+					for (var i = 0, ht; ht = helptext[i]; i++) {
+							if (ht.innerHTML.match(/Rich Text./)) {
+								ta = ht.previousSibling.previousSibling
+								ta.setAttribute("dojoType", "Editor2");
+							}
+					}
+				},
+			}
+		</script>
+		<style type="text/css" media="screen">
+			div.RichTextEditable { border:1px solid #ccc; width:75%;}
+			.EditorToolbarDomNode {padding-left:5px;}
+			.RichTextEditable td {padding:0; vertical-align:middle;}
+			.RichTextEditable table {border:none;}
+			.RichTextEditable iframe {padding:.5em 1em;}
+		</style>
+	</head>
+	<body>
+		<div id="header">
+			<h1>Six Sigma Management Form Processor</h1>
+			<h2>Welcome <em><%= current_user.friendly_name %></em></h2>
+			<ul>
+				<li>
+					<li>
+			<% if logged_in? -%>
+							<a href="/logout">Logout</a>
+					</li>
+					<li>
+						<%= link_to 'My Account', admin_account_path %>
+						/
+					<% if params[:action] == 'forms' or params[:controller] == 'manage/forms' -%>
+						<%= link_to 'Manage', doctors_path %>
+					<% elsif params[:action] == 'management' or params[:controller] == 'manage/doctors' or params[:controller] == 'manage/pages' or (params[:controller] == 'manage/admins' and !(params[:action] == 'dashboard')) -%>
+						<%= link_to 'Forms', admin_forms_by_status_path('submitted') %>
+					<% end -%>
+			<% else -%>
+						Not logged in. <a href="/<%= accessed_domain %>/login">Login</a>
+			<% end -%>
+				</li>
+			</ul>
+		</div>
+		<div id="main">
+			<ul id="tabmenu">
+		<% if logged_in? -%>
+				<% if params[:action] == 'forms' or params[:controller] == 'manage/forms' -%>
+				<li><%= tab_link_to 2.as_status.word('uppercase short singular') + (!FormInstance.find_all_by_status_number(2).blank? ? " (#{FormInstance.find_all_by_status_number(2).count})" : ''), admin_forms_by_status_path(2.as_status.text), :class => "#{2.as_status}_count" %></li>
+				<li><%= tab_link_to 3.as_status.word('uppercase short singular') + (!FormInstance.find_all_by_status_number(3).blank? ? " (#{FormInstance.find_all_by_status_number(3).count})" : ''), admin_forms_by_status_path(3.as_status.text), :class => "#{3.as_status}_count" %></li>
+				<li><%= tab_link_to 4.as_status.word('uppercase short singular'), admin_forms_by_status_path(4.as_status.text) %></li>
+				<% else -%>
+				<li><%= tab_link_to "My Account", admin_account_path %></li>
+				<li><%= tab_link_to 'Doctors', doctors_path %></li>
+				<li><%= tab_link_to 'Admins', admins_path %></li>
+				<li><%= tab_link_to 'Pages', manage_pages_path %></li>
+				<% end -%>
+		<% else -%>
+				<li><%= tab_link_to "Login", admin_login_path %></li>
+		<% end -%>
+			</ul>
+			<div style="background:#C13B00;"><br /></div><br />
+			<div id="content">
+				<%= yield %>
+				<br />
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,4 @@
+<% pre_text ||= '' -%>
+<% update ||= 'yes' -%>
+<li class="form_listing" id="form_listing_<%= form.id %>"><span><%= pre_text %><%= link_to form.visual_identifier, doctor_forms_path(:form_status => form.status, :action => 'view', :form_type => form.form_data_type, :form_id => form.form_data_id) %>
+</span></li>

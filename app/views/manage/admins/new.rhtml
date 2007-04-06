@@ -1,0 +1,10 @@
+<%= error_messages_for :admin %>
+<% form_for :admin, :url => admins_path do |f| -%>
+<p><label for="friendly_name">Friendly Name</label><br/>
+<%= f.text_field :friendly_name %></p>
+
+<p><label for="email">Email</label><br/>
+<%= f.text_field :email %></p>
+
+<p><%= submit_tag 'Create Admin' %></p>
+<% end -%>

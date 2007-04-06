@@ -1,0 +1,246 @@
+<% view = view.nil? ? true : view -%>
+<% f = nil if view -%>
+<% @patient ||= @form if !@form.nil? -%>
+<ul class="form">
+<%= render :partial => 'patients/patient_information', :locals => {:view => view, :f => f} %>
+	<li><h4>Primary Insurance Information - <a href="javascript:Effect.Combo('primary_insurance');">Show/Hide Section</a></h4></li>
+	<li><div id="primary_insurance" style="display:none">
+		<table>
+			<tr>
+			<td class="leftcolumn"><label for="primary_insurance_company">Primary Insurance Company</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_insurance_company, :value => @values.primary_insurance_company) : @form.primary_insurance_company %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_address">Primary Address</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_address, :value => @values.primary_address) : @form.primary_address %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_city">Primary City</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_city, :value => @values.primary_city) : @form.primary_city %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_state">Primary State</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_state, :value => @values.primary_state) : @form.primary_state %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_zipcode">Primary Zipcode</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_zipcode, :value => @values.primary_zipcode) : @form.primary_zipcode %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_telephone">Primary Telephone</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_telephone, :value => @values.primary_telephone) : @form.primary_telephone %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_first_name">Primary First Name</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_first_name, :value => @values.primary_first_name) : @form.primary_first_name %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_middle_initial">Primary Middle Initial</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_middle_initial, :value => @values.primary_middle_initial) : @form.primary_middle_initial %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_last_name">Primary Last Name</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_last_name, :value => @values.primary_last_name) : @form.primary_last_name %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_relationship">Primary Relationship</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_relationship, :value => @values.primary_relationship) : @form.primary_relationship %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_birth_date">Primary Birth Date</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_birth_date, :value => @values.primary_birth_date) : @form.primary_birth_date %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_social_security_number">Primary Social Security Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_social_security_number, :value => @values.primary_social_security_number) : @form.primary_social_security_number %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_contract_number">Primary Contract Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_contract_number, :value => @values.primary_contract_number) : @form.primary_contract_number %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_plan_number">Primary Plan Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_plan_number, :value => @values.primary_plan_number) : @form.primary_plan_number %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="primary_group_number">Primary Group Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:primary_group_number, :value => @values.primary_group_number) : @form.primary_group_number %></td>
+			</tr>
+		</table>
+		<p><a href="javascript:Effect.Combo('primary_insurance');"><%= image_tag "up_arrow.gif", :border => 0 %> Hide Section</a></p>
+	</div></li>
+	<li><h4>Secondary Insurance Information - <a href="javascript:Effect.Combo('secondary_insurance');">Show/Hide Section</a></h4></li>
+	<li><div id="secondary_insurance" style="display:none">
+		<table>	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_insurance_company">Secondary Insurance Company</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_insurance_company, :value => @values.secondary_insurance_company) : @form.secondary_insurance_company %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_address">Secondary Address</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_address, :value => @values.secondary_address) : @form.secondary_address %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_city">Secondary City</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_city, :value => @values.secondary_city) : @form.secondary_city %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_state">Secondary State</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_state, :value => @values.secondary_state) : @form.secondary_state %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_zipcode">Secondary Zipcode</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_zipcode, :value => @values.secondary_zipcode) : @form.secondary_zipcode %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_telephone">Secondary Telephone</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_telephone, :value => @values.secondary_telephone) : @form.secondary_telephone %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_first_name">Secondary First Name</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_first_name, :value => @values.secondary_first_name) : @form.secondary_first_name %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_middle_initial">Secondary Middle Initial</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_middle_initial, :value => @values.secondary_middle_initial) : @form.secondary_middle_initial %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_last_name">Secondary Last Name</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_last_name, :value => @values.secondary_last_name) : @form.secondary_last_name %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_relationship">Secondary Relationship</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_relationship, :value => @values.secondary_relationship) : @form.secondary_relationship %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_birth_date">Secondary Birth Date</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_birth_date, :value => @values.secondary_birth_date) : @form.secondary_birth_date %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_social_security_number">Secondary Social Security Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_social_security_number, :value => @values.secondary_social_security_number) : @form.secondary_social_security_number %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_contract_number">Secondary Contract Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_contract_number, :value => @values.secondary_contract_number) : @form.secondary_contract_number %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_plan_number">Secondary Plan Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_plan_number, :value => @values.secondary_plan_number) : @form.secondary_plan_number %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="secondary_group_number">Secondary Group Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:secondary_group_number, :value => @values.secondary_group_number) : @form.secondary_group_number %></td>
+			</tr>
+		</table>
+		<p><a href="javascript:Effect.Combo('secondary_insurance');"><%= image_tag "up_arrow.gif", :border => 0 %> Hide Section</a></p>
+	</div></li>
+	<li><h4>Tertiary Insurance Information - <a href="javascript:Effect.Combo('tertiary_insurance');">Show/Hide Section</a></h4></li>
+	<li><div id="tertiary_insurance" style="display:none">
+		<table>	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_insurance_company">Tertiary Insurance Company</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_insurance_company, :value => @values.tertiary_insurance_company) : @form.tertiary_insurance_company %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_address">Tertiary Address</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_address, :value => @values.tertiary_address) : @form.tertiary_address %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_city">Tertiary City</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_city, :value => @values.tertiary_city) : @form.tertiary_city %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_state">Tertiary State</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_state, :value => @values.tertiary_state) : @form.tertiary_state %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_zipcode">Tertiary Zipcode</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_zipcode, :value => @values.tertiary_zipcode) : @form.tertiary_zipcode %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_telephone">Tertiary Telephone</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_telephone, :value => @values.tertiary_telephone) : @form.tertiary_telephone %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_first_name">Tertiary First Name</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_first_name, :value => @values.tertiary_first_name) : @form.tertiary_first_name %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_middle_initial">Tertiary Middle Initial</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_middle_initial, :value => @values.tertiary_middle_initial) : @form.tertiary_middle_initial %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_last_name">Tertiary Last Name</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_last_name, :value => @values.tertiary_last_name) : @form.tertiary_last_name %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_relationship">Tertiary Relationship</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_relationship, :value => @values.tertiary_relationship) : @form.tertiary_relationship %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_birth_date">Tertiary Birth Date</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_birth_date, :value => @values.tertiary_birth_date) : @form.tertiary_birth_date %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_social_security_number">Tertiary Social Security Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_social_security_number, :value => @values.tertiary_social_security_number) : @form.tertiary_social_security_number %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_contract_number">Tertiary Contract Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_contract_number, :value => @values.tertiary_contract_number) : @form.tertiary_contract_number %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_plan_number">Tertiary Plan Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_plan_number, :value => @values.tertiary_plan_number) : @form.tertiary_plan_number %></td>
+			</tr>
+	
+			<tr>
+			<td class="leftcolumn"><label for="tertiary_group_number">Tertiary Group Number</label></td>
+			<td class="rightcolumn"><%= !view ? f.text_field(:tertiary_group_number, :value => @values.tertiary_group_number) : @form.tertiary_group_number %></td>
+			</tr>
+		</table>
+		<p><a href="javascript:Effect.Combo('tertiary_insurance');"><%= image_tag "up_arrow.gif", :border => 0 %> Hide Section</a></p>
+	</div></li>
+</ul>

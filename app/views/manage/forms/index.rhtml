@@ -1,0 +1,9 @@
+<h2><%= params[:form_status].as_status.word('uppercase long plural') %></h2>
+<ul class="form_listings">
+	<% @forms.each do |form| -%>
+		<%= render :partial => "#{params[:form_status]}_listing", :locals => {:form => form} %>
+	<% end -%>
+	<% if @forms.blank? -%>
+		<li>&lt;no <%= params[:form_status].as_status.word('lowercase long plural') %>&gt;</li>
+	<% end -%>
+</ul>

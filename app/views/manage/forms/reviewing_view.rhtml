@@ -1,0 +1,14 @@
+<h2><%= @form.instance.visual_identifier %></h2>
+<p>(<%= @form.instance.form_identifier %> - <%= @form.instance.status.as_status.word('uppercase short singular') %>) <%= link_to 'View Log', admin_form_log_path(:form_type => @form.instance.form_data_type, :form_id => @form.instance.form_data_id), :popup => true %></p>
+
+<div class="form">
+<%= render :partial => @form.instance.form_data_type.fromCamelCase -%>
+</div>
+
+<%= render :partial => 'manage/notes/form_notes', :locals => {:form => @form} %>
+
+<p><form method="get" action="<%= admin_forms_path(:form_status => 4.as_status.text, :form_type => @form.instance.form_data_type, :form_id => @form.instance.form_data_id) %>"><input type="submit" value="Accept &amp; Archive" /></form></p>
+<p><form method="post" action="<%= admin_forms_path(:form_status => @form.instance.status, :form_type => @form.instance.form_data_type, :form_id => @form.instance.form_data_id, :action => 'return') %>">
+<input type="hidden" name="form[status]" value="draft" />
+<input type="submit" onclick="return confirm('Are you sure?');" value="Return to Doctor for changes" />
+</form></p>

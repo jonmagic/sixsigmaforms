@@ -1,0 +1,24 @@
+<h2 class="visual_identifier"><%= @form.instance.visual_identifier %></h2>
+<p>(<%= @form.instance.form_identifier %> - <%= @form.instance.status.as_status.word('uppercase short singular') %>) <%= link_to 'View Log', doctor_form_log_path(:form_type => @form_type, :form_id => @form.id), :popup => true %></p>
+
+<%= error_messages_for :basic_form %>
+<% remote_form_for(@form_type, :html => {:id => 'form_'+@form_type.fromCamelCase}, :url => formatted_doctor_forms_path(:form_type => @form_type, :action => 'update', :form_id => @form.id, :format => 'js')) do |f| %>
+
+	<%= hidden_field_tag :patient_id, @patient.id %>
+	<%= render :partial => @form_type.fromCamelCase, :locals => {:f => f, :view => false} %>
+	<br />
+	<%= hidden_field "form_instance", "status", :value => @form.instance.status %>
+	<input id="submit_draft_bttn" name="commit" type="button" value="Submit to SixSigma" onclick="$('form_instance_status').value = 'submitted'; this.form.onsubmit=''; this.form.action='<%= doctor_forms_path(:form_type => @form_type, :action => 'update', :form_id => @form.id) %>'; this.form.submit();" />
+<%= submit_tag 'Save Draft', :id => 'save_draft_bttn' %><span id="draft_save_status"></span>
+<% end -%>
+
+<%= observe_form 'form_'+@form_type.fromCamelCase,
+                :function => "$('save_draft_bttn').value = 'Save Draft'; $('save_draft_bttn').disabled = false" %>
+<%= observe_form 'form_'+@form_type.fromCamelCase,
+                :frequency => 5,
+								:assigns => 'draft_observe',
+								:start_nil => false,
+								:url => formatted_doctor_forms_path(:form_type => @form_type, :action => 'update', :form_id => @form.id, :format => 'js'),
+								:with => "Form.serialize(\"form_#{@form_type.fromCamelCase}\")" %>
+
+<%= render :partial => 'notes/form_notes', :locals => {:form => @form} %>
